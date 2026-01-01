@@ -5,7 +5,7 @@ Adam is a lightweight reactive UI library that transforms native HTMLElements in
 ```tsx
 const externalSignal = signal("something")
 
-function Component(): HTMLElement{
+function Component(property1, property2, children): ReactiveHTMLElement{
     const value = signal(0)
     return div()
         .style.color("green")
@@ -13,7 +13,10 @@ function Component(): HTMLElement{
             header("This is my header"),
             main("Second children")
             b(value),
-            span(externalSignal)
+            span(externalSignal),
+            ...children
         )
 }
+
+document.body.appendChild(render(Component))
 ```
