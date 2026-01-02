@@ -1,9 +1,8 @@
 import { isSignal, effect } from "./signals";
 
-const DISPOSE =
-  "dispose" in Symbol ? (Symbol.dispose as symbol) : Symbol("dispose");
-const RENDER = Symbol("render");
-const EFFECT = Symbol("effect");
+const DISPOSE: unique symbol = Symbol("dispose");
+const RENDER: unique symbol = Symbol("render");
+const EFFECT: unique symbol = Symbol("effect");
 
 function isObject(v: unknown): v is Record<string | symbol, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
@@ -60,13 +59,21 @@ export function reactive(el: HTMLElement): ReactiveHTMLElement {
   const effects = new Set<() => () => void>();
   const disposables = new Set<() => void>();
 
+  const dispatchEffects = () => {
+    effects.forEach((effect) => disposables.add(effect()));
+    effects.clear();
+  };
+  const dispose = () => {
+    disposables.forEach((dispose) => dispose());
+    disposables.clear();
+  };
   const proxy = new Proxy(el, {
     get(target, key: keyof HTMLElement, receiver) {
+      if ("dispose" in Symbol && key === Symbol.dispose) {
+        return dispose;
+      }
       if ((key as unknown as symbol) === DISPOSE) {
-        return () => {
-          disposables.forEach((dispose) => dispose());
-          disposables.clear();
-        };
+        return dispose;
       }
       if ((key as unknown as symbol) === EFFECT) {
         return (fn: () => () => void) => {
@@ -75,8 +82,7 @@ export function reactive(el: HTMLElement): ReactiveHTMLElement {
       }
       if ((key as unknown as symbol) === RENDER) {
         return () => {
-          effects.forEach((effect) => disposables.add(effect()));
-          effects.clear();
+          dispatchEffects();
           return target;
         };
       }
