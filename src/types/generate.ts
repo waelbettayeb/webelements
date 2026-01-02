@@ -1,0 +1,164 @@
+import ts from "typescript";
+import * as fs from "node:fs";
+import * as path from "node:path";
+
+const filename = path.relative(__dirname, "generated.ts");
+// Track processed types to avoid duplicates
+const processedTypes = new Set<string>();
+
+function generateHTMLElementBuilder() {
+  const options: ts.CompilerOptions = {
+    target: ts.ScriptTarget.Latest,
+    lib: ["lib.dom.d.ts"],
+  };
+
+  const defaultLibPath = ts.getDefaultLibFilePath(options);
+  const program = ts.createProgram([defaultLibPath], options);
+  const checker = program.getTypeChecker();
+
+  fs.writeFileSync(filename, "// Auto-generated file\n\n");
+
+  // Find HTMLElementTagNameMap
+  const tagNameMapSymbol = checker.resolveName(
+    "HTMLElementTagNameMap",
+    undefined,
+    ts.SymbolFlags.Interface,
+    false
+  );
+
+  if (!tagNameMapSymbol) {
+    console.error("Could not find HTMLElementTagNameMap");
+    return;
+  }
+
+  const tagNameMapType = checker.getDeclaredTypeOfSymbol(tagNameMapSymbol);
+  const properties = checker.getPropertiesOfType(tagNameMapType);
+
+  // Process each HTML element type
+  properties.forEach((prop) => {
+    const tagName = prop.getName();
+    const elementType = checker.getTypeOfSymbolAtLocation(
+      prop,
+      prop.valueDeclaration!
+    );
+
+    const symbol = elementType.getSymbol();
+    const typeName = symbol?.getName();
+
+    console.log(`\n=== Processing tag: ${tagName} (${typeName}) ===`);
+    processTypeHierarchy(checker, elementType);
+  });
+}
+
+// Helper function to get unique own properties (not inherited)
+function getOwnWritableProperties(
+  checker: ts.TypeChecker,
+  type: ts.Type
+): Map<string, { name: string; typeString: string }> {
+  const allProperties = checker.getPropertiesOfType(type);
+  const baseTypes = type.getBaseTypes() || [];
+
+  // Get all inherited property names
+  const inheritedProps = new Set<string>();
+  baseTypes.forEach((baseType) => {
+    checker.getPropertiesOfType(baseType).forEach((prop) => {
+      inheritedProps.add(prop.getName());
+    });
+  });
+
+  const ownProperties = new Map<string, { name: string; typeString: string }>();
+
+  allProperties.forEach((prop) => {
+    const name = prop.getName();
+
+    // Skip inherited properties to keep them unique
+    if (inheritedProps.has(name)) return;
+    if (name.startsWith("on")) return; // Skip event handlers
+
+    const declarations = prop.getDeclarations();
+    const getter = declarations?.find(ts.isGetAccessor);
+    const setter = declarations?.find(ts.isSetAccessor);
+    const method = declarations?.find(ts.isMethodSignature);
+
+    if (method) return; // Skip methods
+    if (getter && !setter) return; // Skip readonly (getter without setter)
+
+    const flags = prop.valueDeclaration
+      ? ts.getCombinedModifierFlags(prop.valueDeclaration)
+      : 0;
+    if (flags & ts.ModifierFlags.Readonly) return;
+
+    let typeString = "";
+    if (setter) {
+      const setterParams = setter.parameters;
+      if (setterParams.length !== 1) return;
+      const paramType = checker.getTypeAtLocation(setterParams[0]);
+      typeString = checker.typeToString(paramType);
+    } else if (prop.valueDeclaration) {
+      typeString = checker.typeToString(
+        checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration)
+      );
+    }
+
+    if (typeString) {
+      ownProperties.set(name, { name, typeString });
+    }
+  });
+
+  return ownProperties;
+}
+
+// Process a type and its base types recursively
+function processTypeHierarchy(
+  checker: ts.TypeChecker,
+  type: ts.Type
+): string[] {
+  const symbol = type.getSymbol();
+  if (!symbol) return [];
+
+  const typeName = symbol.getName();
+
+  // If already processed, return just the name
+  if (processedTypes.has(typeName)) {
+    return [typeName];
+  }
+
+  processedTypes.add(typeName);
+
+  // Process base types first
+  const baseTypes = type.getBaseTypes() || [];
+  const baseTypeNames: string[] = [];
+
+  baseTypes.forEach((baseType) => {
+    const processed = processTypeHierarchy(checker, baseType);
+    baseTypeNames.push(...processed);
+  });
+
+  // Get unique base type names for extends clause
+  const uniqueBaseNames = [...new Set(baseTypeNames)];
+
+  // Get only own properties (not inherited)
+  const ownProps = getOwnWritableProperties(checker, type);
+
+  // Generate interface
+  const extendsClause =
+    uniqueBaseNames.length > 0
+      ? ` extends ${uniqueBaseNames.map((name) => `${name}Setters`).join(", ")}`
+      : "";
+
+  fs.appendFileSync(
+    filename,
+    `interface ${typeName}Setters${extendsClause} {\n`
+  );
+
+  ownProps.forEach(({ name, typeString }) => {
+    fs.appendFileSync(filename, `  ${name}: ${typeString};\n`);
+  });
+
+  fs.appendFileSync(filename, "}\n\n");
+  console.log(`Processing ${typeName}...`);
+
+  return [typeName];
+}
+
+generateHTMLElementBuilder();

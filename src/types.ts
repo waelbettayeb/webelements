@@ -19,16 +19,16 @@ type WritableKeys<T> = {
     : K;
 }[keyof T];
 
+// NOTE: typescript doens't allow to extract setter argument types directly
+// check: https://github.com/microsoft/TypeScript/issues/21759
 /**
  * Helper to extract the argument type of the setter for a property K in T.
  */
-// typescript doens't allow to extract setter argument types directly
-// check: https://github.com/microsoft/TypeScript/issues/21759
-type SetterArg<T, K extends PropertyKey> = T extends {
-  set [P in K](v: infer V): void;
-}
-  ? V
-  : undefined;
+// type SetterArg<T, K extends PropertyKey> = T extends {
+//   set [P in K](v: infer V): void;
+// }
+//   ? V
+//   : undefined;
 
 /**
  * Make an object callable for setting properties in a reactive way.
@@ -61,7 +61,6 @@ interface Obj {
   set value(v: string);
 }
 
-type K = SetterArg<Obj, "value">; // should be all writable keys of HTMLElement
 const reactiveObject: ReactiveBuilder<HTMLElement> = null!;
 reactiveObject
   .id("my-id")
