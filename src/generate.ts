@@ -49,10 +49,7 @@ function generateHTMLElementBuilders() {
 }
 
 // Helper function to get unique own properties (not inherited)
-function getOwnWritableProperties(
-  checker: ts.TypeChecker,
-  type: ts.Type
-): Map<string, { name: string; typeString: string }> {
+function writeProperties(type: ts.Type) {
   const name = type.getSymbol()?.getName() || "unknown";
   const allProperties = checker.getPropertiesOfType(type);
   const baseTypes = type.getBaseTypes() || [];
@@ -105,7 +102,12 @@ function getOwnWritableProperties(
     }
   });
 
-  return ownProperties;
+  ownProperties.forEach(({ name, typeString }) => {
+    fs.appendFileSync(
+      filename,
+      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+    );
+  });
 }
 
 const BASE_TYPES = [
@@ -147,9 +149,6 @@ function processTypeHierarchy(type: ts.Type): string[] {
   // Get unique base type names for extends clause
   const uniqueBaseNames = [...new Set(baseTypeNames)];
 
-  // Get only own properties (not inherited)
-  const ownProps = getOwnWritableProperties(checker, type);
-
   // Generate interface
   const extendsClause =
     uniqueBaseNames.length > 0
@@ -161,12 +160,8 @@ function processTypeHierarchy(type: ts.Type): string[] {
     `interface ${typeName}Builder${extendsClause} {\n`
   );
 
-  ownProps.forEach(({ name, typeString }) => {
-    fs.appendFileSync(
-      filename,
-      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
-    );
-  });
+  // Get only own properties (not inherited)
+  writeProperties(type);
 
   fs.appendFileSync(filename, "}\n\n");
 
