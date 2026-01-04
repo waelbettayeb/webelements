@@ -63,8 +63,6 @@ function writeProperties(type: ts.Type) {
       });
     });
 
-  const ownProperties = new Map<string, { name: string; typeString: string }>();
-
   allProperties.forEach((prop) => {
     const name = prop.getName();
 
@@ -75,18 +73,25 @@ function writeProperties(type: ts.Type) {
     const declarations = prop.getDeclarations();
     if (!declarations) return;
     const method = declarations.find(ts.isMethodSignature);
-
+    // TODO: support setter methods
+    // TODO: on events
     if (method) return; // Skip methods
 
     const property = declarations.find(ts.isPropertySignature);
 
     const getter = declarations.find(ts.isGetAccessor);
     if (getter) {
-      const paramType = getterParam(prop, getter);
-      let typeString = checker.typeToString(paramType);
+      const propType = getterParam(prop, getter);
+      let typeString = checker.typeToString(propType);
+      if (propType.flags & ts.TypeFlags.Object) {
+        // TODO: object chaining support
+      }
       fs.appendFileSync(filename, `  ${name}(): ${typeString};\n`);
     } else if (property) {
       const propType = checker.getTypeOfSymbolAtLocation(prop, property);
+      if (propType.flags & ts.TypeFlags.Object) {
+        // TODO: object chaining support
+      }
       let typeString = checker.typeToString(propType);
       fs.appendFileSync(filename, `  ${name}(): ${typeString};\n`);
     }
