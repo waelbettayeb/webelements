@@ -7,7 +7,7 @@ console.log(`Generating file at: ${filename}`);
 // Track processed types to avoid duplicates
 const processedTypes = new Set<string>();
 
-function generateHTMLElementBuilder() {
+function createDomTsProgram() {
   const options: ts.CompilerOptions = {
     target: ts.ScriptTarget.Latest,
     lib: ["lib.dom.d.ts"],
@@ -15,41 +15,33 @@ function generateHTMLElementBuilder() {
 
   const defaultLibPath = ts.getDefaultLibFilePath(options);
   const program = ts.createProgram([defaultLibPath], options);
-  const checker = program.getTypeChecker();
+  return program;
+}
+const program = createDomTsProgram();
+const checker = program.getTypeChecker();
 
+function resolveSymbol(name: string, flags: ts.SymbolFlags) {
+  return checker.resolveName(name, undefined, flags, false);
+}
+
+function generateHTMLElementBuilder() {
   fs.writeFileSync(filename, "// Auto-generated file\n\n");
   fs.writeFileSync(filename, 'import type { ReactiveValue } from "./types";\n');
 
-  // Find HTMLElementTagNameMap
-  const tagNameMapSymbol = checker.resolveName(
+  const tagNameMap = resolveSymbol(
     "HTMLElementTagNameMap",
-    undefined,
-    ts.SymbolFlags.Interface,
-    false
+    ts.SymbolFlags.Interface
   );
 
-  if (!tagNameMapSymbol) {
-    console.error("Could not find HTMLElementTagNameMap");
-    return;
-  }
+  if (!tagNameMap) throw new Error("Could not find HTMLElementTagNameMap");
 
-  const tagNameMapType = checker.getDeclaredTypeOfSymbol(tagNameMapSymbol);
-  const properties = checker.getPropertiesOfType(tagNameMapType);
-
-  // Process each HTML element type
-  properties.forEach((prop) => {
-    const tagName = prop.getName();
+  for (const [_name, tag] of tagNameMap.members) {
     const elementType = checker.getTypeOfSymbolAtLocation(
-      prop,
-      prop.valueDeclaration!
+      tag,
+      tag.valueDeclaration!
     );
-
-    const symbol = elementType.getSymbol();
-    const typeName = symbol?.getName();
-
-    console.log(`\n=== Processing tag: ${tagName} (${typeName}) ===`);
     processTypeHierarchy(checker, elementType);
-  });
+  }
 }
 
 // Helper function to get unique own properties (not inherited)
