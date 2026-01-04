@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "es2015",
-    "lib": ["ES2015", "DOM"],
+    "target": "es2016",
+    "lib": ["ES2016", "DOM"],
     "moduleResolution": "bundler"
   }
 }

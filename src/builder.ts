@@ -1,5 +1,5 @@
 import type { ReactiveValue } from "./types";
-interface HTMLElementBuilder {
+export interface HTMLElementBuilder {
   accessKey(): string;
   accessKey(value: ReactiveValue<string>): this;
   accessKeyLabel(): string;
@@ -231,7 +231,7 @@ interface HTMLElementBuilder {
   tabIndex(value: ReactiveValue<number>): this;
 }
 
-interface HTMLHyperlinkElementUtilsBuilder {
+export interface HTMLHyperlinkElementUtilsBuilder {
   hash(): string;
   hash(value: ReactiveValue<string>): this;
   host(): string;
@@ -255,7 +255,7 @@ interface HTMLHyperlinkElementUtilsBuilder {
   username(value: ReactiveValue<string>): this;
 }
 
-interface HTMLAnchorElementBuilder extends HTMLElementBuilder, HTMLHyperlinkElementUtilsBuilder {
+export interface HTMLAnchorElementBuilder extends HTMLElementBuilder, HTMLHyperlinkElementUtilsBuilder {
   charset(): string;
   charset(value: ReactiveValue<string>): this;
   coords(): string;
@@ -286,7 +286,7 @@ interface HTMLAnchorElementBuilder extends HTMLElementBuilder, HTMLHyperlinkElem
   type(value: ReactiveValue<string>): this;
 }
 
-interface HTMLAreaElementBuilder extends HTMLElementBuilder, HTMLHyperlinkElementUtilsBuilder {
+export interface HTMLAreaElementBuilder extends HTMLElementBuilder, HTMLHyperlinkElementUtilsBuilder {
   alt(): string;
   alt(value: ReactiveValue<string>): this;
   coords(): string;
@@ -309,7 +309,7 @@ interface HTMLAreaElementBuilder extends HTMLElementBuilder, HTMLHyperlinkElemen
   target(value: ReactiveValue<string>): this;
 }
 
-interface HTMLMediaElementBuilder extends HTMLElementBuilder {
+export interface HTMLMediaElementBuilder extends HTMLElementBuilder {
   autoplay(): boolean;
   autoplay(value: ReactiveValue<boolean>): this;
   buffered(): TimeRanges;
@@ -366,25 +366,25 @@ interface HTMLMediaElementBuilder extends HTMLElementBuilder {
   HAVE_ENOUGH_DATA(): 4;
 }
 
-interface HTMLAudioElementBuilder extends HTMLMediaElementBuilder {
+export interface HTMLAudioElementBuilder extends HTMLMediaElementBuilder {
 }
 
-interface HTMLBaseElementBuilder extends HTMLElementBuilder {
+export interface HTMLBaseElementBuilder extends HTMLElementBuilder {
   href(): string;
   href(value: ReactiveValue<string>): this;
   target(): string;
   target(value: ReactiveValue<string>): this;
 }
 
-interface HTMLQuoteElementBuilder extends HTMLElementBuilder {
+export interface HTMLQuoteElementBuilder extends HTMLElementBuilder {
   cite(): string;
   cite(value: ReactiveValue<string>): this;
 }
 
-interface WindowEventHandlersBuilder {
+export interface WindowEventHandlersBuilder {
 }
 
-interface HTMLBodyElementBuilder extends HTMLElementBuilder, WindowEventHandlersBuilder {
+export interface HTMLBodyElementBuilder extends HTMLElementBuilder, WindowEventHandlersBuilder {
   aLink(): string;
   aLink(value: ReactiveValue<string>): this;
   background(): string;
@@ -399,19 +399,19 @@ interface HTMLBodyElementBuilder extends HTMLElementBuilder, WindowEventHandlers
   vLink(value: ReactiveValue<string>): this;
 }
 
-interface HTMLBRElementBuilder extends HTMLElementBuilder {
+export interface HTMLBRElementBuilder extends HTMLElementBuilder {
   clear(): string;
   clear(value: ReactiveValue<string>): this;
 }
 
-interface PopoverInvokerElementBuilder {
+export interface PopoverInvokerElementBuilder {
   popoverTargetAction(): string;
   popoverTargetAction(value: ReactiveValue<string>): this;
   popoverTargetElement(): Element;
   popoverTargetElement(value: ReactiveValue<Element>): this;
 }
 
-interface HTMLButtonElementBuilder extends HTMLElementBuilder, PopoverInvokerElementBuilder {
+export interface HTMLButtonElementBuilder extends HTMLElementBuilder, PopoverInvokerElementBuilder {
   disabled(): boolean;
   disabled(value: ReactiveValue<boolean>): this;
   form(): HTMLFormElement;
@@ -437,19 +437,19 @@ interface HTMLButtonElementBuilder extends HTMLElementBuilder, PopoverInvokerEle
   willValidate(): boolean;
 }
 
-interface HTMLCanvasElementBuilder extends HTMLElementBuilder {
+export interface HTMLCanvasElementBuilder extends HTMLElementBuilder {
   height(): number;
   height(value: ReactiveValue<number>): this;
   width(): number;
   width(value: ReactiveValue<number>): this;
 }
 
-interface HTMLTableCaptionElementBuilder extends HTMLElementBuilder {
+export interface HTMLTableCaptionElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTableColElementBuilder extends HTMLElementBuilder {
+export interface HTMLTableColElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   ch(): string;
@@ -464,47 +464,47 @@ interface HTMLTableColElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<string>): this;
 }
 
-interface HTMLDataElementBuilder extends HTMLElementBuilder {
+export interface HTMLDataElementBuilder extends HTMLElementBuilder {
   value(): string;
   value(value: ReactiveValue<string>): this;
 }
 
-interface HTMLDataListElementBuilder extends HTMLElementBuilder {
+export interface HTMLDataListElementBuilder extends HTMLElementBuilder {
   options(): HTMLCollectionOf<HTMLOptionElement>;
 }
 
-interface HTMLModElementBuilder extends HTMLElementBuilder {
+export interface HTMLModElementBuilder extends HTMLElementBuilder {
   cite(): string;
   cite(value: ReactiveValue<string>): this;
   dateTime(): string;
   dateTime(value: ReactiveValue<string>): this;
 }
 
-interface HTMLDetailsElementBuilder extends HTMLElementBuilder {
+export interface HTMLDetailsElementBuilder extends HTMLElementBuilder {
   name(): string;
   name(value: ReactiveValue<string>): this;
   open(): boolean;
   open(value: ReactiveValue<boolean>): this;
 }
 
-interface HTMLDialogElementBuilder extends HTMLElementBuilder {
+export interface HTMLDialogElementBuilder extends HTMLElementBuilder {
   open(): boolean;
   open(value: ReactiveValue<boolean>): this;
   returnValue(): string;
   returnValue(value: ReactiveValue<string>): this;
 }
 
-interface HTMLDivElementBuilder extends HTMLElementBuilder {
+export interface HTMLDivElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
 }
 
-interface HTMLDListElementBuilder extends HTMLElementBuilder {
+export interface HTMLDListElementBuilder extends HTMLElementBuilder {
   compact(): boolean;
   compact(value: ReactiveValue<boolean>): this;
 }
 
-interface HTMLEmbedElementBuilder extends HTMLElementBuilder {
+export interface HTMLEmbedElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   height(): string;
@@ -519,7 +519,7 @@ interface HTMLEmbedElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<string>): this;
 }
 
-interface HTMLFieldSetElementBuilder extends HTMLElementBuilder {
+export interface HTMLFieldSetElementBuilder extends HTMLElementBuilder {
   disabled(): boolean;
   disabled(value: ReactiveValue<boolean>): this;
   elements(): HTMLCollection;
@@ -532,7 +532,7 @@ interface HTMLFieldSetElementBuilder extends HTMLElementBuilder {
   willValidate(): boolean;
 }
 
-interface HTMLFormElementBuilder extends HTMLElementBuilder {
+export interface HTMLFormElementBuilder extends HTMLElementBuilder {
   acceptCharset(): string;
   acceptCharset(value: ReactiveValue<string>): this;
   action(): string;
@@ -559,15 +559,15 @@ interface HTMLFormElementBuilder extends HTMLElementBuilder {
   target(value: ReactiveValue<string>): this;
 }
 
-interface HTMLHeadingElementBuilder extends HTMLElementBuilder {
+export interface HTMLHeadingElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
 }
 
-interface HTMLHeadElementBuilder extends HTMLElementBuilder {
+export interface HTMLHeadElementBuilder extends HTMLElementBuilder {
 }
 
-interface HTMLHRElementBuilder extends HTMLElementBuilder {
+export interface HTMLHRElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   color(): string;
@@ -580,12 +580,12 @@ interface HTMLHRElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<string>): this;
 }
 
-interface HTMLHtmlElementBuilder extends HTMLElementBuilder {
+export interface HTMLHtmlElementBuilder extends HTMLElementBuilder {
   version(): string;
   version(value: ReactiveValue<string>): this;
 }
 
-interface HTMLIFrameElementBuilder extends HTMLElementBuilder {
+export interface HTMLIFrameElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   allow(): string;
@@ -622,7 +622,7 @@ interface HTMLIFrameElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<string>): this;
 }
 
-interface HTMLImageElementBuilder extends HTMLElementBuilder {
+export interface HTMLImageElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   alt(): string;
@@ -671,7 +671,7 @@ interface HTMLImageElementBuilder extends HTMLElementBuilder {
   y(): number;
 }
 
-interface HTMLInputElementBuilder extends HTMLElementBuilder, PopoverInvokerElementBuilder {
+export interface HTMLInputElementBuilder extends HTMLElementBuilder, PopoverInvokerElementBuilder {
   accept(): string;
   accept(value: ReactiveValue<string>): this;
   align(): string;
@@ -763,31 +763,31 @@ interface HTMLInputElementBuilder extends HTMLElementBuilder, PopoverInvokerElem
   willValidate(): boolean;
 }
 
-interface HTMLLabelElementBuilder extends HTMLElementBuilder {
+export interface HTMLLabelElementBuilder extends HTMLElementBuilder {
   control(): HTMLElement;
   form(): HTMLFormElement;
   htmlFor(): string;
   htmlFor(value: ReactiveValue<string>): this;
 }
 
-interface HTMLLegendElementBuilder extends HTMLElementBuilder {
+export interface HTMLLegendElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   form(): HTMLFormElement;
 }
 
-interface HTMLLIElementBuilder extends HTMLElementBuilder {
+export interface HTMLLIElementBuilder extends HTMLElementBuilder {
   type(): string;
   type(value: ReactiveValue<string>): this;
   value(): number;
   value(value: ReactiveValue<number>): this;
 }
 
-interface LinkStyleBuilder {
+export interface LinkStyleBuilder {
   sheet(): CSSStyleSheet;
 }
 
-interface HTMLLinkElementBuilder extends HTMLElementBuilder, LinkStyleBuilder {
+export interface HTMLLinkElementBuilder extends HTMLElementBuilder, LinkStyleBuilder {
   as(): string;
   as(value: ReactiveValue<string>): this;
   blocking(): DOMTokenList;
@@ -828,18 +828,18 @@ interface HTMLLinkElementBuilder extends HTMLElementBuilder, LinkStyleBuilder {
   type(value: ReactiveValue<string>): this;
 }
 
-interface HTMLMapElementBuilder extends HTMLElementBuilder {
+export interface HTMLMapElementBuilder extends HTMLElementBuilder {
   areas(): HTMLCollection;
   name(): string;
   name(value: ReactiveValue<string>): this;
 }
 
-interface HTMLMenuElementBuilder extends HTMLElementBuilder {
+export interface HTMLMenuElementBuilder extends HTMLElementBuilder {
   compact(): boolean;
   compact(value: ReactiveValue<boolean>): this;
 }
 
-interface HTMLMetaElementBuilder extends HTMLElementBuilder {
+export interface HTMLMetaElementBuilder extends HTMLElementBuilder {
   content(): string;
   content(value: ReactiveValue<string>): this;
   httpEquiv(): string;
@@ -852,7 +852,7 @@ interface HTMLMetaElementBuilder extends HTMLElementBuilder {
   scheme(value: ReactiveValue<string>): this;
 }
 
-interface HTMLMeterElementBuilder extends HTMLElementBuilder {
+export interface HTMLMeterElementBuilder extends HTMLElementBuilder {
   high(): number;
   high(value: ReactiveValue<number>): this;
   labels(): NodeListOf<HTMLLabelElement>;
@@ -868,7 +868,7 @@ interface HTMLMeterElementBuilder extends HTMLElementBuilder {
   value(value: ReactiveValue<number>): this;
 }
 
-interface HTMLObjectElementBuilder extends HTMLElementBuilder {
+export interface HTMLObjectElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   archive(): string;
@@ -909,7 +909,7 @@ interface HTMLObjectElementBuilder extends HTMLElementBuilder {
   willValidate(): boolean;
 }
 
-interface HTMLOListElementBuilder extends HTMLElementBuilder {
+export interface HTMLOListElementBuilder extends HTMLElementBuilder {
   compact(): boolean;
   compact(value: ReactiveValue<boolean>): this;
   reversed(): boolean;
@@ -920,14 +920,14 @@ interface HTMLOListElementBuilder extends HTMLElementBuilder {
   type(value: ReactiveValue<string>): this;
 }
 
-interface HTMLOptGroupElementBuilder extends HTMLElementBuilder {
+export interface HTMLOptGroupElementBuilder extends HTMLElementBuilder {
   disabled(): boolean;
   disabled(value: ReactiveValue<boolean>): this;
   label(): string;
   label(value: ReactiveValue<string>): this;
 }
 
-interface HTMLOptionElementBuilder extends HTMLElementBuilder {
+export interface HTMLOptionElementBuilder extends HTMLElementBuilder {
   defaultSelected(): boolean;
   defaultSelected(value: ReactiveValue<boolean>): this;
   disabled(): boolean;
@@ -944,7 +944,7 @@ interface HTMLOptionElementBuilder extends HTMLElementBuilder {
   value(value: ReactiveValue<string>): this;
 }
 
-interface HTMLOutputElementBuilder extends HTMLElementBuilder {
+export interface HTMLOutputElementBuilder extends HTMLElementBuilder {
   defaultValue(): string;
   defaultValue(value: ReactiveValue<string>): this;
   form(): HTMLFormElement;
@@ -961,20 +961,20 @@ interface HTMLOutputElementBuilder extends HTMLElementBuilder {
   willValidate(): boolean;
 }
 
-interface HTMLParagraphElementBuilder extends HTMLElementBuilder {
+export interface HTMLParagraphElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
 }
 
-interface HTMLPictureElementBuilder extends HTMLElementBuilder {
+export interface HTMLPictureElementBuilder extends HTMLElementBuilder {
 }
 
-interface HTMLPreElementBuilder extends HTMLElementBuilder {
+export interface HTMLPreElementBuilder extends HTMLElementBuilder {
   width(): number;
   width(value: ReactiveValue<number>): this;
 }
 
-interface HTMLProgressElementBuilder extends HTMLElementBuilder {
+export interface HTMLProgressElementBuilder extends HTMLElementBuilder {
   labels(): NodeListOf<HTMLLabelElement>;
   max(): number;
   max(value: ReactiveValue<number>): this;
@@ -983,7 +983,7 @@ interface HTMLProgressElementBuilder extends HTMLElementBuilder {
   value(value: ReactiveValue<number>): this;
 }
 
-interface HTMLScriptElementBuilder extends HTMLElementBuilder {
+export interface HTMLScriptElementBuilder extends HTMLElementBuilder {
   async(): boolean;
   async(value: ReactiveValue<boolean>): this;
   blocking(): DOMTokenList;
@@ -1014,7 +1014,7 @@ interface HTMLScriptElementBuilder extends HTMLElementBuilder {
   type(value: ReactiveValue<string>): this;
 }
 
-interface HTMLSelectElementBuilder extends HTMLElementBuilder {
+export interface HTMLSelectElementBuilder extends HTMLElementBuilder {
   autocomplete(): AutoFill;
   autocomplete(value: ReactiveValue<AutoFill>): this;
   disabled(): boolean;
@@ -1043,12 +1043,12 @@ interface HTMLSelectElementBuilder extends HTMLElementBuilder {
   willValidate(): boolean;
 }
 
-interface HTMLSlotElementBuilder extends HTMLElementBuilder {
+export interface HTMLSlotElementBuilder extends HTMLElementBuilder {
   name(): string;
   name(value: ReactiveValue<string>): this;
 }
 
-interface HTMLSourceElementBuilder extends HTMLElementBuilder {
+export interface HTMLSourceElementBuilder extends HTMLElementBuilder {
   height(): number;
   height(value: ReactiveValue<number>): this;
   media(): string;
@@ -1065,10 +1065,10 @@ interface HTMLSourceElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<number>): this;
 }
 
-interface HTMLSpanElementBuilder extends HTMLElementBuilder {
+export interface HTMLSpanElementBuilder extends HTMLElementBuilder {
 }
 
-interface HTMLStyleElementBuilder extends HTMLElementBuilder, LinkStyleBuilder {
+export interface HTMLStyleElementBuilder extends HTMLElementBuilder, LinkStyleBuilder {
   blocking(): DOMTokenList;
   blocking(value: ReactiveValue<string>): this;
   disabled(): boolean;
@@ -1079,7 +1079,7 @@ interface HTMLStyleElementBuilder extends HTMLElementBuilder, LinkStyleBuilder {
   type(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTableElementBuilder extends HTMLElementBuilder {
+export interface HTMLTableElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   bgColor(): string;
@@ -1108,7 +1108,7 @@ interface HTMLTableElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTableSectionElementBuilder extends HTMLElementBuilder {
+export interface HTMLTableSectionElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   ch(): string;
@@ -1120,7 +1120,7 @@ interface HTMLTableSectionElementBuilder extends HTMLElementBuilder {
   vAlign(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTableCellElementBuilder extends HTMLElementBuilder {
+export interface HTMLTableCellElementBuilder extends HTMLElementBuilder {
   abbr(): string;
   abbr(value: ReactiveValue<string>): this;
   align(): string;
@@ -1152,7 +1152,7 @@ interface HTMLTableCellElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTemplateElementBuilder extends HTMLElementBuilder {
+export interface HTMLTemplateElementBuilder extends HTMLElementBuilder {
   content(): DocumentFragment;
   shadowRootClonable(): boolean;
   shadowRootClonable(value: ReactiveValue<boolean>): this;
@@ -1164,7 +1164,7 @@ interface HTMLTemplateElementBuilder extends HTMLElementBuilder {
   shadowRootSerializable(value: ReactiveValue<boolean>): this;
 }
 
-interface HTMLTextAreaElementBuilder extends HTMLElementBuilder {
+export interface HTMLTextAreaElementBuilder extends HTMLElementBuilder {
   autocomplete(): AutoFill;
   autocomplete(value: ReactiveValue<AutoFill>): this;
   cols(): number;
@@ -1208,17 +1208,17 @@ interface HTMLTextAreaElementBuilder extends HTMLElementBuilder {
   wrap(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTimeElementBuilder extends HTMLElementBuilder {
+export interface HTMLTimeElementBuilder extends HTMLElementBuilder {
   dateTime(): string;
   dateTime(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTitleElementBuilder extends HTMLElementBuilder {
+export interface HTMLTitleElementBuilder extends HTMLElementBuilder {
   text(): string;
   text(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTableRowElementBuilder extends HTMLElementBuilder {
+export interface HTMLTableRowElementBuilder extends HTMLElementBuilder {
   align(): string;
   align(value: ReactiveValue<string>): this;
   bgColor(): string;
@@ -1234,7 +1234,7 @@ interface HTMLTableRowElementBuilder extends HTMLElementBuilder {
   vAlign(value: ReactiveValue<string>): this;
 }
 
-interface HTMLTrackElementBuilder extends HTMLElementBuilder {
+export interface HTMLTrackElementBuilder extends HTMLElementBuilder {
   default(): boolean;
   default(value: ReactiveValue<boolean>): this;
   kind(): string;
@@ -1253,14 +1253,14 @@ interface HTMLTrackElementBuilder extends HTMLElementBuilder {
   ERROR(): 3;
 }
 
-interface HTMLUListElementBuilder extends HTMLElementBuilder {
+export interface HTMLUListElementBuilder extends HTMLElementBuilder {
   compact(): boolean;
   compact(value: ReactiveValue<boolean>): this;
   type(): string;
   type(value: ReactiveValue<string>): this;
 }
 
-interface HTMLVideoElementBuilder extends HTMLMediaElementBuilder {
+export interface HTMLVideoElementBuilder extends HTMLMediaElementBuilder {
   disablePictureInPicture(): boolean;
   disablePictureInPicture(value: ReactiveValue<boolean>): this;
   height(): number;
@@ -1275,7 +1275,7 @@ interface HTMLVideoElementBuilder extends HTMLMediaElementBuilder {
   width(value: ReactiveValue<number>): this;
 }
 
-interface SVGGraphicsElementBuilder {
+export interface SVGGraphicsElementBuilder {
   transform(): SVGAnimatedTransformList;
   className(): any;
   ownerSVGElement(): SVGSVGElement;
@@ -1468,11 +1468,11 @@ interface SVGGraphicsElementBuilder {
   systemLanguage(): SVGStringList;
 }
 
-interface SVGURIReferenceBuilder {
+export interface SVGURIReferenceBuilder {
   href(): SVGAnimatedString;
 }
 
-interface SVGAElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceBuilder {
+export interface SVGAElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceBuilder {
   rel(): string;
   rel(value: ReactiveValue<string>): this;
   relList(): DOMTokenList;
@@ -1480,7 +1480,7 @@ interface SVGAElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceB
   target(): SVGAnimatedString;
 }
 
-interface SVGElementBuilder {
+export interface SVGElementBuilder {
   className(): any;
   ownerSVGElement(): SVGSVGElement;
   viewportElement(): SVGElement;
@@ -1670,53 +1670,53 @@ interface SVGElementBuilder {
   tabIndex(value: ReactiveValue<number>): this;
 }
 
-interface SVGTestsBuilder {
+export interface SVGTestsBuilder {
   requiredExtensions(): SVGStringList;
   systemLanguage(): SVGStringList;
 }
 
-interface SVGAnimationElementBuilder extends SVGElementBuilder, SVGTestsBuilder {
+export interface SVGAnimationElementBuilder extends SVGElementBuilder, SVGTestsBuilder {
   targetElement(): SVGElement;
 }
 
-interface SVGAnimateElementBuilder extends SVGAnimationElementBuilder {
+export interface SVGAnimateElementBuilder extends SVGAnimationElementBuilder {
 }
 
-interface SVGAnimateMotionElementBuilder extends SVGAnimationElementBuilder {
+export interface SVGAnimateMotionElementBuilder extends SVGAnimationElementBuilder {
 }
 
-interface SVGAnimateTransformElementBuilder extends SVGAnimationElementBuilder {
+export interface SVGAnimateTransformElementBuilder extends SVGAnimationElementBuilder {
 }
 
-interface SVGGeometryElementBuilder extends SVGGraphicsElementBuilder {
+export interface SVGGeometryElementBuilder extends SVGGraphicsElementBuilder {
   pathLength(): SVGAnimatedNumber;
 }
 
-interface SVGCircleElementBuilder extends SVGGeometryElementBuilder {
+export interface SVGCircleElementBuilder extends SVGGeometryElementBuilder {
   cx(): SVGAnimatedLength;
   cy(): SVGAnimatedLength;
   r(): SVGAnimatedLength;
 }
 
-interface SVGClipPathElementBuilder extends SVGElementBuilder {
+export interface SVGClipPathElementBuilder extends SVGElementBuilder {
   clipPathUnits(): SVGAnimatedEnumeration;
   transform(): SVGAnimatedTransformList;
 }
 
-interface SVGDefsElementBuilder extends SVGGraphicsElementBuilder {
+export interface SVGDefsElementBuilder extends SVGGraphicsElementBuilder {
 }
 
-interface SVGDescElementBuilder extends SVGElementBuilder {
+export interface SVGDescElementBuilder extends SVGElementBuilder {
 }
 
-interface SVGEllipseElementBuilder extends SVGGeometryElementBuilder {
+export interface SVGEllipseElementBuilder extends SVGGeometryElementBuilder {
   cx(): SVGAnimatedLength;
   cy(): SVGAnimatedLength;
   rx(): SVGAnimatedLength;
   ry(): SVGAnimatedLength;
 }
 
-interface SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFilterPrimitiveStandardAttributesBuilder {
   height(): SVGAnimatedLength;
   result(): SVGAnimatedString;
   width(): SVGAnimatedLength;
@@ -1724,7 +1724,7 @@ interface SVGFilterPrimitiveStandardAttributesBuilder {
   y(): SVGAnimatedLength;
 }
 
-interface SVGFEBlendElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEBlendElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   in2(): SVGAnimatedString;
   mode(): SVGAnimatedEnumeration;
@@ -1747,7 +1747,7 @@ interface SVGFEBlendElementBuilder extends SVGElementBuilder, SVGFilterPrimitive
   SVG_FEBLEND_MODE_LUMINOSITY(): 16;
 }
 
-interface SVGFEColorMatrixElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEColorMatrixElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   type(): SVGAnimatedEnumeration;
   values(): SVGAnimatedNumberList;
@@ -1758,11 +1758,11 @@ interface SVGFEColorMatrixElementBuilder extends SVGElementBuilder, SVGFilterPri
   SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA(): 4;
 }
 
-interface SVGFEComponentTransferElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEComponentTransferElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
 }
 
-interface SVGFECompositeElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFECompositeElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   in2(): SVGAnimatedString;
   k1(): SVGAnimatedNumber;
@@ -1779,7 +1779,7 @@ interface SVGFECompositeElementBuilder extends SVGElementBuilder, SVGFilterPrimi
   SVG_FECOMPOSITE_OPERATOR_ARITHMETIC(): 6;
 }
 
-interface SVGFEConvolveMatrixElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEConvolveMatrixElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   bias(): SVGAnimatedNumber;
   divisor(): SVGAnimatedNumber;
   edgeMode(): SVGAnimatedEnumeration;
@@ -1798,7 +1798,7 @@ interface SVGFEConvolveMatrixElementBuilder extends SVGElementBuilder, SVGFilter
   SVG_EDGEMODE_NONE(): 3;
 }
 
-interface SVGFEDiffuseLightingElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEDiffuseLightingElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   diffuseConstant(): SVGAnimatedNumber;
   in1(): SVGAnimatedString;
   kernelUnitLengthX(): SVGAnimatedNumber;
@@ -1806,7 +1806,7 @@ interface SVGFEDiffuseLightingElementBuilder extends SVGElementBuilder, SVGFilte
   surfaceScale(): SVGAnimatedNumber;
 }
 
-interface SVGFEDisplacementMapElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEDisplacementMapElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   in2(): SVGAnimatedString;
   scale(): SVGAnimatedNumber;
@@ -1819,12 +1819,12 @@ interface SVGFEDisplacementMapElementBuilder extends SVGElementBuilder, SVGFilte
   SVG_CHANNEL_A(): 4;
 }
 
-interface SVGFEDistantLightElementBuilder extends SVGElementBuilder {
+export interface SVGFEDistantLightElementBuilder extends SVGElementBuilder {
   azimuth(): SVGAnimatedNumber;
   elevation(): SVGAnimatedNumber;
 }
 
-interface SVGFEDropShadowElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEDropShadowElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   dx(): SVGAnimatedNumber;
   dy(): SVGAnimatedNumber;
   in1(): SVGAnimatedString;
@@ -1832,10 +1832,10 @@ interface SVGFEDropShadowElementBuilder extends SVGElementBuilder, SVGFilterPrim
   stdDeviationY(): SVGAnimatedNumber;
 }
 
-interface SVGFEFloodElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEFloodElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
 }
 
-interface SVGComponentTransferFunctionElementBuilder extends SVGElementBuilder {
+export interface SVGComponentTransferFunctionElementBuilder extends SVGElementBuilder {
   amplitude(): SVGAnimatedNumber;
   exponent(): SVGAnimatedNumber;
   intercept(): SVGAnimatedNumber;
@@ -1851,36 +1851,36 @@ interface SVGComponentTransferFunctionElementBuilder extends SVGElementBuilder {
   SVG_FECOMPONENTTRANSFER_TYPE_GAMMA(): 5;
 }
 
-interface SVGFEFuncAElementBuilder extends SVGComponentTransferFunctionElementBuilder {
+export interface SVGFEFuncAElementBuilder extends SVGComponentTransferFunctionElementBuilder {
 }
 
-interface SVGFEFuncBElementBuilder extends SVGComponentTransferFunctionElementBuilder {
+export interface SVGFEFuncBElementBuilder extends SVGComponentTransferFunctionElementBuilder {
 }
 
-interface SVGFEFuncGElementBuilder extends SVGComponentTransferFunctionElementBuilder {
+export interface SVGFEFuncGElementBuilder extends SVGComponentTransferFunctionElementBuilder {
 }
 
-interface SVGFEFuncRElementBuilder extends SVGComponentTransferFunctionElementBuilder {
+export interface SVGFEFuncRElementBuilder extends SVGComponentTransferFunctionElementBuilder {
 }
 
-interface SVGFEGaussianBlurElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEGaussianBlurElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   stdDeviationX(): SVGAnimatedNumber;
   stdDeviationY(): SVGAnimatedNumber;
 }
 
-interface SVGFEImageElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder, SVGURIReferenceBuilder {
+export interface SVGFEImageElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder, SVGURIReferenceBuilder {
   preserveAspectRatio(): SVGAnimatedPreserveAspectRatio;
 }
 
-interface SVGFEMergeElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEMergeElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
 }
 
-interface SVGFEMergeNodeElementBuilder extends SVGElementBuilder {
+export interface SVGFEMergeNodeElementBuilder extends SVGElementBuilder {
   in1(): SVGAnimatedString;
 }
 
-interface SVGFEMorphologyElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEMorphologyElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   operator(): SVGAnimatedEnumeration;
   radiusX(): SVGAnimatedNumber;
@@ -1890,19 +1890,19 @@ interface SVGFEMorphologyElementBuilder extends SVGElementBuilder, SVGFilterPrim
   SVG_MORPHOLOGY_OPERATOR_DILATE(): 2;
 }
 
-interface SVGFEOffsetElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFEOffsetElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   dx(): SVGAnimatedNumber;
   dy(): SVGAnimatedNumber;
   in1(): SVGAnimatedString;
 }
 
-interface SVGFEPointLightElementBuilder extends SVGElementBuilder {
+export interface SVGFEPointLightElementBuilder extends SVGElementBuilder {
   x(): SVGAnimatedNumber;
   y(): SVGAnimatedNumber;
   z(): SVGAnimatedNumber;
 }
 
-interface SVGFESpecularLightingElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFESpecularLightingElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
   kernelUnitLengthX(): SVGAnimatedNumber;
   kernelUnitLengthY(): SVGAnimatedNumber;
@@ -1911,7 +1911,7 @@ interface SVGFESpecularLightingElementBuilder extends SVGElementBuilder, SVGFilt
   surfaceScale(): SVGAnimatedNumber;
 }
 
-interface SVGFESpotLightElementBuilder extends SVGElementBuilder {
+export interface SVGFESpotLightElementBuilder extends SVGElementBuilder {
   limitingConeAngle(): SVGAnimatedNumber;
   pointsAtX(): SVGAnimatedNumber;
   pointsAtY(): SVGAnimatedNumber;
@@ -1922,11 +1922,11 @@ interface SVGFESpotLightElementBuilder extends SVGElementBuilder {
   z(): SVGAnimatedNumber;
 }
 
-interface SVGFETileElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFETileElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   in1(): SVGAnimatedString;
 }
 
-interface SVGFETurbulenceElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
+export interface SVGFETurbulenceElementBuilder extends SVGElementBuilder, SVGFilterPrimitiveStandardAttributesBuilder {
   baseFrequencyX(): SVGAnimatedNumber;
   baseFrequencyY(): SVGAnimatedNumber;
   numOctaves(): SVGAnimatedInteger;
@@ -1941,7 +1941,7 @@ interface SVGFETurbulenceElementBuilder extends SVGElementBuilder, SVGFilterPrim
   SVG_STITCHTYPE_NOSTITCH(): 2;
 }
 
-interface SVGFilterElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
+export interface SVGFilterElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
   filterUnits(): SVGAnimatedEnumeration;
   height(): SVGAnimatedLength;
   primitiveUnits(): SVGAnimatedEnumeration;
@@ -1950,17 +1950,17 @@ interface SVGFilterElementBuilder extends SVGElementBuilder, SVGURIReferenceBuil
   y(): SVGAnimatedLength;
 }
 
-interface SVGForeignObjectElementBuilder extends SVGGraphicsElementBuilder {
+export interface SVGForeignObjectElementBuilder extends SVGGraphicsElementBuilder {
   height(): SVGAnimatedLength;
   width(): SVGAnimatedLength;
   x(): SVGAnimatedLength;
   y(): SVGAnimatedLength;
 }
 
-interface SVGGElementBuilder extends SVGGraphicsElementBuilder {
+export interface SVGGElementBuilder extends SVGGraphicsElementBuilder {
 }
 
-interface SVGImageElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceBuilder {
+export interface SVGImageElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceBuilder {
   crossOrigin(): string;
   crossOrigin(value: ReactiveValue<string>): this;
   height(): SVGAnimatedLength;
@@ -1970,14 +1970,14 @@ interface SVGImageElementBuilder extends SVGGraphicsElementBuilder, SVGURIRefere
   y(): SVGAnimatedLength;
 }
 
-interface SVGLineElementBuilder extends SVGGeometryElementBuilder {
+export interface SVGLineElementBuilder extends SVGGeometryElementBuilder {
   x1(): SVGAnimatedLength;
   x2(): SVGAnimatedLength;
   y1(): SVGAnimatedLength;
   y2(): SVGAnimatedLength;
 }
 
-interface SVGGradientElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
+export interface SVGGradientElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
   gradientTransform(): SVGAnimatedTransformList;
   gradientUnits(): SVGAnimatedEnumeration;
   spreadMethod(): SVGAnimatedEnumeration;
@@ -1987,19 +1987,19 @@ interface SVGGradientElementBuilder extends SVGElementBuilder, SVGURIReferenceBu
   SVG_SPREADMETHOD_REPEAT(): 3;
 }
 
-interface SVGLinearGradientElementBuilder extends SVGGradientElementBuilder {
+export interface SVGLinearGradientElementBuilder extends SVGGradientElementBuilder {
   x1(): SVGAnimatedLength;
   x2(): SVGAnimatedLength;
   y1(): SVGAnimatedLength;
   y2(): SVGAnimatedLength;
 }
 
-interface SVGFitToViewBoxBuilder {
+export interface SVGFitToViewBoxBuilder {
   preserveAspectRatio(): SVGAnimatedPreserveAspectRatio;
   viewBox(): SVGAnimatedRect;
 }
 
-interface SVGMarkerElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder {
+export interface SVGMarkerElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder {
   markerHeight(): SVGAnimatedLength;
   markerUnits(): SVGAnimatedEnumeration;
   markerWidth(): SVGAnimatedLength;
@@ -2015,7 +2015,7 @@ interface SVGMarkerElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuil
   SVG_MARKER_ORIENT_ANGLE(): 2;
 }
 
-interface SVGMaskElementBuilder extends SVGElementBuilder {
+export interface SVGMaskElementBuilder extends SVGElementBuilder {
   height(): SVGAnimatedLength;
   maskContentUnits(): SVGAnimatedEnumeration;
   maskUnits(): SVGAnimatedEnumeration;
@@ -2024,16 +2024,16 @@ interface SVGMaskElementBuilder extends SVGElementBuilder {
   y(): SVGAnimatedLength;
 }
 
-interface SVGMetadataElementBuilder extends SVGElementBuilder {
+export interface SVGMetadataElementBuilder extends SVGElementBuilder {
 }
 
-interface SVGMPathElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
+export interface SVGMPathElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
 }
 
-interface SVGPathElementBuilder extends SVGGeometryElementBuilder {
+export interface SVGPathElementBuilder extends SVGGeometryElementBuilder {
 }
 
-interface SVGPatternElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder, SVGURIReferenceBuilder {
+export interface SVGPatternElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder, SVGURIReferenceBuilder {
   height(): SVGAnimatedLength;
   patternContentUnits(): SVGAnimatedEnumeration;
   patternTransform(): SVGAnimatedTransformList;
@@ -2043,18 +2043,18 @@ interface SVGPatternElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBui
   y(): SVGAnimatedLength;
 }
 
-interface SVGAnimatedPointsBuilder {
+export interface SVGAnimatedPointsBuilder {
   animatedPoints(): SVGPointList;
   points(): SVGPointList;
 }
 
-interface SVGPolygonElementBuilder extends SVGGeometryElementBuilder, SVGAnimatedPointsBuilder {
+export interface SVGPolygonElementBuilder extends SVGGeometryElementBuilder, SVGAnimatedPointsBuilder {
 }
 
-interface SVGPolylineElementBuilder extends SVGGeometryElementBuilder, SVGAnimatedPointsBuilder {
+export interface SVGPolylineElementBuilder extends SVGGeometryElementBuilder, SVGAnimatedPointsBuilder {
 }
 
-interface SVGRadialGradientElementBuilder extends SVGGradientElementBuilder {
+export interface SVGRadialGradientElementBuilder extends SVGGradientElementBuilder {
   cx(): SVGAnimatedLength;
   cy(): SVGAnimatedLength;
   fr(): SVGAnimatedLength;
@@ -2063,7 +2063,7 @@ interface SVGRadialGradientElementBuilder extends SVGGradientElementBuilder {
   r(): SVGAnimatedLength;
 }
 
-interface SVGRectElementBuilder extends SVGGeometryElementBuilder {
+export interface SVGRectElementBuilder extends SVGGeometryElementBuilder {
   height(): SVGAnimatedLength;
   rx(): SVGAnimatedLength;
   ry(): SVGAnimatedLength;
@@ -2072,19 +2072,19 @@ interface SVGRectElementBuilder extends SVGGeometryElementBuilder {
   y(): SVGAnimatedLength;
 }
 
-interface SVGScriptElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
+export interface SVGScriptElementBuilder extends SVGElementBuilder, SVGURIReferenceBuilder {
   type(): string;
   type(value: ReactiveValue<string>): this;
 }
 
-interface SVGSetElementBuilder extends SVGAnimationElementBuilder {
+export interface SVGSetElementBuilder extends SVGAnimationElementBuilder {
 }
 
-interface SVGStopElementBuilder extends SVGElementBuilder {
+export interface SVGStopElementBuilder extends SVGElementBuilder {
   offset(): SVGAnimatedNumber;
 }
 
-interface SVGStyleElementBuilder extends SVGElementBuilder, LinkStyleBuilder {
+export interface SVGStyleElementBuilder extends SVGElementBuilder, LinkStyleBuilder {
   disabled(): boolean;
   disabled(value: ReactiveValue<boolean>): this;
   media(): string;
@@ -2095,7 +2095,7 @@ interface SVGStyleElementBuilder extends SVGElementBuilder, LinkStyleBuilder {
   type(value: ReactiveValue<string>): this;
 }
 
-interface SVGSVGElementBuilder extends SVGGraphicsElementBuilder, SVGFitToViewBoxBuilder, WindowEventHandlersBuilder {
+export interface SVGSVGElementBuilder extends SVGGraphicsElementBuilder, SVGFitToViewBoxBuilder, WindowEventHandlersBuilder {
   currentScale(): number;
   currentScale(value: ReactiveValue<number>): this;
   currentTranslate(): DOMPointReadOnly;
@@ -2105,13 +2105,13 @@ interface SVGSVGElementBuilder extends SVGGraphicsElementBuilder, SVGFitToViewBo
   y(): SVGAnimatedLength;
 }
 
-interface SVGSwitchElementBuilder extends SVGGraphicsElementBuilder {
+export interface SVGSwitchElementBuilder extends SVGGraphicsElementBuilder {
 }
 
-interface SVGSymbolElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder {
+export interface SVGSymbolElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder {
 }
 
-interface SVGTextContentElementBuilder extends SVGGraphicsElementBuilder {
+export interface SVGTextContentElementBuilder extends SVGGraphicsElementBuilder {
   lengthAdjust(): SVGAnimatedEnumeration;
   textLength(): SVGAnimatedLength;
   LENGTHADJUST_UNKNOWN(): 0;
@@ -2119,7 +2119,7 @@ interface SVGTextContentElementBuilder extends SVGGraphicsElementBuilder {
   LENGTHADJUST_SPACINGANDGLYPHS(): 2;
 }
 
-interface SVGTextPositioningElementBuilder extends SVGTextContentElementBuilder {
+export interface SVGTextPositioningElementBuilder extends SVGTextContentElementBuilder {
   dx(): SVGAnimatedLengthList;
   dy(): SVGAnimatedLengthList;
   rotate(): SVGAnimatedNumberList;
@@ -2127,10 +2127,10 @@ interface SVGTextPositioningElementBuilder extends SVGTextContentElementBuilder 
   y(): SVGAnimatedLengthList;
 }
 
-interface SVGTextElementBuilder extends SVGTextPositioningElementBuilder {
+export interface SVGTextElementBuilder extends SVGTextPositioningElementBuilder {
 }
 
-interface SVGTextPathElementBuilder extends SVGTextContentElementBuilder, SVGURIReferenceBuilder {
+export interface SVGTextPathElementBuilder extends SVGTextContentElementBuilder, SVGURIReferenceBuilder {
   method(): SVGAnimatedEnumeration;
   spacing(): SVGAnimatedEnumeration;
   startOffset(): SVGAnimatedLength;
@@ -2142,23 +2142,23 @@ interface SVGTextPathElementBuilder extends SVGTextContentElementBuilder, SVGURI
   TEXTPATH_SPACINGTYPE_EXACT(): 2;
 }
 
-interface SVGTitleElementBuilder extends SVGElementBuilder {
+export interface SVGTitleElementBuilder extends SVGElementBuilder {
 }
 
-interface SVGTSpanElementBuilder extends SVGTextPositioningElementBuilder {
+export interface SVGTSpanElementBuilder extends SVGTextPositioningElementBuilder {
 }
 
-interface SVGUseElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceBuilder {
+export interface SVGUseElementBuilder extends SVGGraphicsElementBuilder, SVGURIReferenceBuilder {
   height(): SVGAnimatedLength;
   width(): SVGAnimatedLength;
   x(): SVGAnimatedLength;
   y(): SVGAnimatedLength;
 }
 
-interface SVGViewElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder {
+export interface SVGViewElementBuilder extends SVGElementBuilder, SVGFitToViewBoxBuilder {
 }
 
-interface MathMLElementBuilder {
+export interface MathMLElementBuilder {
   attributes(): NamedNodeMap;
   classList(): DOMTokenList;
   classList(value: ReactiveValue<string>): this;

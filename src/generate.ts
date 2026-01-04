@@ -162,7 +162,7 @@ function processTypeHierarchy(type: ts.Type): string[] {
 
   fs.appendFileSync(
     filename,
-    `interface ${typeName}Builder${extendsClause} {\n`
+    `export interface ${typeName}Builder${extendsClause} {\n`
   );
 
   // Get only own properties (not inherited)

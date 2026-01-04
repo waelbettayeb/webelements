@@ -1,11 +1,8 @@
 {
-  "name": "webelements",
-  "version": "1.0.0",
+  "name": "@wael_bettayeb/webelements",
+  "type": "module",
+  "version": "0.0.1",
   "description": "A lightweight reactive UI library that transforms native HTMLElements into reactive components with signals. Ideal for framework-agnostic applications and web components.",
-  "main": "index.js",
-  "scripts": {
-    "demo": "pnpx vite ./demo"
-  },
   "keywords": [
     "webcomponents",
     "custom-elements",
@@ -20,8 +17,33 @@
   ],
   "author": "@waelbettayeb",
   "license": "MIT",
+  "main": "./dist/core.js",
+  "types": "./dist/core.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/core.js",
+      "types": "./dist/core.d.ts"
+    },
+    "./signals": {
+      "import": "./dist/signals.js",
+      "types": "./dist/signals.d.ts"
+    },
+    "./builder": {
+      "import": "./dist/builder.js",
+      "types": "./dist/builder.d.ts"
+    }
+  },
+  "scripts": {
+    "demo": "pnpx vite ./demo",
+    "build": "tsdown",
+    "generate": "pnpx tsx ./src/generate.ts"
+  },
   "packageManager": "pnpm@10.26.2",
   "devDependencies": {
+    "tsdown": "0.19.0-beta.2",
     "typescript": "^5.9.3"
   },
   "dependencies": {
