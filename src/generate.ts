@@ -2,7 +2,7 @@ import ts from "typescript";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-const filename = path.resolve(__dirname, "generated.ts");
+const filename = path.resolve(__dirname, "builder.ts");
 console.log(`Generating file at: ${filename}`);
 // Track processed types to avoid duplicates
 const processedTypes = new Set<string>();
@@ -48,7 +48,7 @@ function generateHTMLElementBuilders() {
   });
 }
 
-// Helper function to get unique own properties (not inherited)
+// Helper function to get unique own properties (not inherited from base types)
 function writeProperties(type: ts.Type) {
   const name = type.getSymbol()?.getName() || "unknown";
   const allProperties = checker.getPropertiesOfType(type);
@@ -73,40 +73,40 @@ function writeProperties(type: ts.Type) {
     if (name.startsWith("on")) return; // Skip event handlers
 
     const declarations = prop.getDeclarations();
-    const getter = declarations?.find(ts.isGetAccessor);
-    const setter = declarations?.find(ts.isSetAccessor);
-    const method = declarations?.find(ts.isMethodSignature);
+    if (!declarations) return;
+    const method = declarations.find(ts.isMethodSignature);
 
     if (method) return; // Skip methods
-    if (getter && !setter) return; // Skip readonly (getter without setter)
 
-    const flags = prop.valueDeclaration
-      ? ts.getCombinedModifierFlags(prop.valueDeclaration)
-      : 0;
-    if (flags & ts.ModifierFlags.Readonly) return;
+    const property = declarations.find(ts.isPropertySignature);
 
-    let typeString = "";
+    const getter = declarations.find(ts.isGetAccessor);
+    if (getter) {
+      const paramType = getterParam(prop, getter);
+      let typeString = checker.typeToString(paramType);
+      fs.appendFileSync(filename, `  ${name}(): ${typeString};\n`);
+    } else if (property) {
+      const propType = checker.getTypeOfSymbolAtLocation(prop, property);
+      let typeString = checker.typeToString(propType);
+      fs.appendFileSync(filename, `  ${name}(): ${typeString};\n`);
+    }
+
+    const setter = declarations.find(ts.isSetAccessor);
     if (setter) {
-      const setterParams = setter.parameters;
-      if (setterParams.length !== 1) return;
-      const paramType = checker.getTypeAtLocation(setterParams[0]);
-      typeString = checker.typeToString(paramType);
-    } else if (prop.valueDeclaration) {
-      typeString = checker.typeToString(
-        checker.getTypeOfSymbolAtLocation(prop, prop.valueDeclaration)
+      const paramType = setterParam(setter);
+      let typeString = checker.typeToString(paramType);
+      fs.appendFileSync(
+        filename,
+        `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+      );
+    } else if (property && !isReadonly(prop)) {
+      const propType = checker.getTypeOfSymbolAtLocation(prop, property);
+      let typeString = checker.typeToString(propType);
+      fs.appendFileSync(
+        filename,
+        `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
       );
     }
-
-    if (typeString) {
-      ownProperties.set(name, { name, typeString });
-    }
-  });
-
-  ownProperties.forEach(({ name, typeString }) => {
-    fs.appendFileSync(
-      filename,
-      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
-    );
   });
 }
 
@@ -168,4 +168,23 @@ function processTypeHierarchy(type: ts.Type): string[] {
   return [typeName];
 }
 
+function setterParam(setter: ts.SetAccessorDeclaration) {
+  const setterParams = setter.parameters;
+  if (setterParams.length !== 1) return;
+  return checker.getTypeAtLocation(setterParams[0]);
+}
+
+function getterParam(prop: ts.Symbol, getter: ts.GetAccessorDeclaration) {
+  return checker.getTypeOfSymbolAtLocation(prop, getter);
+}
+
+function isReadonly(prop: ts.Symbol) {
+  const flags = prop.valueDeclaration
+    ? ts.getCombinedModifierFlags(prop.valueDeclaration)
+    : 0;
+
+  if (flags & ts.ModifierFlags.Readonly) return true;
+
+  return false;
+}
 generateHTMLElementBuilders();
