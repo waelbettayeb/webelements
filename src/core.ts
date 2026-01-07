@@ -1,8 +1,8 @@
 import { isSignal, effect } from "./signals";
 
-const DISPOSE: unique symbol = Symbol("dispose");
-const RENDER: unique symbol = Symbol("render");
-const EFFECT: unique symbol = Symbol("effect");
+export const DISPOSE: unique symbol = Symbol("dispose");
+export const RENDER: unique symbol = Symbol("render");
+export const EFFECT: unique symbol = Symbol("effect");
 
 function isObject(v: unknown): v is Record<string | symbol, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
