@@ -3,6 +3,10 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 
+function toCamelCase(str: string) {
+  return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const filename = path.resolve(__dirname, "../src", "builder.ts");
 console.log(`Generating file at: ${filename}`);
@@ -33,19 +37,44 @@ const TAG_MAPS = [
 ];
 function generateHTMLElementBuilders() {
   fs.writeFileSync(filename, "// Auto-generated file\n\n");
-  fs.writeFileSync(filename, 'import type { ReactiveValue } from "./types";\n');
+  fs.writeFileSync(
+    filename,
+    `
+import type { ReactiveValue } from "./types";
+import { isReactiveValue, effect } from "./signals";
+`
+  );
 
+  const tags = new Set();
+  const TAG_TRANSFORMS: Record<string, string> = {
+    var: "mathVar",
+    switch: "svgSwitch",
+  };
   TAG_MAPS.forEach((mapName) => {
     const tagNameMap = resolveSymbol(mapName, ts.SymbolFlags.Interface);
 
     if (!tagNameMap) throw new Error("Could not find HTMLElementTagNameMap");
 
-    for (const [_name, tag] of tagNameMap.members) {
+    for (const [name, tag] of tagNameMap.members) {
       const elementType = checker.getTypeOfSymbolAtLocation(
         tag,
         tag.valueDeclaration!
       );
       processTypeHierarchy(elementType);
+      const elementCls = checker.typeToString(elementType);
+      if (tags.has(name)) continue;
+      tags.add(name);
+      const finalName = toCamelCase(
+        TAG_TRANSFORMS[name as string] || (name as string)
+      );
+      fs.appendFileSync(
+        filename,
+        `
+export const ${finalName} = () => new ${elementCls}Builder(document.createElement("${name}")${
+          elementCls !== "HTMLElement" ? ` as unknown as ${elementCls}` : ""
+        });
+      `
+      );
     }
   });
 }
@@ -112,15 +141,41 @@ function writeProperties(type: ts.Type) {
       let typeString = checker.typeToString(paramType);
       fs.appendFileSync(
         filename,
-        `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+        `
+  ${name}(value: ReactiveValue<${typeString}>): this {
+    if (isReactiveValue(value)) {
+      effect(() => {
+        this.el.${name} = value();
+      });
+      return this
+    }
+    this.el.${name} = value;
+    return this;
+  }
+`
       );
     } else if (property && !isReadonly(prop)) {
       const propType = checker.getTypeOfSymbolAtLocation(prop, property);
       let typeString = checker.typeToString(propType);
       fs.appendFileSync(
         filename,
-        `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+        `
+  ${name}(value: ReactiveValue<${typeString}>): this {
+    if (isReactiveValue(value)) {
+      effect(() => {
+        this.el.${name} = value();
+      });
+      return this
+    }
+    this.el.${name} = value;
+    return this;
+  }
+`
       );
+      // fs.appendFileSync(
+      //   filename,
+      //   `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+      // );
     }
   });
 }
@@ -174,7 +229,13 @@ function processTypeHierarchy(type: ts.Type): string[] {
 
   fs.appendFileSync(
     filename,
-    `export interface ${typeName}Builder${extendsClause} {\n`
+    `
+class ${typeName}Builder${extendsClause} {
+  el: ${typeName};
+  constructor(el: ${typeName}) {
+    ${uniqueBaseNames.length > 0 ? "super(el);" : "this.el = el;"}
+  }
+`
   );
 
   // Get only own properties (not inherited)
