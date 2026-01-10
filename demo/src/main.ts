@@ -6,8 +6,7 @@ const value = signal(0);
 
 const myelement = div()
   .textContent(computed(() => `The value is: ${value()}`))
-  .style.backgroundColor("lightblue")
-  .style.padding("20px");
+  .style("background:lightblue; padding:20px;");
 
 const child = span()
   .textContent(computed(() => `The value is: ${value()}`))

@@ -6,7 +6,6 @@ import { transformTagName } from "./lib.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const filename = path.resolve(__dirname, "../src", "builder.ts");
-console.log(`Generating file at: ${filename}`);
 // Track processed types to avoid duplicates
 const processedTypes = new Set<string>();
 
@@ -64,11 +63,67 @@ function generateHTMLElementBuilders() {
       fs.appendFileSync(
         filename,
         `
-export const ${finalName} = () => reactive(document.createElement("${name}")) as ReactiveElement & ${elementCls}Builder;
+export const ${finalName} = () => reactive(document.createElement("${name}") as unknown as ${elementCls}) as ReactiveElement<${elementCls}> & ${elementCls}Builder;
             `
       );
     }
   });
+}
+
+function appendGetters(property: ts.Symbol) {
+  const declarations = property.getDeclarations();
+  if (!declarations) return;
+
+  // Has getter or property signature
+  const propertySignature = declarations.find(ts.isPropertySignature);
+  const getAccessor = declarations.find(ts.isGetAccessor);
+  const getter = getAccessor ?? propertySignature;
+  if (!getter) return false;
+
+  // Is object type
+  const type = checker.getTypeOfSymbolAtLocation(property, getter);
+  if (!(type.flags & ts.TypeFlags.Object)) return;
+
+  const name = property.getName();
+  const getterTypeString = checker.typeToString(type);
+  // TODO: object chaining support
+
+  const setter = declarations.find(ts.isSetAccessor);
+  if (setter) {
+    const paramType = setterParam(setter);
+    const typeString = checker.typeToString(paramType);
+    fs.appendFileSync(
+      filename,
+      `  ${name}: ${getterTypeString} & ((value: ReactiveValue<${typeString}>)=>this);\n`
+    );
+    return true;
+  }
+  fs.appendFileSync(filename, `  ${name}: ${getterTypeString};\n`);
+  return true;
+}
+
+function appendSetters(property: ts.Symbol) {
+  const declarations = property.getDeclarations();
+  if (!declarations) return;
+
+  const name = property.getName();
+  const getter = declarations.find(ts.isPropertySignature);
+  const setter = declarations.find(ts.isSetAccessor);
+  if (setter) {
+    const paramType = setterParam(setter);
+    let typeString = checker.typeToString(paramType);
+    fs.appendFileSync(
+      filename,
+      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+    );
+  } else if (getter && !isReadonly(property)) {
+    const propType = checker.getTypeOfSymbolAtLocation(property, getter);
+    let typeString = checker.typeToString(propType);
+    fs.appendFileSync(
+      filename,
+      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+    );
+  }
 }
 
 // Helper function to get unique own properties (not inherited from base types)
@@ -102,47 +157,7 @@ function writeProperties(type: ts.Type) {
     // TODO: on events
     if (method) return; // Skip methods
 
-    const property = declarations.find(ts.isPropertySignature);
-
-    const getter = declarations.find(ts.isGetAccessor);
-    if (getter) {
-      const propType = getterParam(prop, getter);
-      if (propType.flags & ts.TypeFlags.Object) {
-        // TODO: object chaining support
-        console.log(
-          "Object chaining not supported yet for",
-          name,
-          checker.typeToString(propType)
-        );
-      }
-    } else if (property) {
-      const propType = checker.getTypeOfSymbolAtLocation(prop, property);
-      if (propType.flags & ts.TypeFlags.Object) {
-        // TODO: object chaining support
-        console.log(
-          "Object chaining not supported yet for",
-          name,
-          checker.typeToString(propType)
-        );
-      }
-    }
-
-    const setter = declarations.find(ts.isSetAccessor);
-    if (setter) {
-      const paramType = setterParam(setter);
-      let typeString = checker.typeToString(paramType);
-      fs.appendFileSync(
-        filename,
-        `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
-      );
-    } else if (property && !isReadonly(prop)) {
-      const propType = checker.getTypeOfSymbolAtLocation(prop, property);
-      let typeString = checker.typeToString(propType);
-      fs.appendFileSync(
-        filename,
-        `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
-      );
-    }
+    appendSetters(prop);
   });
 }
 
@@ -195,7 +210,8 @@ function processTypeHierarchy(type: ts.Type): string[] {
 
   fs.appendFileSync(
     filename,
-    `interface ${typeName}Builder${extendsClause} {\n`
+    `
+interface ${typeName}Builder${extendsClause} {\n`
   );
 
   // Get only own properties (not inherited)

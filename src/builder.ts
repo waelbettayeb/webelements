@@ -2,13 +2,16 @@
 
 import type { ReactiveValue } from "./types";
 import { reactive, ReactiveElement } from "./core";
+
 interface EventTargetBuilder {
 }
+
 
 interface NodeBuilder extends EventTargetBuilder {
   nodeValue(value: ReactiveValue<string>): this;
   textContent(value: ReactiveValue<string>): this;
 }
+
 
 interface ElementBuilder extends NodeBuilder {
   classList(value: ReactiveValue<string>): this;
@@ -21,6 +24,7 @@ interface ElementBuilder extends NodeBuilder {
   scrollTop(value: ReactiveValue<number>): this;
   slot(value: ReactiveValue<string>): this;
 }
+
 
 interface HTMLElementBuilder extends ElementBuilder {
   accessKey(value: ReactiveValue<string>): this;
@@ -102,6 +106,7 @@ interface HTMLElementBuilder extends ElementBuilder {
   ariaValueText(value: ReactiveValue<string>): this;
   role(value: ReactiveValue<string>): this;
 }
+
 
 interface HTMLAnchorElementBuilder extends HTMLElementBuilder {
   charset(value: ReactiveValue<string>): this;
@@ -206,12 +211,13 @@ interface HTMLAnchorElementBuilder extends HTMLElementBuilder {
 }
 
 
-export const a = () => reactive(document.createElement("a")) as ReactiveElement & HTMLAnchorElementBuilder;
+export const a = () => reactive(document.createElement("a") as unknown as HTMLAnchorElement) as ReactiveElement<HTMLAnchorElement> & HTMLAnchorElementBuilder;
             
-export const abbr = () => reactive(document.createElement("abbr")) as ReactiveElement & HTMLElementBuilder;
+export const abbr = () => reactive(document.createElement("abbr") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const address = () => reactive(document.createElement("address")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLAreaElementBuilder extends HTMLElementBuilder {
+export const address = () => reactive(document.createElement("address") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLAreaElementBuilder extends HTMLElementBuilder {
   alt(value: ReactiveValue<string>): this;
   coords(value: ReactiveValue<string>): this;
   download(value: ReactiveValue<string>): this;
@@ -310,19 +316,21 @@ export const address = () => reactive(document.createElement("address")) as Reac
 }
 
 
-export const area = () => reactive(document.createElement("area")) as ReactiveElement & HTMLAreaElementBuilder;
+export const area = () => reactive(document.createElement("area") as unknown as HTMLAreaElement) as ReactiveElement<HTMLAreaElement> & HTMLAreaElementBuilder;
             
-export const article = () => reactive(document.createElement("article")) as ReactiveElement & HTMLElementBuilder;
+export const article = () => reactive(document.createElement("article") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const aside = () => reactive(document.createElement("aside")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLAudioElementBuilder {
+export const aside = () => reactive(document.createElement("aside") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLAudioElementBuilder {
 }
 
 
-export const audio = () => reactive(document.createElement("audio")) as ReactiveElement & HTMLAudioElementBuilder;
+export const audio = () => reactive(document.createElement("audio") as unknown as HTMLAudioElement) as ReactiveElement<HTMLAudioElement> & HTMLAudioElementBuilder;
             
-export const b = () => reactive(document.createElement("b")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLBaseElementBuilder extends HTMLElementBuilder {
+export const b = () => reactive(document.createElement("b") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLBaseElementBuilder extends HTMLElementBuilder {
   href(value: ReactiveValue<string>): this;
   target(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -413,12 +421,13 @@ export const b = () => reactive(document.createElement("b")) as ReactiveElement 
 }
 
 
-export const base = () => reactive(document.createElement("base")) as ReactiveElement & HTMLBaseElementBuilder;
+export const base = () => reactive(document.createElement("base") as unknown as HTMLBaseElement) as ReactiveElement<HTMLBaseElement> & HTMLBaseElementBuilder;
             
-export const bdi = () => reactive(document.createElement("bdi")) as ReactiveElement & HTMLElementBuilder;
+export const bdi = () => reactive(document.createElement("bdi") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const bdo = () => reactive(document.createElement("bdo")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLQuoteElementBuilder extends HTMLElementBuilder {
+export const bdo = () => reactive(document.createElement("bdo") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLQuoteElementBuilder extends HTMLElementBuilder {
   cite(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -508,8 +517,9 @@ export const bdo = () => reactive(document.createElement("bdo")) as ReactiveElem
 }
 
 
-export const blockquote = () => reactive(document.createElement("blockquote")) as ReactiveElement & HTMLQuoteElementBuilder;
-            interface HTMLBodyElementBuilder extends HTMLElementBuilder {
+export const blockquote = () => reactive(document.createElement("blockquote") as unknown as HTMLQuoteElement) as ReactiveElement<HTMLQuoteElement> & HTMLQuoteElementBuilder;
+            
+interface HTMLBodyElementBuilder extends HTMLElementBuilder {
   aLink(value: ReactiveValue<string>): this;
   background(value: ReactiveValue<string>): this;
   bgColor(value: ReactiveValue<string>): this;
@@ -604,8 +614,9 @@ export const blockquote = () => reactive(document.createElement("blockquote")) a
 }
 
 
-export const body = () => reactive(document.createElement("body")) as ReactiveElement & HTMLBodyElementBuilder;
-            interface HTMLBRElementBuilder extends HTMLElementBuilder {
+export const body = () => reactive(document.createElement("body") as unknown as HTMLBodyElement) as ReactiveElement<HTMLBodyElement> & HTMLBodyElementBuilder;
+            
+interface HTMLBRElementBuilder extends HTMLElementBuilder {
   clear(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -695,8 +706,9 @@ export const body = () => reactive(document.createElement("body")) as ReactiveEl
 }
 
 
-export const br = () => reactive(document.createElement("br")) as ReactiveElement & HTMLBRElementBuilder;
-            interface HTMLButtonElementBuilder extends HTMLElementBuilder {
+export const br = () => reactive(document.createElement("br") as unknown as HTMLBRElement) as ReactiveElement<HTMLBRElement> & HTMLBRElementBuilder;
+            
+interface HTMLButtonElementBuilder extends HTMLElementBuilder {
   disabled(value: ReactiveValue<boolean>): this;
   formAction(value: ReactiveValue<string>): this;
   formEnctype(value: ReactiveValue<string>): this;
@@ -794,8 +806,9 @@ export const br = () => reactive(document.createElement("br")) as ReactiveElemen
 }
 
 
-export const button = () => reactive(document.createElement("button")) as ReactiveElement & HTMLButtonElementBuilder;
-            interface HTMLCanvasElementBuilder extends HTMLElementBuilder {
+export const button = () => reactive(document.createElement("button") as unknown as HTMLButtonElement) as ReactiveElement<HTMLButtonElement> & HTMLButtonElementBuilder;
+            
+interface HTMLCanvasElementBuilder extends HTMLElementBuilder {
   height(value: ReactiveValue<number>): this;
   width(value: ReactiveValue<number>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -886,8 +899,9 @@ export const button = () => reactive(document.createElement("button")) as Reacti
 }
 
 
-export const canvas = () => reactive(document.createElement("canvas")) as ReactiveElement & HTMLCanvasElementBuilder;
-            interface HTMLTableCaptionElementBuilder extends HTMLElementBuilder {
+export const canvas = () => reactive(document.createElement("canvas") as unknown as HTMLCanvasElement) as ReactiveElement<HTMLCanvasElement> & HTMLCanvasElementBuilder;
+            
+interface HTMLTableCaptionElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -977,12 +991,13 @@ export const canvas = () => reactive(document.createElement("canvas")) as Reacti
 }
 
 
-export const caption = () => reactive(document.createElement("caption")) as ReactiveElement & HTMLTableCaptionElementBuilder;
+export const caption = () => reactive(document.createElement("caption") as unknown as HTMLTableCaptionElement) as ReactiveElement<HTMLTableCaptionElement> & HTMLTableCaptionElementBuilder;
             
-export const cite = () => reactive(document.createElement("cite")) as ReactiveElement & HTMLElementBuilder;
+export const cite = () => reactive(document.createElement("cite") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const code = () => reactive(document.createElement("code")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLTableColElementBuilder extends HTMLElementBuilder {
+export const code = () => reactive(document.createElement("code") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLTableColElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   ch(value: ReactiveValue<string>): this;
   chOff(value: ReactiveValue<string>): this;
@@ -1077,10 +1092,11 @@ export const code = () => reactive(document.createElement("code")) as ReactiveEl
 }
 
 
-export const col = () => reactive(document.createElement("col")) as ReactiveElement & HTMLTableColElementBuilder;
+export const col = () => reactive(document.createElement("col") as unknown as HTMLTableColElement) as ReactiveElement<HTMLTableColElement> & HTMLTableColElementBuilder;
             
-export const colgroup = () => reactive(document.createElement("colgroup")) as ReactiveElement & HTMLTableColElementBuilder;
-            interface HTMLDataElementBuilder extends HTMLElementBuilder {
+export const colgroup = () => reactive(document.createElement("colgroup") as unknown as HTMLTableColElement) as ReactiveElement<HTMLTableColElement> & HTMLTableColElementBuilder;
+            
+interface HTMLDataElementBuilder extends HTMLElementBuilder {
   value(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -1170,8 +1186,9 @@ export const colgroup = () => reactive(document.createElement("colgroup")) as Re
 }
 
 
-export const data = () => reactive(document.createElement("data")) as ReactiveElement & HTMLDataElementBuilder;
-            interface HTMLDataListElementBuilder extends HTMLElementBuilder {
+export const data = () => reactive(document.createElement("data") as unknown as HTMLDataElement) as ReactiveElement<HTMLDataElement> & HTMLDataElementBuilder;
+            
+interface HTMLDataListElementBuilder extends HTMLElementBuilder {
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
   autocorrect(value: ReactiveValue<boolean>): this;
@@ -1260,10 +1277,11 @@ export const data = () => reactive(document.createElement("data")) as ReactiveEl
 }
 
 
-export const datalist = () => reactive(document.createElement("datalist")) as ReactiveElement & HTMLDataListElementBuilder;
+export const datalist = () => reactive(document.createElement("datalist") as unknown as HTMLDataListElement) as ReactiveElement<HTMLDataListElement> & HTMLDataListElementBuilder;
             
-export const dd = () => reactive(document.createElement("dd")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLModElementBuilder extends HTMLElementBuilder {
+export const dd = () => reactive(document.createElement("dd") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLModElementBuilder extends HTMLElementBuilder {
   cite(value: ReactiveValue<string>): this;
   dateTime(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -1354,8 +1372,9 @@ export const dd = () => reactive(document.createElement("dd")) as ReactiveElemen
 }
 
 
-export const del = () => reactive(document.createElement("del")) as ReactiveElement & HTMLModElementBuilder;
-            interface HTMLDetailsElementBuilder extends HTMLElementBuilder {
+export const del = () => reactive(document.createElement("del") as unknown as HTMLModElement) as ReactiveElement<HTMLModElement> & HTMLModElementBuilder;
+            
+interface HTMLDetailsElementBuilder extends HTMLElementBuilder {
   name(value: ReactiveValue<string>): this;
   open(value: ReactiveValue<boolean>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -1446,10 +1465,11 @@ export const del = () => reactive(document.createElement("del")) as ReactiveElem
 }
 
 
-export const details = () => reactive(document.createElement("details")) as ReactiveElement & HTMLDetailsElementBuilder;
+export const details = () => reactive(document.createElement("details") as unknown as HTMLDetailsElement) as ReactiveElement<HTMLDetailsElement> & HTMLDetailsElementBuilder;
             
-export const dfn = () => reactive(document.createElement("dfn")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLDialogElementBuilder extends HTMLElementBuilder {
+export const dfn = () => reactive(document.createElement("dfn") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLDialogElementBuilder extends HTMLElementBuilder {
   open(value: ReactiveValue<boolean>): this;
   returnValue(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -1540,8 +1560,9 @@ export const dfn = () => reactive(document.createElement("dfn")) as ReactiveElem
 }
 
 
-export const dialog = () => reactive(document.createElement("dialog")) as ReactiveElement & HTMLDialogElementBuilder;
-            interface HTMLDivElementBuilder extends HTMLElementBuilder {
+export const dialog = () => reactive(document.createElement("dialog") as unknown as HTMLDialogElement) as ReactiveElement<HTMLDialogElement> & HTMLDialogElementBuilder;
+            
+interface HTMLDivElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -1631,8 +1652,9 @@ export const dialog = () => reactive(document.createElement("dialog")) as Reacti
 }
 
 
-export const div = () => reactive(document.createElement("div")) as ReactiveElement & HTMLDivElementBuilder;
-            interface HTMLDListElementBuilder extends HTMLElementBuilder {
+export const div = () => reactive(document.createElement("div") as unknown as HTMLDivElement) as ReactiveElement<HTMLDivElement> & HTMLDivElementBuilder;
+            
+interface HTMLDListElementBuilder extends HTMLElementBuilder {
   compact(value: ReactiveValue<boolean>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -1722,12 +1744,13 @@ export const div = () => reactive(document.createElement("div")) as ReactiveElem
 }
 
 
-export const dl = () => reactive(document.createElement("dl")) as ReactiveElement & HTMLDListElementBuilder;
+export const dl = () => reactive(document.createElement("dl") as unknown as HTMLDListElement) as ReactiveElement<HTMLDListElement> & HTMLDListElementBuilder;
             
-export const dt = () => reactive(document.createElement("dt")) as ReactiveElement & HTMLElementBuilder;
+export const dt = () => reactive(document.createElement("dt") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const em = () => reactive(document.createElement("em")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLEmbedElementBuilder extends HTMLElementBuilder {
+export const em = () => reactive(document.createElement("em") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLEmbedElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   height(value: ReactiveValue<string>): this;
   name(value: ReactiveValue<string>): this;
@@ -1822,8 +1845,9 @@ export const em = () => reactive(document.createElement("em")) as ReactiveElemen
 }
 
 
-export const embed = () => reactive(document.createElement("embed")) as ReactiveElement & HTMLEmbedElementBuilder;
-            interface HTMLFieldSetElementBuilder extends HTMLElementBuilder {
+export const embed = () => reactive(document.createElement("embed") as unknown as HTMLEmbedElement) as ReactiveElement<HTMLEmbedElement> & HTMLEmbedElementBuilder;
+            
+interface HTMLFieldSetElementBuilder extends HTMLElementBuilder {
   disabled(value: ReactiveValue<boolean>): this;
   name(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -1914,14 +1938,15 @@ export const embed = () => reactive(document.createElement("embed")) as Reactive
 }
 
 
-export const fieldset = () => reactive(document.createElement("fieldset")) as ReactiveElement & HTMLFieldSetElementBuilder;
+export const fieldset = () => reactive(document.createElement("fieldset") as unknown as HTMLFieldSetElement) as ReactiveElement<HTMLFieldSetElement> & HTMLFieldSetElementBuilder;
             
-export const figcaption = () => reactive(document.createElement("figcaption")) as ReactiveElement & HTMLElementBuilder;
+export const figcaption = () => reactive(document.createElement("figcaption") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const figure = () => reactive(document.createElement("figure")) as ReactiveElement & HTMLElementBuilder;
+export const figure = () => reactive(document.createElement("figure") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const footer = () => reactive(document.createElement("footer")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLFormElementBuilder extends HTMLElementBuilder {
+export const footer = () => reactive(document.createElement("footer") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLFormElementBuilder extends HTMLElementBuilder {
   acceptCharset(value: ReactiveValue<string>): this;
   action(value: ReactiveValue<string>): this;
   autocomplete(value: ReactiveValue<AutoFillBase>): this;
@@ -2021,8 +2046,9 @@ export const footer = () => reactive(document.createElement("footer")) as Reacti
 }
 
 
-export const form = () => reactive(document.createElement("form")) as ReactiveElement & HTMLFormElementBuilder;
-            interface HTMLHeadingElementBuilder extends HTMLElementBuilder {
+export const form = () => reactive(document.createElement("form") as unknown as HTMLFormElement) as ReactiveElement<HTMLFormElement> & HTMLFormElementBuilder;
+            
+interface HTMLHeadingElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -2112,18 +2138,19 @@ export const form = () => reactive(document.createElement("form")) as ReactiveEl
 }
 
 
-export const h1 = () => reactive(document.createElement("h1")) as ReactiveElement & HTMLHeadingElementBuilder;
+export const h1 = () => reactive(document.createElement("h1") as unknown as HTMLHeadingElement) as ReactiveElement<HTMLHeadingElement> & HTMLHeadingElementBuilder;
             
-export const h2 = () => reactive(document.createElement("h2")) as ReactiveElement & HTMLHeadingElementBuilder;
+export const h2 = () => reactive(document.createElement("h2") as unknown as HTMLHeadingElement) as ReactiveElement<HTMLHeadingElement> & HTMLHeadingElementBuilder;
             
-export const h3 = () => reactive(document.createElement("h3")) as ReactiveElement & HTMLHeadingElementBuilder;
+export const h3 = () => reactive(document.createElement("h3") as unknown as HTMLHeadingElement) as ReactiveElement<HTMLHeadingElement> & HTMLHeadingElementBuilder;
             
-export const h4 = () => reactive(document.createElement("h4")) as ReactiveElement & HTMLHeadingElementBuilder;
+export const h4 = () => reactive(document.createElement("h4") as unknown as HTMLHeadingElement) as ReactiveElement<HTMLHeadingElement> & HTMLHeadingElementBuilder;
             
-export const h5 = () => reactive(document.createElement("h5")) as ReactiveElement & HTMLHeadingElementBuilder;
+export const h5 = () => reactive(document.createElement("h5") as unknown as HTMLHeadingElement) as ReactiveElement<HTMLHeadingElement> & HTMLHeadingElementBuilder;
             
-export const h6 = () => reactive(document.createElement("h6")) as ReactiveElement & HTMLHeadingElementBuilder;
-            interface HTMLHeadElementBuilder extends HTMLElementBuilder {
+export const h6 = () => reactive(document.createElement("h6") as unknown as HTMLHeadingElement) as ReactiveElement<HTMLHeadingElement> & HTMLHeadingElementBuilder;
+            
+interface HTMLHeadElementBuilder extends HTMLElementBuilder {
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
   autocorrect(value: ReactiveValue<boolean>): this;
@@ -2212,12 +2239,13 @@ export const h6 = () => reactive(document.createElement("h6")) as ReactiveElemen
 }
 
 
-export const head = () => reactive(document.createElement("head")) as ReactiveElement & HTMLHeadElementBuilder;
+export const head = () => reactive(document.createElement("head") as unknown as HTMLHeadElement) as ReactiveElement<HTMLHeadElement> & HTMLHeadElementBuilder;
             
-export const header = () => reactive(document.createElement("header")) as ReactiveElement & HTMLElementBuilder;
+export const header = () => reactive(document.createElement("header") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const hgroup = () => reactive(document.createElement("hgroup")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLHRElementBuilder extends HTMLElementBuilder {
+export const hgroup = () => reactive(document.createElement("hgroup") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLHRElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   color(value: ReactiveValue<string>): this;
   noShade(value: ReactiveValue<boolean>): this;
@@ -2311,8 +2339,9 @@ export const hgroup = () => reactive(document.createElement("hgroup")) as Reacti
 }
 
 
-export const hr = () => reactive(document.createElement("hr")) as ReactiveElement & HTMLHRElementBuilder;
-            interface HTMLHtmlElementBuilder extends HTMLElementBuilder {
+export const hr = () => reactive(document.createElement("hr") as unknown as HTMLHRElement) as ReactiveElement<HTMLHRElement> & HTMLHRElementBuilder;
+            
+interface HTMLHtmlElementBuilder extends HTMLElementBuilder {
   version(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -2402,10 +2431,11 @@ export const hr = () => reactive(document.createElement("hr")) as ReactiveElemen
 }
 
 
-export const html = () => reactive(document.createElement("html")) as ReactiveElement & HTMLHtmlElementBuilder;
+export const html = () => reactive(document.createElement("html") as unknown as HTMLHtmlElement) as ReactiveElement<HTMLHtmlElement> & HTMLHtmlElementBuilder;
             
-export const i = () => reactive(document.createElement("i")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLIFrameElementBuilder extends HTMLElementBuilder {
+export const i = () => reactive(document.createElement("i") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLIFrameElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   allow(value: ReactiveValue<string>): this;
   allowFullscreen(value: ReactiveValue<boolean>): this;
@@ -2510,8 +2540,9 @@ export const i = () => reactive(document.createElement("i")) as ReactiveElement 
 }
 
 
-export const iframe = () => reactive(document.createElement("iframe")) as ReactiveElement & HTMLIFrameElementBuilder;
-            interface HTMLImageElementBuilder extends HTMLElementBuilder {
+export const iframe = () => reactive(document.createElement("iframe") as unknown as HTMLIFrameElement) as ReactiveElement<HTMLIFrameElement> & HTMLIFrameElementBuilder;
+            
+interface HTMLImageElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   alt(value: ReactiveValue<string>): this;
   border(value: ReactiveValue<string>): this;
@@ -2620,8 +2651,9 @@ export const iframe = () => reactive(document.createElement("iframe")) as Reacti
 }
 
 
-export const img = () => reactive(document.createElement("img")) as ReactiveElement & HTMLImageElementBuilder;
-            interface HTMLInputElementBuilder extends HTMLElementBuilder {
+export const img = () => reactive(document.createElement("img") as unknown as HTMLImageElement) as ReactiveElement<HTMLImageElement> & HTMLImageElementBuilder;
+            
+interface HTMLInputElementBuilder extends HTMLElementBuilder {
   accept(value: ReactiveValue<string>): this;
   align(value: ReactiveValue<string>): this;
   alt(value: ReactiveValue<string>): this;
@@ -2751,12 +2783,13 @@ export const img = () => reactive(document.createElement("img")) as ReactiveElem
 }
 
 
-export const input = () => reactive(document.createElement("input")) as ReactiveElement & HTMLInputElementBuilder;
+export const input = () => reactive(document.createElement("input") as unknown as HTMLInputElement) as ReactiveElement<HTMLInputElement> & HTMLInputElementBuilder;
             
-export const ins = () => reactive(document.createElement("ins")) as ReactiveElement & HTMLModElementBuilder;
+export const ins = () => reactive(document.createElement("ins") as unknown as HTMLModElement) as ReactiveElement<HTMLModElement> & HTMLModElementBuilder;
             
-export const kbd = () => reactive(document.createElement("kbd")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLLabelElementBuilder extends HTMLElementBuilder {
+export const kbd = () => reactive(document.createElement("kbd") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLLabelElementBuilder extends HTMLElementBuilder {
   htmlFor(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -2846,8 +2879,9 @@ export const kbd = () => reactive(document.createElement("kbd")) as ReactiveElem
 }
 
 
-export const label = () => reactive(document.createElement("label")) as ReactiveElement & HTMLLabelElementBuilder;
-            interface HTMLLegendElementBuilder extends HTMLElementBuilder {
+export const label = () => reactive(document.createElement("label") as unknown as HTMLLabelElement) as ReactiveElement<HTMLLabelElement> & HTMLLabelElementBuilder;
+            
+interface HTMLLegendElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -2937,8 +2971,9 @@ export const label = () => reactive(document.createElement("label")) as Reactive
 }
 
 
-export const legend = () => reactive(document.createElement("legend")) as ReactiveElement & HTMLLegendElementBuilder;
-            interface HTMLLIElementBuilder extends HTMLElementBuilder {
+export const legend = () => reactive(document.createElement("legend") as unknown as HTMLLegendElement) as ReactiveElement<HTMLLegendElement> & HTMLLegendElementBuilder;
+            
+interface HTMLLIElementBuilder extends HTMLElementBuilder {
   type(value: ReactiveValue<string>): this;
   value(value: ReactiveValue<number>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -3029,8 +3064,9 @@ export const legend = () => reactive(document.createElement("legend")) as Reacti
 }
 
 
-export const li = () => reactive(document.createElement("li")) as ReactiveElement & HTMLLIElementBuilder;
-            interface HTMLLinkElementBuilder extends HTMLElementBuilder {
+export const li = () => reactive(document.createElement("li") as unknown as HTMLLIElement) as ReactiveElement<HTMLLIElement> & HTMLLIElementBuilder;
+            
+interface HTMLLinkElementBuilder extends HTMLElementBuilder {
   as(value: ReactiveValue<string>): this;
   blocking(value: ReactiveValue<string>): this;
   charset(value: ReactiveValue<string>): this;
@@ -3138,10 +3174,11 @@ export const li = () => reactive(document.createElement("li")) as ReactiveElemen
 }
 
 
-export const link = () => reactive(document.createElement("link")) as ReactiveElement & HTMLLinkElementBuilder;
+export const link = () => reactive(document.createElement("link") as unknown as HTMLLinkElement) as ReactiveElement<HTMLLinkElement> & HTMLLinkElementBuilder;
             
-export const main = () => reactive(document.createElement("main")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLMapElementBuilder extends HTMLElementBuilder {
+export const main = () => reactive(document.createElement("main") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLMapElementBuilder extends HTMLElementBuilder {
   name(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -3231,10 +3268,11 @@ export const main = () => reactive(document.createElement("main")) as ReactiveEl
 }
 
 
-export const map = () => reactive(document.createElement("map")) as ReactiveElement & HTMLMapElementBuilder;
+export const map = () => reactive(document.createElement("map") as unknown as HTMLMapElement) as ReactiveElement<HTMLMapElement> & HTMLMapElementBuilder;
             
-export const mark = () => reactive(document.createElement("mark")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLMenuElementBuilder extends HTMLElementBuilder {
+export const mark = () => reactive(document.createElement("mark") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLMenuElementBuilder extends HTMLElementBuilder {
   compact(value: ReactiveValue<boolean>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -3324,8 +3362,9 @@ export const mark = () => reactive(document.createElement("mark")) as ReactiveEl
 }
 
 
-export const menu = () => reactive(document.createElement("menu")) as ReactiveElement & HTMLMenuElementBuilder;
-            interface HTMLMetaElementBuilder extends HTMLElementBuilder {
+export const menu = () => reactive(document.createElement("menu") as unknown as HTMLMenuElement) as ReactiveElement<HTMLMenuElement> & HTMLMenuElementBuilder;
+            
+interface HTMLMetaElementBuilder extends HTMLElementBuilder {
   content(value: ReactiveValue<string>): this;
   httpEquiv(value: ReactiveValue<string>): this;
   media(value: ReactiveValue<string>): this;
@@ -3419,8 +3458,9 @@ export const menu = () => reactive(document.createElement("menu")) as ReactiveEl
 }
 
 
-export const meta = () => reactive(document.createElement("meta")) as ReactiveElement & HTMLMetaElementBuilder;
-            interface HTMLMeterElementBuilder extends HTMLElementBuilder {
+export const meta = () => reactive(document.createElement("meta") as unknown as HTMLMetaElement) as ReactiveElement<HTMLMetaElement> & HTMLMetaElementBuilder;
+            
+interface HTMLMeterElementBuilder extends HTMLElementBuilder {
   high(value: ReactiveValue<number>): this;
   low(value: ReactiveValue<number>): this;
   max(value: ReactiveValue<number>): this;
@@ -3515,12 +3555,13 @@ export const meta = () => reactive(document.createElement("meta")) as ReactiveEl
 }
 
 
-export const meter = () => reactive(document.createElement("meter")) as ReactiveElement & HTMLMeterElementBuilder;
+export const meter = () => reactive(document.createElement("meter") as unknown as HTMLMeterElement) as ReactiveElement<HTMLMeterElement> & HTMLMeterElementBuilder;
             
-export const nav = () => reactive(document.createElement("nav")) as ReactiveElement & HTMLElementBuilder;
+export const nav = () => reactive(document.createElement("nav") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const noscript = () => reactive(document.createElement("noscript")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLObjectElementBuilder extends HTMLElementBuilder {
+export const noscript = () => reactive(document.createElement("noscript") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLObjectElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   archive(value: ReactiveValue<string>): this;
   border(value: ReactiveValue<string>): this;
@@ -3625,8 +3666,9 @@ export const noscript = () => reactive(document.createElement("noscript")) as Re
 }
 
 
-export const object = () => reactive(document.createElement("object")) as ReactiveElement & HTMLObjectElementBuilder;
-            interface HTMLOListElementBuilder extends HTMLElementBuilder {
+export const object = () => reactive(document.createElement("object") as unknown as HTMLObjectElement) as ReactiveElement<HTMLObjectElement> & HTMLObjectElementBuilder;
+            
+interface HTMLOListElementBuilder extends HTMLElementBuilder {
   compact(value: ReactiveValue<boolean>): this;
   reversed(value: ReactiveValue<boolean>): this;
   start(value: ReactiveValue<number>): this;
@@ -3719,8 +3761,9 @@ export const object = () => reactive(document.createElement("object")) as Reacti
 }
 
 
-export const ol = () => reactive(document.createElement("ol")) as ReactiveElement & HTMLOListElementBuilder;
-            interface HTMLOptGroupElementBuilder extends HTMLElementBuilder {
+export const ol = () => reactive(document.createElement("ol") as unknown as HTMLOListElement) as ReactiveElement<HTMLOListElement> & HTMLOListElementBuilder;
+            
+interface HTMLOptGroupElementBuilder extends HTMLElementBuilder {
   disabled(value: ReactiveValue<boolean>): this;
   label(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -3811,8 +3854,9 @@ export const ol = () => reactive(document.createElement("ol")) as ReactiveElemen
 }
 
 
-export const optgroup = () => reactive(document.createElement("optgroup")) as ReactiveElement & HTMLOptGroupElementBuilder;
-            interface HTMLOptionElementBuilder extends HTMLElementBuilder {
+export const optgroup = () => reactive(document.createElement("optgroup") as unknown as HTMLOptGroupElement) as ReactiveElement<HTMLOptGroupElement> & HTMLOptGroupElementBuilder;
+            
+interface HTMLOptionElementBuilder extends HTMLElementBuilder {
   defaultSelected(value: ReactiveValue<boolean>): this;
   disabled(value: ReactiveValue<boolean>): this;
   label(value: ReactiveValue<string>): this;
@@ -3907,8 +3951,9 @@ export const optgroup = () => reactive(document.createElement("optgroup")) as Re
 }
 
 
-export const option = () => reactive(document.createElement("option")) as ReactiveElement & HTMLOptionElementBuilder;
-            interface HTMLOutputElementBuilder extends HTMLElementBuilder {
+export const option = () => reactive(document.createElement("option") as unknown as HTMLOptionElement) as ReactiveElement<HTMLOptionElement> & HTMLOptionElementBuilder;
+            
+interface HTMLOutputElementBuilder extends HTMLElementBuilder {
   defaultValue(value: ReactiveValue<string>): this;
   htmlFor(value: ReactiveValue<string>): this;
   name(value: ReactiveValue<string>): this;
@@ -4001,8 +4046,9 @@ export const option = () => reactive(document.createElement("option")) as Reacti
 }
 
 
-export const output = () => reactive(document.createElement("output")) as ReactiveElement & HTMLOutputElementBuilder;
-            interface HTMLParagraphElementBuilder extends HTMLElementBuilder {
+export const output = () => reactive(document.createElement("output") as unknown as HTMLOutputElement) as ReactiveElement<HTMLOutputElement> & HTMLOutputElementBuilder;
+            
+interface HTMLParagraphElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -4092,8 +4138,9 @@ export const output = () => reactive(document.createElement("output")) as Reacti
 }
 
 
-export const p = () => reactive(document.createElement("p")) as ReactiveElement & HTMLParagraphElementBuilder;
-            interface HTMLPictureElementBuilder extends HTMLElementBuilder {
+export const p = () => reactive(document.createElement("p") as unknown as HTMLParagraphElement) as ReactiveElement<HTMLParagraphElement> & HTMLParagraphElementBuilder;
+            
+interface HTMLPictureElementBuilder extends HTMLElementBuilder {
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
   autocorrect(value: ReactiveValue<boolean>): this;
@@ -4182,8 +4229,9 @@ export const p = () => reactive(document.createElement("p")) as ReactiveElement 
 }
 
 
-export const picture = () => reactive(document.createElement("picture")) as ReactiveElement & HTMLPictureElementBuilder;
-            interface HTMLPreElementBuilder extends HTMLElementBuilder {
+export const picture = () => reactive(document.createElement("picture") as unknown as HTMLPictureElement) as ReactiveElement<HTMLPictureElement> & HTMLPictureElementBuilder;
+            
+interface HTMLPreElementBuilder extends HTMLElementBuilder {
   width(value: ReactiveValue<number>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -4273,8 +4321,9 @@ export const picture = () => reactive(document.createElement("picture")) as Reac
 }
 
 
-export const pre = () => reactive(document.createElement("pre")) as ReactiveElement & HTMLPreElementBuilder;
-            interface HTMLProgressElementBuilder extends HTMLElementBuilder {
+export const pre = () => reactive(document.createElement("pre") as unknown as HTMLPreElement) as ReactiveElement<HTMLPreElement> & HTMLPreElementBuilder;
+            
+interface HTMLProgressElementBuilder extends HTMLElementBuilder {
   max(value: ReactiveValue<number>): this;
   value(value: ReactiveValue<number>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -4365,20 +4414,21 @@ export const pre = () => reactive(document.createElement("pre")) as ReactiveElem
 }
 
 
-export const progress = () => reactive(document.createElement("progress")) as ReactiveElement & HTMLProgressElementBuilder;
+export const progress = () => reactive(document.createElement("progress") as unknown as HTMLProgressElement) as ReactiveElement<HTMLProgressElement> & HTMLProgressElementBuilder;
             
-export const q = () => reactive(document.createElement("q")) as ReactiveElement & HTMLQuoteElementBuilder;
+export const q = () => reactive(document.createElement("q") as unknown as HTMLQuoteElement) as ReactiveElement<HTMLQuoteElement> & HTMLQuoteElementBuilder;
             
-export const rp = () => reactive(document.createElement("rp")) as ReactiveElement & HTMLElementBuilder;
+export const rp = () => reactive(document.createElement("rp") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const rt = () => reactive(document.createElement("rt")) as ReactiveElement & HTMLElementBuilder;
+export const rt = () => reactive(document.createElement("rt") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const ruby = () => reactive(document.createElement("ruby")) as ReactiveElement & HTMLElementBuilder;
+export const ruby = () => reactive(document.createElement("ruby") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const s = () => reactive(document.createElement("s")) as ReactiveElement & HTMLElementBuilder;
+export const s = () => reactive(document.createElement("s") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const samp = () => reactive(document.createElement("samp")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLScriptElementBuilder extends HTMLElementBuilder {
+export const samp = () => reactive(document.createElement("samp") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLScriptElementBuilder extends HTMLElementBuilder {
   async(value: ReactiveValue<boolean>): this;
   blocking(value: ReactiveValue<string>): this;
   charset(value: ReactiveValue<string>): this;
@@ -4481,12 +4531,13 @@ export const samp = () => reactive(document.createElement("samp")) as ReactiveEl
 }
 
 
-export const script = () => reactive(document.createElement("script")) as ReactiveElement & HTMLScriptElementBuilder;
+export const script = () => reactive(document.createElement("script") as unknown as HTMLScriptElement) as ReactiveElement<HTMLScriptElement> & HTMLScriptElementBuilder;
             
-export const search = () => reactive(document.createElement("search")) as ReactiveElement & HTMLElementBuilder;
+export const search = () => reactive(document.createElement("search") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const section = () => reactive(document.createElement("section")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLSelectElementBuilder extends HTMLElementBuilder {
+export const section = () => reactive(document.createElement("section") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLSelectElementBuilder extends HTMLElementBuilder {
   autocomplete(value: ReactiveValue<AutoFill>): this;
   disabled(value: ReactiveValue<boolean>): this;
   length(value: ReactiveValue<number>): this;
@@ -4584,8 +4635,9 @@ export const section = () => reactive(document.createElement("section")) as Reac
 }
 
 
-export const select = () => reactive(document.createElement("select")) as ReactiveElement & HTMLSelectElementBuilder;
-            interface HTMLSlotElementBuilder extends HTMLElementBuilder {
+export const select = () => reactive(document.createElement("select") as unknown as HTMLSelectElement) as ReactiveElement<HTMLSelectElement> & HTMLSelectElementBuilder;
+            
+interface HTMLSlotElementBuilder extends HTMLElementBuilder {
   name(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -4675,10 +4727,11 @@ export const select = () => reactive(document.createElement("select")) as Reacti
 }
 
 
-export const slot = () => reactive(document.createElement("slot")) as ReactiveElement & HTMLSlotElementBuilder;
+export const slot = () => reactive(document.createElement("slot") as unknown as HTMLSlotElement) as ReactiveElement<HTMLSlotElement> & HTMLSlotElementBuilder;
             
-export const small = () => reactive(document.createElement("small")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLSourceElementBuilder extends HTMLElementBuilder {
+export const small = () => reactive(document.createElement("small") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLSourceElementBuilder extends HTMLElementBuilder {
   height(value: ReactiveValue<number>): this;
   media(value: ReactiveValue<string>): this;
   sizes(value: ReactiveValue<string>): this;
@@ -4774,8 +4827,9 @@ export const small = () => reactive(document.createElement("small")) as Reactive
 }
 
 
-export const source = () => reactive(document.createElement("source")) as ReactiveElement & HTMLSourceElementBuilder;
-            interface HTMLSpanElementBuilder extends HTMLElementBuilder {
+export const source = () => reactive(document.createElement("source") as unknown as HTMLSourceElement) as ReactiveElement<HTMLSourceElement> & HTMLSourceElementBuilder;
+            
+interface HTMLSpanElementBuilder extends HTMLElementBuilder {
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
   autocorrect(value: ReactiveValue<boolean>): this;
@@ -4864,10 +4918,11 @@ export const source = () => reactive(document.createElement("source")) as Reacti
 }
 
 
-export const span = () => reactive(document.createElement("span")) as ReactiveElement & HTMLSpanElementBuilder;
+export const span = () => reactive(document.createElement("span") as unknown as HTMLSpanElement) as ReactiveElement<HTMLSpanElement> & HTMLSpanElementBuilder;
             
-export const strong = () => reactive(document.createElement("strong")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLStyleElementBuilder extends HTMLElementBuilder {
+export const strong = () => reactive(document.createElement("strong") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLStyleElementBuilder extends HTMLElementBuilder {
   blocking(value: ReactiveValue<string>): this;
   disabled(value: ReactiveValue<boolean>): this;
   media(value: ReactiveValue<string>): this;
@@ -4960,14 +5015,15 @@ export const strong = () => reactive(document.createElement("strong")) as Reacti
 }
 
 
-export const style = () => reactive(document.createElement("style")) as ReactiveElement & HTMLStyleElementBuilder;
+export const style = () => reactive(document.createElement("style") as unknown as HTMLStyleElement) as ReactiveElement<HTMLStyleElement> & HTMLStyleElementBuilder;
             
-export const sub = () => reactive(document.createElement("sub")) as ReactiveElement & HTMLElementBuilder;
+export const sub = () => reactive(document.createElement("sub") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const summary = () => reactive(document.createElement("summary")) as ReactiveElement & HTMLElementBuilder;
+export const summary = () => reactive(document.createElement("summary") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
             
-export const sup = () => reactive(document.createElement("sup")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLTableElementBuilder extends HTMLElementBuilder {
+export const sup = () => reactive(document.createElement("sup") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLTableElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   bgColor(value: ReactiveValue<string>): this;
   border(value: ReactiveValue<string>): this;
@@ -5068,8 +5124,9 @@ export const sup = () => reactive(document.createElement("sup")) as ReactiveElem
 }
 
 
-export const table = () => reactive(document.createElement("table")) as ReactiveElement & HTMLTableElementBuilder;
-            interface HTMLTableSectionElementBuilder extends HTMLElementBuilder {
+export const table = () => reactive(document.createElement("table") as unknown as HTMLTableElement) as ReactiveElement<HTMLTableElement> & HTMLTableElementBuilder;
+            
+interface HTMLTableSectionElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   ch(value: ReactiveValue<string>): this;
   chOff(value: ReactiveValue<string>): this;
@@ -5162,8 +5219,9 @@ export const table = () => reactive(document.createElement("table")) as Reactive
 }
 
 
-export const tbody = () => reactive(document.createElement("tbody")) as ReactiveElement & HTMLTableSectionElementBuilder;
-            interface HTMLTableCellElementBuilder extends HTMLElementBuilder {
+export const tbody = () => reactive(document.createElement("tbody") as unknown as HTMLTableSectionElement) as ReactiveElement<HTMLTableSectionElement> & HTMLTableSectionElementBuilder;
+            
+interface HTMLTableCellElementBuilder extends HTMLElementBuilder {
   abbr(value: ReactiveValue<string>): this;
   align(value: ReactiveValue<string>): this;
   axis(value: ReactiveValue<string>): this;
@@ -5266,8 +5324,9 @@ export const tbody = () => reactive(document.createElement("tbody")) as Reactive
 }
 
 
-export const td = () => reactive(document.createElement("td")) as ReactiveElement & HTMLTableCellElementBuilder;
-            interface HTMLTemplateElementBuilder extends HTMLElementBuilder {
+export const td = () => reactive(document.createElement("td") as unknown as HTMLTableCellElement) as ReactiveElement<HTMLTableCellElement> & HTMLTableCellElementBuilder;
+            
+interface HTMLTemplateElementBuilder extends HTMLElementBuilder {
   shadowRootClonable(value: ReactiveValue<boolean>): this;
   shadowRootDelegatesFocus(value: ReactiveValue<boolean>): this;
   shadowRootMode(value: ReactiveValue<string>): this;
@@ -5360,8 +5419,9 @@ export const td = () => reactive(document.createElement("td")) as ReactiveElemen
 }
 
 
-export const template = () => reactive(document.createElement("template")) as ReactiveElement & HTMLTemplateElementBuilder;
-            interface HTMLTextAreaElementBuilder extends HTMLElementBuilder {
+export const template = () => reactive(document.createElement("template") as unknown as HTMLTemplateElement) as ReactiveElement<HTMLTemplateElement> & HTMLTemplateElementBuilder;
+            
+interface HTMLTextAreaElementBuilder extends HTMLElementBuilder {
   autocomplete(value: ReactiveValue<AutoFill>): this;
   cols(value: ReactiveValue<number>): this;
   defaultValue(value: ReactiveValue<string>): this;
@@ -5467,14 +5527,15 @@ export const template = () => reactive(document.createElement("template")) as Re
 }
 
 
-export const textarea = () => reactive(document.createElement("textarea")) as ReactiveElement & HTMLTextAreaElementBuilder;
+export const textarea = () => reactive(document.createElement("textarea") as unknown as HTMLTextAreaElement) as ReactiveElement<HTMLTextAreaElement> & HTMLTextAreaElementBuilder;
             
-export const tfoot = () => reactive(document.createElement("tfoot")) as ReactiveElement & HTMLTableSectionElementBuilder;
+export const tfoot = () => reactive(document.createElement("tfoot") as unknown as HTMLTableSectionElement) as ReactiveElement<HTMLTableSectionElement> & HTMLTableSectionElementBuilder;
             
-export const th = () => reactive(document.createElement("th")) as ReactiveElement & HTMLTableCellElementBuilder;
+export const th = () => reactive(document.createElement("th") as unknown as HTMLTableCellElement) as ReactiveElement<HTMLTableCellElement> & HTMLTableCellElementBuilder;
             
-export const thead = () => reactive(document.createElement("thead")) as ReactiveElement & HTMLTableSectionElementBuilder;
-            interface HTMLTimeElementBuilder extends HTMLElementBuilder {
+export const thead = () => reactive(document.createElement("thead") as unknown as HTMLTableSectionElement) as ReactiveElement<HTMLTableSectionElement> & HTMLTableSectionElementBuilder;
+            
+interface HTMLTimeElementBuilder extends HTMLElementBuilder {
   dateTime(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -5564,8 +5625,9 @@ export const thead = () => reactive(document.createElement("thead")) as Reactive
 }
 
 
-export const time = () => reactive(document.createElement("time")) as ReactiveElement & HTMLTimeElementBuilder;
-            interface HTMLTitleElementBuilder extends HTMLElementBuilder {
+export const time = () => reactive(document.createElement("time") as unknown as HTMLTimeElement) as ReactiveElement<HTMLTimeElement> & HTMLTimeElementBuilder;
+            
+interface HTMLTitleElementBuilder extends HTMLElementBuilder {
   text(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
   autocapitalize(value: ReactiveValue<string>): this;
@@ -5655,8 +5717,9 @@ export const time = () => reactive(document.createElement("time")) as ReactiveEl
 }
 
 
-export const title = () => reactive(document.createElement("title")) as ReactiveElement & HTMLTitleElementBuilder;
-            interface HTMLTableRowElementBuilder extends HTMLElementBuilder {
+export const title = () => reactive(document.createElement("title") as unknown as HTMLTitleElement) as ReactiveElement<HTMLTitleElement> & HTMLTitleElementBuilder;
+            
+interface HTMLTableRowElementBuilder extends HTMLElementBuilder {
   align(value: ReactiveValue<string>): this;
   bgColor(value: ReactiveValue<string>): this;
   ch(value: ReactiveValue<string>): this;
@@ -5750,8 +5813,9 @@ export const title = () => reactive(document.createElement("title")) as Reactive
 }
 
 
-export const tr = () => reactive(document.createElement("tr")) as ReactiveElement & HTMLTableRowElementBuilder;
-            interface HTMLTrackElementBuilder extends HTMLElementBuilder {
+export const tr = () => reactive(document.createElement("tr") as unknown as HTMLTableRowElement) as ReactiveElement<HTMLTableRowElement> & HTMLTableRowElementBuilder;
+            
+interface HTMLTrackElementBuilder extends HTMLElementBuilder {
   default(value: ReactiveValue<boolean>): this;
   kind(value: ReactiveValue<string>): this;
   label(value: ReactiveValue<string>): this;
@@ -5845,10 +5909,11 @@ export const tr = () => reactive(document.createElement("tr")) as ReactiveElemen
 }
 
 
-export const track = () => reactive(document.createElement("track")) as ReactiveElement & HTMLTrackElementBuilder;
+export const track = () => reactive(document.createElement("track") as unknown as HTMLTrackElement) as ReactiveElement<HTMLTrackElement> & HTMLTrackElementBuilder;
             
-export const u = () => reactive(document.createElement("u")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLUListElementBuilder extends HTMLElementBuilder {
+export const u = () => reactive(document.createElement("u") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLUListElementBuilder extends HTMLElementBuilder {
   compact(value: ReactiveValue<boolean>): this;
   type(value: ReactiveValue<string>): this;
   accessKey(value: ReactiveValue<string>): this;
@@ -5939,10 +6004,11 @@ export const u = () => reactive(document.createElement("u")) as ReactiveElement 
 }
 
 
-export const ul = () => reactive(document.createElement("ul")) as ReactiveElement & HTMLUListElementBuilder;
+export const ul = () => reactive(document.createElement("ul") as unknown as HTMLUListElement) as ReactiveElement<HTMLUListElement> & HTMLUListElementBuilder;
             
-export const mathVar = () => reactive(document.createElement("var")) as ReactiveElement & HTMLElementBuilder;
-            interface HTMLVideoElementBuilder {
+export const mathVar = () => reactive(document.createElement("var") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface HTMLVideoElementBuilder {
   disablePictureInPicture(value: ReactiveValue<boolean>): this;
   height(value: ReactiveValue<number>): this;
   playsInline(value: ReactiveValue<boolean>): this;
@@ -5951,10 +6017,11 @@ export const mathVar = () => reactive(document.createElement("var")) as Reactive
 }
 
 
-export const video = () => reactive(document.createElement("video")) as ReactiveElement & HTMLVideoElementBuilder;
+export const video = () => reactive(document.createElement("video") as unknown as HTMLVideoElement) as ReactiveElement<HTMLVideoElement> & HTMLVideoElementBuilder;
             
-export const wbr = () => reactive(document.createElement("wbr")) as ReactiveElement & HTMLElementBuilder;
-            interface SVGElementBuilder extends ElementBuilder {
+export const wbr = () => reactive(document.createElement("wbr") as unknown as HTMLElement) as ReactiveElement<HTMLElement> & HTMLElementBuilder;
+            
+interface SVGElementBuilder extends ElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6018,6 +6085,7 @@ export const wbr = () => reactive(document.createElement("wbr")) as ReactiveElem
   ariaValueText(value: ReactiveValue<string>): this;
   role(value: ReactiveValue<string>): this;
 }
+
 
 interface SVGGraphicsElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
@@ -6087,6 +6155,7 @@ interface SVGGraphicsElementBuilder extends SVGElementBuilder {
   nonce(value: ReactiveValue<string>): this;
   tabIndex(value: ReactiveValue<number>): this;
 }
+
 
 interface SVGAElementBuilder extends SVGGraphicsElementBuilder {
   rel(value: ReactiveValue<string>): this;
@@ -6159,27 +6228,32 @@ interface SVGAElementBuilder extends SVGGraphicsElementBuilder {
   tabIndex(value: ReactiveValue<number>): this;
 }
 
+
 interface SVGAnimateElementBuilder {
 }
 
 
-export const animate = () => reactive(document.createElement("animate")) as ReactiveElement & SVGAnimateElementBuilder;
-            interface SVGAnimateMotionElementBuilder {
+export const animate = () => reactive(document.createElement("animate") as unknown as SVGAnimateElement) as ReactiveElement<SVGAnimateElement> & SVGAnimateElementBuilder;
+            
+interface SVGAnimateMotionElementBuilder {
 }
 
 
-export const animateMotion = () => reactive(document.createElement("animateMotion")) as ReactiveElement & SVGAnimateMotionElementBuilder;
-            interface SVGAnimateTransformElementBuilder {
+export const animateMotion = () => reactive(document.createElement("animateMotion") as unknown as SVGAnimateMotionElement) as ReactiveElement<SVGAnimateMotionElement> & SVGAnimateMotionElementBuilder;
+            
+interface SVGAnimateTransformElementBuilder {
 }
 
 
-export const animateTransform = () => reactive(document.createElement("animateTransform")) as ReactiveElement & SVGAnimateTransformElementBuilder;
-            interface SVGCircleElementBuilder {
+export const animateTransform = () => reactive(document.createElement("animateTransform") as unknown as SVGAnimateTransformElement) as ReactiveElement<SVGAnimateTransformElement> & SVGAnimateTransformElementBuilder;
+            
+interface SVGCircleElementBuilder {
 }
 
 
-export const circle = () => reactive(document.createElement("circle")) as ReactiveElement & SVGCircleElementBuilder;
-            interface SVGClipPathElementBuilder extends SVGElementBuilder {
+export const circle = () => reactive(document.createElement("circle") as unknown as SVGCircleElement) as ReactiveElement<SVGCircleElement> & SVGCircleElementBuilder;
+            
+interface SVGClipPathElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6249,8 +6323,9 @@ export const circle = () => reactive(document.createElement("circle")) as Reacti
 }
 
 
-export const clipPath = () => reactive(document.createElement("clipPath")) as ReactiveElement & SVGClipPathElementBuilder;
-            interface SVGDefsElementBuilder extends SVGGraphicsElementBuilder {
+export const clipPath = () => reactive(document.createElement("clipPath") as unknown as SVGClipPathElement) as ReactiveElement<SVGClipPathElement> & SVGClipPathElementBuilder;
+            
+interface SVGDefsElementBuilder extends SVGGraphicsElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6320,8 +6395,9 @@ export const clipPath = () => reactive(document.createElement("clipPath")) as Re
 }
 
 
-export const defs = () => reactive(document.createElement("defs")) as ReactiveElement & SVGDefsElementBuilder;
-            interface SVGDescElementBuilder extends SVGElementBuilder {
+export const defs = () => reactive(document.createElement("defs") as unknown as SVGDefsElement) as ReactiveElement<SVGDefsElement> & SVGDefsElementBuilder;
+            
+interface SVGDescElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6391,13 +6467,15 @@ export const defs = () => reactive(document.createElement("defs")) as ReactiveEl
 }
 
 
-export const desc = () => reactive(document.createElement("desc")) as ReactiveElement & SVGDescElementBuilder;
-            interface SVGEllipseElementBuilder {
+export const desc = () => reactive(document.createElement("desc") as unknown as SVGDescElement) as ReactiveElement<SVGDescElement> & SVGDescElementBuilder;
+            
+interface SVGEllipseElementBuilder {
 }
 
 
-export const ellipse = () => reactive(document.createElement("ellipse")) as ReactiveElement & SVGEllipseElementBuilder;
-            interface SVGFEBlendElementBuilder extends SVGElementBuilder {
+export const ellipse = () => reactive(document.createElement("ellipse") as unknown as SVGEllipseElement) as ReactiveElement<SVGEllipseElement> & SVGEllipseElementBuilder;
+            
+interface SVGFEBlendElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6467,8 +6545,9 @@ export const ellipse = () => reactive(document.createElement("ellipse")) as Reac
 }
 
 
-export const feBlend = () => reactive(document.createElement("feBlend")) as ReactiveElement & SVGFEBlendElementBuilder;
-            interface SVGFEColorMatrixElementBuilder extends SVGElementBuilder {
+export const feBlend = () => reactive(document.createElement("feBlend") as unknown as SVGFEBlendElement) as ReactiveElement<SVGFEBlendElement> & SVGFEBlendElementBuilder;
+            
+interface SVGFEColorMatrixElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6538,8 +6617,9 @@ export const feBlend = () => reactive(document.createElement("feBlend")) as Reac
 }
 
 
-export const feColorMatrix = () => reactive(document.createElement("feColorMatrix")) as ReactiveElement & SVGFEColorMatrixElementBuilder;
-            interface SVGFEComponentTransferElementBuilder extends SVGElementBuilder {
+export const feColorMatrix = () => reactive(document.createElement("feColorMatrix") as unknown as SVGFEColorMatrixElement) as ReactiveElement<SVGFEColorMatrixElement> & SVGFEColorMatrixElementBuilder;
+            
+interface SVGFEComponentTransferElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6609,8 +6689,9 @@ export const feColorMatrix = () => reactive(document.createElement("feColorMatri
 }
 
 
-export const feComponentTransfer = () => reactive(document.createElement("feComponentTransfer")) as ReactiveElement & SVGFEComponentTransferElementBuilder;
-            interface SVGFECompositeElementBuilder extends SVGElementBuilder {
+export const feComponentTransfer = () => reactive(document.createElement("feComponentTransfer") as unknown as SVGFEComponentTransferElement) as ReactiveElement<SVGFEComponentTransferElement> & SVGFEComponentTransferElementBuilder;
+            
+interface SVGFECompositeElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6680,8 +6761,9 @@ export const feComponentTransfer = () => reactive(document.createElement("feComp
 }
 
 
-export const feComposite = () => reactive(document.createElement("feComposite")) as ReactiveElement & SVGFECompositeElementBuilder;
-            interface SVGFEConvolveMatrixElementBuilder extends SVGElementBuilder {
+export const feComposite = () => reactive(document.createElement("feComposite") as unknown as SVGFECompositeElement) as ReactiveElement<SVGFECompositeElement> & SVGFECompositeElementBuilder;
+            
+interface SVGFEConvolveMatrixElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6751,8 +6833,9 @@ export const feComposite = () => reactive(document.createElement("feComposite"))
 }
 
 
-export const feConvolveMatrix = () => reactive(document.createElement("feConvolveMatrix")) as ReactiveElement & SVGFEConvolveMatrixElementBuilder;
-            interface SVGFEDiffuseLightingElementBuilder extends SVGElementBuilder {
+export const feConvolveMatrix = () => reactive(document.createElement("feConvolveMatrix") as unknown as SVGFEConvolveMatrixElement) as ReactiveElement<SVGFEConvolveMatrixElement> & SVGFEConvolveMatrixElementBuilder;
+            
+interface SVGFEDiffuseLightingElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6822,8 +6905,9 @@ export const feConvolveMatrix = () => reactive(document.createElement("feConvolv
 }
 
 
-export const feDiffuseLighting = () => reactive(document.createElement("feDiffuseLighting")) as ReactiveElement & SVGFEDiffuseLightingElementBuilder;
-            interface SVGFEDisplacementMapElementBuilder extends SVGElementBuilder {
+export const feDiffuseLighting = () => reactive(document.createElement("feDiffuseLighting") as unknown as SVGFEDiffuseLightingElement) as ReactiveElement<SVGFEDiffuseLightingElement> & SVGFEDiffuseLightingElementBuilder;
+            
+interface SVGFEDisplacementMapElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6893,8 +6977,9 @@ export const feDiffuseLighting = () => reactive(document.createElement("feDiffus
 }
 
 
-export const feDisplacementMap = () => reactive(document.createElement("feDisplacementMap")) as ReactiveElement & SVGFEDisplacementMapElementBuilder;
-            interface SVGFEDistantLightElementBuilder extends SVGElementBuilder {
+export const feDisplacementMap = () => reactive(document.createElement("feDisplacementMap") as unknown as SVGFEDisplacementMapElement) as ReactiveElement<SVGFEDisplacementMapElement> & SVGFEDisplacementMapElementBuilder;
+            
+interface SVGFEDistantLightElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -6964,8 +7049,9 @@ export const feDisplacementMap = () => reactive(document.createElement("feDispla
 }
 
 
-export const feDistantLight = () => reactive(document.createElement("feDistantLight")) as ReactiveElement & SVGFEDistantLightElementBuilder;
-            interface SVGFEDropShadowElementBuilder extends SVGElementBuilder {
+export const feDistantLight = () => reactive(document.createElement("feDistantLight") as unknown as SVGFEDistantLightElement) as ReactiveElement<SVGFEDistantLightElement> & SVGFEDistantLightElementBuilder;
+            
+interface SVGFEDropShadowElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7035,8 +7121,9 @@ export const feDistantLight = () => reactive(document.createElement("feDistantLi
 }
 
 
-export const feDropShadow = () => reactive(document.createElement("feDropShadow")) as ReactiveElement & SVGFEDropShadowElementBuilder;
-            interface SVGFEFloodElementBuilder extends SVGElementBuilder {
+export const feDropShadow = () => reactive(document.createElement("feDropShadow") as unknown as SVGFEDropShadowElement) as ReactiveElement<SVGFEDropShadowElement> & SVGFEDropShadowElementBuilder;
+            
+interface SVGFEFloodElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7106,28 +7193,33 @@ export const feDropShadow = () => reactive(document.createElement("feDropShadow"
 }
 
 
-export const feFlood = () => reactive(document.createElement("feFlood")) as ReactiveElement & SVGFEFloodElementBuilder;
-            interface SVGFEFuncAElementBuilder {
+export const feFlood = () => reactive(document.createElement("feFlood") as unknown as SVGFEFloodElement) as ReactiveElement<SVGFEFloodElement> & SVGFEFloodElementBuilder;
+            
+interface SVGFEFuncAElementBuilder {
 }
 
 
-export const feFuncA = () => reactive(document.createElement("feFuncA")) as ReactiveElement & SVGFEFuncAElementBuilder;
-            interface SVGFEFuncBElementBuilder {
+export const feFuncA = () => reactive(document.createElement("feFuncA") as unknown as SVGFEFuncAElement) as ReactiveElement<SVGFEFuncAElement> & SVGFEFuncAElementBuilder;
+            
+interface SVGFEFuncBElementBuilder {
 }
 
 
-export const feFuncB = () => reactive(document.createElement("feFuncB")) as ReactiveElement & SVGFEFuncBElementBuilder;
-            interface SVGFEFuncGElementBuilder {
+export const feFuncB = () => reactive(document.createElement("feFuncB") as unknown as SVGFEFuncBElement) as ReactiveElement<SVGFEFuncBElement> & SVGFEFuncBElementBuilder;
+            
+interface SVGFEFuncGElementBuilder {
 }
 
 
-export const feFuncG = () => reactive(document.createElement("feFuncG")) as ReactiveElement & SVGFEFuncGElementBuilder;
-            interface SVGFEFuncRElementBuilder {
+export const feFuncG = () => reactive(document.createElement("feFuncG") as unknown as SVGFEFuncGElement) as ReactiveElement<SVGFEFuncGElement> & SVGFEFuncGElementBuilder;
+            
+interface SVGFEFuncRElementBuilder {
 }
 
 
-export const feFuncR = () => reactive(document.createElement("feFuncR")) as ReactiveElement & SVGFEFuncRElementBuilder;
-            interface SVGFEGaussianBlurElementBuilder extends SVGElementBuilder {
+export const feFuncR = () => reactive(document.createElement("feFuncR") as unknown as SVGFEFuncRElement) as ReactiveElement<SVGFEFuncRElement> & SVGFEFuncRElementBuilder;
+            
+interface SVGFEGaussianBlurElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7197,8 +7289,9 @@ export const feFuncR = () => reactive(document.createElement("feFuncR")) as Reac
 }
 
 
-export const feGaussianBlur = () => reactive(document.createElement("feGaussianBlur")) as ReactiveElement & SVGFEGaussianBlurElementBuilder;
-            interface SVGFEImageElementBuilder extends SVGElementBuilder {
+export const feGaussianBlur = () => reactive(document.createElement("feGaussianBlur") as unknown as SVGFEGaussianBlurElement) as ReactiveElement<SVGFEGaussianBlurElement> & SVGFEGaussianBlurElementBuilder;
+            
+interface SVGFEImageElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7268,8 +7361,9 @@ export const feGaussianBlur = () => reactive(document.createElement("feGaussianB
 }
 
 
-export const feImage = () => reactive(document.createElement("feImage")) as ReactiveElement & SVGFEImageElementBuilder;
-            interface SVGFEMergeElementBuilder extends SVGElementBuilder {
+export const feImage = () => reactive(document.createElement("feImage") as unknown as SVGFEImageElement) as ReactiveElement<SVGFEImageElement> & SVGFEImageElementBuilder;
+            
+interface SVGFEMergeElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7339,8 +7433,9 @@ export const feImage = () => reactive(document.createElement("feImage")) as Reac
 }
 
 
-export const feMerge = () => reactive(document.createElement("feMerge")) as ReactiveElement & SVGFEMergeElementBuilder;
-            interface SVGFEMergeNodeElementBuilder extends SVGElementBuilder {
+export const feMerge = () => reactive(document.createElement("feMerge") as unknown as SVGFEMergeElement) as ReactiveElement<SVGFEMergeElement> & SVGFEMergeElementBuilder;
+            
+interface SVGFEMergeNodeElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7410,8 +7505,9 @@ export const feMerge = () => reactive(document.createElement("feMerge")) as Reac
 }
 
 
-export const feMergeNode = () => reactive(document.createElement("feMergeNode")) as ReactiveElement & SVGFEMergeNodeElementBuilder;
-            interface SVGFEMorphologyElementBuilder extends SVGElementBuilder {
+export const feMergeNode = () => reactive(document.createElement("feMergeNode") as unknown as SVGFEMergeNodeElement) as ReactiveElement<SVGFEMergeNodeElement> & SVGFEMergeNodeElementBuilder;
+            
+interface SVGFEMorphologyElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7481,8 +7577,9 @@ export const feMergeNode = () => reactive(document.createElement("feMergeNode"))
 }
 
 
-export const feMorphology = () => reactive(document.createElement("feMorphology")) as ReactiveElement & SVGFEMorphologyElementBuilder;
-            interface SVGFEOffsetElementBuilder extends SVGElementBuilder {
+export const feMorphology = () => reactive(document.createElement("feMorphology") as unknown as SVGFEMorphologyElement) as ReactiveElement<SVGFEMorphologyElement> & SVGFEMorphologyElementBuilder;
+            
+interface SVGFEOffsetElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7552,8 +7649,9 @@ export const feMorphology = () => reactive(document.createElement("feMorphology"
 }
 
 
-export const feOffset = () => reactive(document.createElement("feOffset")) as ReactiveElement & SVGFEOffsetElementBuilder;
-            interface SVGFEPointLightElementBuilder extends SVGElementBuilder {
+export const feOffset = () => reactive(document.createElement("feOffset") as unknown as SVGFEOffsetElement) as ReactiveElement<SVGFEOffsetElement> & SVGFEOffsetElementBuilder;
+            
+interface SVGFEPointLightElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7623,8 +7721,9 @@ export const feOffset = () => reactive(document.createElement("feOffset")) as Re
 }
 
 
-export const fePointLight = () => reactive(document.createElement("fePointLight")) as ReactiveElement & SVGFEPointLightElementBuilder;
-            interface SVGFESpecularLightingElementBuilder extends SVGElementBuilder {
+export const fePointLight = () => reactive(document.createElement("fePointLight") as unknown as SVGFEPointLightElement) as ReactiveElement<SVGFEPointLightElement> & SVGFEPointLightElementBuilder;
+            
+interface SVGFESpecularLightingElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7694,8 +7793,9 @@ export const fePointLight = () => reactive(document.createElement("fePointLight"
 }
 
 
-export const feSpecularLighting = () => reactive(document.createElement("feSpecularLighting")) as ReactiveElement & SVGFESpecularLightingElementBuilder;
-            interface SVGFESpotLightElementBuilder extends SVGElementBuilder {
+export const feSpecularLighting = () => reactive(document.createElement("feSpecularLighting") as unknown as SVGFESpecularLightingElement) as ReactiveElement<SVGFESpecularLightingElement> & SVGFESpecularLightingElementBuilder;
+            
+interface SVGFESpotLightElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7765,8 +7865,9 @@ export const feSpecularLighting = () => reactive(document.createElement("feSpecu
 }
 
 
-export const feSpotLight = () => reactive(document.createElement("feSpotLight")) as ReactiveElement & SVGFESpotLightElementBuilder;
-            interface SVGFETileElementBuilder extends SVGElementBuilder {
+export const feSpotLight = () => reactive(document.createElement("feSpotLight") as unknown as SVGFESpotLightElement) as ReactiveElement<SVGFESpotLightElement> & SVGFESpotLightElementBuilder;
+            
+interface SVGFETileElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7836,8 +7937,9 @@ export const feSpotLight = () => reactive(document.createElement("feSpotLight"))
 }
 
 
-export const feTile = () => reactive(document.createElement("feTile")) as ReactiveElement & SVGFETileElementBuilder;
-            interface SVGFETurbulenceElementBuilder extends SVGElementBuilder {
+export const feTile = () => reactive(document.createElement("feTile") as unknown as SVGFETileElement) as ReactiveElement<SVGFETileElement> & SVGFETileElementBuilder;
+            
+interface SVGFETurbulenceElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7907,8 +8009,9 @@ export const feTile = () => reactive(document.createElement("feTile")) as Reacti
 }
 
 
-export const feTurbulence = () => reactive(document.createElement("feTurbulence")) as ReactiveElement & SVGFETurbulenceElementBuilder;
-            interface SVGFilterElementBuilder extends SVGElementBuilder {
+export const feTurbulence = () => reactive(document.createElement("feTurbulence") as unknown as SVGFETurbulenceElement) as ReactiveElement<SVGFETurbulenceElement> & SVGFETurbulenceElementBuilder;
+            
+interface SVGFilterElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -7978,8 +8081,9 @@ export const feTurbulence = () => reactive(document.createElement("feTurbulence"
 }
 
 
-export const filter = () => reactive(document.createElement("filter")) as ReactiveElement & SVGFilterElementBuilder;
-            interface SVGForeignObjectElementBuilder extends SVGGraphicsElementBuilder {
+export const filter = () => reactive(document.createElement("filter") as unknown as SVGFilterElement) as ReactiveElement<SVGFilterElement> & SVGFilterElementBuilder;
+            
+interface SVGForeignObjectElementBuilder extends SVGGraphicsElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8049,8 +8153,9 @@ export const filter = () => reactive(document.createElement("filter")) as Reacti
 }
 
 
-export const foreignObject = () => reactive(document.createElement("foreignObject")) as ReactiveElement & SVGForeignObjectElementBuilder;
-            interface SVGGElementBuilder extends SVGGraphicsElementBuilder {
+export const foreignObject = () => reactive(document.createElement("foreignObject") as unknown as SVGForeignObjectElement) as ReactiveElement<SVGForeignObjectElement> & SVGForeignObjectElementBuilder;
+            
+interface SVGGElementBuilder extends SVGGraphicsElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8120,8 +8225,9 @@ export const foreignObject = () => reactive(document.createElement("foreignObjec
 }
 
 
-export const g = () => reactive(document.createElement("g")) as ReactiveElement & SVGGElementBuilder;
-            interface SVGImageElementBuilder extends SVGGraphicsElementBuilder {
+export const g = () => reactive(document.createElement("g") as unknown as SVGGElement) as ReactiveElement<SVGGElement> & SVGGElementBuilder;
+            
+interface SVGImageElementBuilder extends SVGGraphicsElementBuilder {
   crossOrigin(value: ReactiveValue<string>): this;
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
@@ -8192,18 +8298,21 @@ export const g = () => reactive(document.createElement("g")) as ReactiveElement 
 }
 
 
-export const image = () => reactive(document.createElement("image")) as ReactiveElement & SVGImageElementBuilder;
-            interface SVGLineElementBuilder {
+export const image = () => reactive(document.createElement("image") as unknown as SVGImageElement) as ReactiveElement<SVGImageElement> & SVGImageElementBuilder;
+            
+interface SVGLineElementBuilder {
 }
 
 
-export const line = () => reactive(document.createElement("line")) as ReactiveElement & SVGLineElementBuilder;
-            interface SVGLinearGradientElementBuilder {
+export const line = () => reactive(document.createElement("line") as unknown as SVGLineElement) as ReactiveElement<SVGLineElement> & SVGLineElementBuilder;
+            
+interface SVGLinearGradientElementBuilder {
 }
 
 
-export const linearGradient = () => reactive(document.createElement("linearGradient")) as ReactiveElement & SVGLinearGradientElementBuilder;
-            interface SVGMarkerElementBuilder extends SVGElementBuilder {
+export const linearGradient = () => reactive(document.createElement("linearGradient") as unknown as SVGLinearGradientElement) as ReactiveElement<SVGLinearGradientElement> & SVGLinearGradientElementBuilder;
+            
+interface SVGMarkerElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8273,8 +8382,9 @@ export const linearGradient = () => reactive(document.createElement("linearGradi
 }
 
 
-export const marker = () => reactive(document.createElement("marker")) as ReactiveElement & SVGMarkerElementBuilder;
-            interface SVGMaskElementBuilder extends SVGElementBuilder {
+export const marker = () => reactive(document.createElement("marker") as unknown as SVGMarkerElement) as ReactiveElement<SVGMarkerElement> & SVGMarkerElementBuilder;
+            
+interface SVGMaskElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8344,8 +8454,9 @@ export const marker = () => reactive(document.createElement("marker")) as Reacti
 }
 
 
-export const mask = () => reactive(document.createElement("mask")) as ReactiveElement & SVGMaskElementBuilder;
-            interface SVGMetadataElementBuilder extends SVGElementBuilder {
+export const mask = () => reactive(document.createElement("mask") as unknown as SVGMaskElement) as ReactiveElement<SVGMaskElement> & SVGMaskElementBuilder;
+            
+interface SVGMetadataElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8415,8 +8526,9 @@ export const mask = () => reactive(document.createElement("mask")) as ReactiveEl
 }
 
 
-export const metadata = () => reactive(document.createElement("metadata")) as ReactiveElement & SVGMetadataElementBuilder;
-            interface SVGMPathElementBuilder extends SVGElementBuilder {
+export const metadata = () => reactive(document.createElement("metadata") as unknown as SVGMetadataElement) as ReactiveElement<SVGMetadataElement> & SVGMetadataElementBuilder;
+            
+interface SVGMPathElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8486,13 +8598,15 @@ export const metadata = () => reactive(document.createElement("metadata")) as Re
 }
 
 
-export const mpath = () => reactive(document.createElement("mpath")) as ReactiveElement & SVGMPathElementBuilder;
-            interface SVGPathElementBuilder {
+export const mpath = () => reactive(document.createElement("mpath") as unknown as SVGMPathElement) as ReactiveElement<SVGMPathElement> & SVGMPathElementBuilder;
+            
+interface SVGPathElementBuilder {
 }
 
 
-export const path = () => reactive(document.createElement("path")) as ReactiveElement & SVGPathElementBuilder;
-            interface SVGPatternElementBuilder extends SVGElementBuilder {
+export const path = () => reactive(document.createElement("path") as unknown as SVGPathElement) as ReactiveElement<SVGPathElement> & SVGPathElementBuilder;
+            
+interface SVGPatternElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8562,28 +8676,33 @@ export const path = () => reactive(document.createElement("path")) as ReactiveEl
 }
 
 
-export const pattern = () => reactive(document.createElement("pattern")) as ReactiveElement & SVGPatternElementBuilder;
-            interface SVGPolygonElementBuilder {
+export const pattern = () => reactive(document.createElement("pattern") as unknown as SVGPatternElement) as ReactiveElement<SVGPatternElement> & SVGPatternElementBuilder;
+            
+interface SVGPolygonElementBuilder {
 }
 
 
-export const polygon = () => reactive(document.createElement("polygon")) as ReactiveElement & SVGPolygonElementBuilder;
-            interface SVGPolylineElementBuilder {
+export const polygon = () => reactive(document.createElement("polygon") as unknown as SVGPolygonElement) as ReactiveElement<SVGPolygonElement> & SVGPolygonElementBuilder;
+            
+interface SVGPolylineElementBuilder {
 }
 
 
-export const polyline = () => reactive(document.createElement("polyline")) as ReactiveElement & SVGPolylineElementBuilder;
-            interface SVGRadialGradientElementBuilder {
+export const polyline = () => reactive(document.createElement("polyline") as unknown as SVGPolylineElement) as ReactiveElement<SVGPolylineElement> & SVGPolylineElementBuilder;
+            
+interface SVGRadialGradientElementBuilder {
 }
 
 
-export const radialGradient = () => reactive(document.createElement("radialGradient")) as ReactiveElement & SVGRadialGradientElementBuilder;
-            interface SVGRectElementBuilder {
+export const radialGradient = () => reactive(document.createElement("radialGradient") as unknown as SVGRadialGradientElement) as ReactiveElement<SVGRadialGradientElement> & SVGRadialGradientElementBuilder;
+            
+interface SVGRectElementBuilder {
 }
 
 
-export const rect = () => reactive(document.createElement("rect")) as ReactiveElement & SVGRectElementBuilder;
-            interface SVGScriptElementBuilder extends SVGElementBuilder {
+export const rect = () => reactive(document.createElement("rect") as unknown as SVGRectElement) as ReactiveElement<SVGRectElement> & SVGRectElementBuilder;
+            
+interface SVGScriptElementBuilder extends SVGElementBuilder {
   type(value: ReactiveValue<string>): this;
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
@@ -8653,12 +8772,14 @@ export const rect = () => reactive(document.createElement("rect")) as ReactiveEl
   tabIndex(value: ReactiveValue<number>): this;
 }
 
+
 interface SVGSetElementBuilder {
 }
 
 
-export const set = () => reactive(document.createElement("set")) as ReactiveElement & SVGSetElementBuilder;
-            interface SVGStopElementBuilder extends SVGElementBuilder {
+export const set = () => reactive(document.createElement("set") as unknown as SVGSetElement) as ReactiveElement<SVGSetElement> & SVGSetElementBuilder;
+            
+interface SVGStopElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8728,8 +8849,9 @@ export const set = () => reactive(document.createElement("set")) as ReactiveElem
 }
 
 
-export const stop = () => reactive(document.createElement("stop")) as ReactiveElement & SVGStopElementBuilder;
-            interface SVGStyleElementBuilder extends SVGElementBuilder {
+export const stop = () => reactive(document.createElement("stop") as unknown as SVGStopElement) as ReactiveElement<SVGStopElement> & SVGStopElementBuilder;
+            
+interface SVGStyleElementBuilder extends SVGElementBuilder {
   disabled(value: ReactiveValue<boolean>): this;
   media(value: ReactiveValue<string>): this;
   title(value: ReactiveValue<string>): this;
@@ -8802,6 +8924,7 @@ export const stop = () => reactive(document.createElement("stop")) as ReactiveEl
   tabIndex(value: ReactiveValue<number>): this;
 }
 
+
 interface SVGSVGElementBuilder extends SVGGraphicsElementBuilder {
   currentScale(value: ReactiveValue<number>): this;
   classList(value: ReactiveValue<string>): this;
@@ -8873,8 +8996,9 @@ interface SVGSVGElementBuilder extends SVGGraphicsElementBuilder {
 }
 
 
-export const svg = () => reactive(document.createElement("svg")) as ReactiveElement & SVGSVGElementBuilder;
-            interface SVGSwitchElementBuilder extends SVGGraphicsElementBuilder {
+export const svg = () => reactive(document.createElement("svg") as unknown as SVGSVGElement) as ReactiveElement<SVGSVGElement> & SVGSVGElementBuilder;
+            
+interface SVGSwitchElementBuilder extends SVGGraphicsElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -8944,8 +9068,9 @@ export const svg = () => reactive(document.createElement("svg")) as ReactiveElem
 }
 
 
-export const svgSwitch = () => reactive(document.createElement("switch")) as ReactiveElement & SVGSwitchElementBuilder;
-            interface SVGSymbolElementBuilder extends SVGElementBuilder {
+export const svgSwitch = () => reactive(document.createElement("switch") as unknown as SVGSwitchElement) as ReactiveElement<SVGSwitchElement> & SVGSwitchElementBuilder;
+            
+interface SVGSymbolElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -9015,18 +9140,21 @@ export const svgSwitch = () => reactive(document.createElement("switch")) as Rea
 }
 
 
-export const symbol = () => reactive(document.createElement("symbol")) as ReactiveElement & SVGSymbolElementBuilder;
-            interface SVGTextElementBuilder {
+export const symbol = () => reactive(document.createElement("symbol") as unknown as SVGSymbolElement) as ReactiveElement<SVGSymbolElement> & SVGSymbolElementBuilder;
+            
+interface SVGTextElementBuilder {
 }
 
 
-export const text = () => reactive(document.createElement("text")) as ReactiveElement & SVGTextElementBuilder;
-            interface SVGTextPathElementBuilder {
+export const text = () => reactive(document.createElement("text") as unknown as SVGTextElement) as ReactiveElement<SVGTextElement> & SVGTextElementBuilder;
+            
+interface SVGTextPathElementBuilder {
 }
 
 
-export const textPath = () => reactive(document.createElement("textPath")) as ReactiveElement & SVGTextPathElementBuilder;
-            interface SVGTitleElementBuilder extends SVGElementBuilder {
+export const textPath = () => reactive(document.createElement("textPath") as unknown as SVGTextPathElement) as ReactiveElement<SVGTextPathElement> & SVGTextPathElementBuilder;
+            
+interface SVGTitleElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -9094,13 +9222,15 @@ export const textPath = () => reactive(document.createElement("textPath")) as Re
   nonce(value: ReactiveValue<string>): this;
   tabIndex(value: ReactiveValue<number>): this;
 }
+
 
 interface SVGTSpanElementBuilder {
 }
 
 
-export const tspan = () => reactive(document.createElement("tspan")) as ReactiveElement & SVGTSpanElementBuilder;
-            interface SVGUseElementBuilder extends SVGGraphicsElementBuilder {
+export const tspan = () => reactive(document.createElement("tspan") as unknown as SVGTSpanElement) as ReactiveElement<SVGTSpanElement> & SVGTSpanElementBuilder;
+            
+interface SVGUseElementBuilder extends SVGGraphicsElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -9170,8 +9300,9 @@ export const tspan = () => reactive(document.createElement("tspan")) as Reactive
 }
 
 
-export const use = () => reactive(document.createElement("use")) as ReactiveElement & SVGUseElementBuilder;
-            interface SVGViewElementBuilder extends SVGElementBuilder {
+export const use = () => reactive(document.createElement("use") as unknown as SVGUseElement) as ReactiveElement<SVGUseElement> & SVGUseElementBuilder;
+            
+interface SVGViewElementBuilder extends SVGElementBuilder {
   classList(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
   innerHTML(value: ReactiveValue<string>): this;
@@ -9241,8 +9372,9 @@ export const use = () => reactive(document.createElement("use")) as ReactiveElem
 }
 
 
-export const view = () => reactive(document.createElement("view")) as ReactiveElement & SVGViewElementBuilder;
-            interface MathMLElementBuilder extends ElementBuilder {
+export const view = () => reactive(document.createElement("view") as unknown as SVGViewElement) as ReactiveElement<SVGViewElement> & SVGViewElementBuilder;
+            
+interface MathMLElementBuilder extends ElementBuilder {
   classList(value: ReactiveValue<string>): this;
   className(value: ReactiveValue<string>): this;
   id(value: ReactiveValue<string>): this;
@@ -9309,63 +9441,63 @@ export const view = () => reactive(document.createElement("view")) as ReactiveEl
 }
 
 
-export const annotation = () => reactive(document.createElement("annotation")) as ReactiveElement & MathMLElementBuilder;
+export const annotation = () => reactive(document.createElement("annotation") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const annotationXml = () => reactive(document.createElement("annotation-xml")) as ReactiveElement & MathMLElementBuilder;
+export const annotationXml = () => reactive(document.createElement("annotation-xml") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const maction = () => reactive(document.createElement("maction")) as ReactiveElement & MathMLElementBuilder;
+export const maction = () => reactive(document.createElement("maction") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const math = () => reactive(document.createElement("math")) as ReactiveElement & MathMLElementBuilder;
+export const math = () => reactive(document.createElement("math") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const merror = () => reactive(document.createElement("merror")) as ReactiveElement & MathMLElementBuilder;
+export const merror = () => reactive(document.createElement("merror") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mfrac = () => reactive(document.createElement("mfrac")) as ReactiveElement & MathMLElementBuilder;
+export const mfrac = () => reactive(document.createElement("mfrac") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mi = () => reactive(document.createElement("mi")) as ReactiveElement & MathMLElementBuilder;
+export const mi = () => reactive(document.createElement("mi") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mmultiscripts = () => reactive(document.createElement("mmultiscripts")) as ReactiveElement & MathMLElementBuilder;
+export const mmultiscripts = () => reactive(document.createElement("mmultiscripts") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mn = () => reactive(document.createElement("mn")) as ReactiveElement & MathMLElementBuilder;
+export const mn = () => reactive(document.createElement("mn") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mo = () => reactive(document.createElement("mo")) as ReactiveElement & MathMLElementBuilder;
+export const mo = () => reactive(document.createElement("mo") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mover = () => reactive(document.createElement("mover")) as ReactiveElement & MathMLElementBuilder;
+export const mover = () => reactive(document.createElement("mover") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mpadded = () => reactive(document.createElement("mpadded")) as ReactiveElement & MathMLElementBuilder;
+export const mpadded = () => reactive(document.createElement("mpadded") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mphantom = () => reactive(document.createElement("mphantom")) as ReactiveElement & MathMLElementBuilder;
+export const mphantom = () => reactive(document.createElement("mphantom") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mprescripts = () => reactive(document.createElement("mprescripts")) as ReactiveElement & MathMLElementBuilder;
+export const mprescripts = () => reactive(document.createElement("mprescripts") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mroot = () => reactive(document.createElement("mroot")) as ReactiveElement & MathMLElementBuilder;
+export const mroot = () => reactive(document.createElement("mroot") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mrow = () => reactive(document.createElement("mrow")) as ReactiveElement & MathMLElementBuilder;
+export const mrow = () => reactive(document.createElement("mrow") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const ms = () => reactive(document.createElement("ms")) as ReactiveElement & MathMLElementBuilder;
+export const ms = () => reactive(document.createElement("ms") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mspace = () => reactive(document.createElement("mspace")) as ReactiveElement & MathMLElementBuilder;
+export const mspace = () => reactive(document.createElement("mspace") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const msqrt = () => reactive(document.createElement("msqrt")) as ReactiveElement & MathMLElementBuilder;
+export const msqrt = () => reactive(document.createElement("msqrt") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mstyle = () => reactive(document.createElement("mstyle")) as ReactiveElement & MathMLElementBuilder;
+export const mstyle = () => reactive(document.createElement("mstyle") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const msub = () => reactive(document.createElement("msub")) as ReactiveElement & MathMLElementBuilder;
+export const msub = () => reactive(document.createElement("msub") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const msubsup = () => reactive(document.createElement("msubsup")) as ReactiveElement & MathMLElementBuilder;
+export const msubsup = () => reactive(document.createElement("msubsup") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const msup = () => reactive(document.createElement("msup")) as ReactiveElement & MathMLElementBuilder;
+export const msup = () => reactive(document.createElement("msup") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mtable = () => reactive(document.createElement("mtable")) as ReactiveElement & MathMLElementBuilder;
+export const mtable = () => reactive(document.createElement("mtable") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mtd = () => reactive(document.createElement("mtd")) as ReactiveElement & MathMLElementBuilder;
+export const mtd = () => reactive(document.createElement("mtd") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mtext = () => reactive(document.createElement("mtext")) as ReactiveElement & MathMLElementBuilder;
+export const mtext = () => reactive(document.createElement("mtext") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const mtr = () => reactive(document.createElement("mtr")) as ReactiveElement & MathMLElementBuilder;
+export const mtr = () => reactive(document.createElement("mtr") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const munder = () => reactive(document.createElement("munder")) as ReactiveElement & MathMLElementBuilder;
+export const munder = () => reactive(document.createElement("munder") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const munderover = () => reactive(document.createElement("munderover")) as ReactiveElement & MathMLElementBuilder;
+export const munderover = () => reactive(document.createElement("munderover") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
-export const semantics = () => reactive(document.createElement("semantics")) as ReactiveElement & MathMLElementBuilder;
+export const semantics = () => reactive(document.createElement("semantics") as unknown as MathMLElement) as ReactiveElement<MathMLElement> & MathMLElementBuilder;
             
