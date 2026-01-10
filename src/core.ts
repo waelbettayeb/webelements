@@ -98,6 +98,7 @@ function objectOrSetter<T extends Record<string | symbol, unknown>>(
     const value = args[0];
     if (isReactiveValue(value)) {
       root[EFFECT](() => {
+        // @ts-ignore
         obj[key] = value();
       });
     } else {
