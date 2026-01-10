@@ -31,9 +31,9 @@
       "import": "./dist/signals.js",
       "types": "./dist/signals.d.ts"
     },
-    "./builder": {
-      "import": "./dist/builder.js",
-      "types": "./dist/builder.d.ts"
+    "./dom": {
+      "import": "./dist/dom.js",
+      "types": "./dist/dom.d.ts"
     }
   },
   "scripts": {

@@ -4,7 +4,7 @@ ElementsKit is a lightweight reactive UI library that transforms native HTMLElem
 
 ```tsx
 import { signal } from "elements-kit/signals"
-import { div } from "elements-kit/builder"
+import { div } from "elements-kit/dom"
 import { ReactiveElement, element } from "elements-kit"
 
 const externalSignal = signal("something")

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { transformTagName } from "./lib.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const filename = path.resolve(__dirname, "../src", "builder.ts");
+const filename = path.resolve(__dirname, "../src", "dom.ts");
 console.log(`Generating file at: ${filename}`);
 // Track processed types to avoid duplicates
 const processedTypes = new Set<string>();
