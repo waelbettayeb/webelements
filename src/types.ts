@@ -13,7 +13,7 @@ type ReactiveArray<T extends any[]> = {
  */
 type WritableKeys<T> = {
   [K in keyof T]: (<U>() => U extends { [Q in K]: T[K] } ? 1 : 2) extends <
-    U
+    U,
   >() => U extends { readonly [Q in K]: T[K] } ? 1 : 2
     ? never
     : K;
@@ -36,7 +36,7 @@ type WritableKeys<T> = {
  * if the property is called without arguments it will return the root object.
  * if the property is accessed and is an object, it will return a reactive version of that object.
  */
-type ReactiveBuilder<R, T = R> = T extends (...args: infer U) => unknown
+export type ReactiveBuilder<R, T = R> = T extends (...args: infer U) => unknown
   ? (...value: ReactiveArray<U>) => ReactiveBuilder<R>
   : {
       (value?: ReactiveValue<T>): ReactiveBuilder<R>;

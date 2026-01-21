@@ -1,20 +1,21 @@
 import { computed, signal } from "../../src/signals";
-import { element, reactive } from "../../src/core";
-import { span, div } from "../../src/builder";
+import { reactive } from "../../src/core";
+import { span, div } from "../../src/dom";
 
 const value = signal(0);
 
 const myelement = div()
   .textContent(computed(() => `The value is: ${value()}`))
-  .style("background:lightblue; padding:20px;");
+  .style.backgroundColor("lightblue")
+  .style.padding("20px");
 
-const child = span()
-  .textContent(computed(() => `The value is: ${value()}`))
-  .classList("child-span");
+const child = span().textContent(
+  computed(() => `The span value is: ${value()}`),
+);
 
 const interval = setInterval(() => {
   console.log("incrementing", value());
   value(value() + 1);
 }, 1000);
 
-document.getElementById("app")?.appendChild(element(myelement));
+document.getElementById("app")?.appendChild(myelement(child()));
