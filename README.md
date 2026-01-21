@@ -35,3 +35,8 @@ document.body.appendChild(element(Elements))
 - **Type-Safe** - Full TypeScript support with comprehensive type inference
 - **Minimal Abstraction** - Thin layer over standard DOM APIs, learn once and use anywhere
 - **Composable** - Build complex UIs from simple, reusable reactive elements
+
+## TO-DO
+
+- [ ] Add events `.on()`, `.once()`, `.off()`
+- [ ] Complete type safety

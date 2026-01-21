@@ -1,5 +1,4 @@
 import { computed, signal } from "../../src/signals";
-import { reactive } from "../../src/core";
 import { span, div } from "../../src/dom";
 
 const value = signal(0);
@@ -18,4 +17,4 @@ const interval = setInterval(() => {
   value(value() + 1);
 }, 1000);
 
-document.getElementById("app")?.appendChild(myelement(child()));
+document.getElementById("app")?.appendChild(myelement(child));
