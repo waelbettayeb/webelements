@@ -1,14 +1,11 @@
 import { effect, isReactiveValue } from "./signals";
-import { ReactiveBuilder } from "./types";
+import type { computed, signal } from "./signals";
 
 export const DISPOSABLES: unique symbol = Symbol("disposables");
 export const DISPOSE: unique symbol = Symbol("dispose");
 export const ELEMENT: unique symbol = Symbol("element");
 export const BUILD_ELEMENT: unique symbol = Symbol("build_element");
 export const EFFECT: unique symbol = Symbol("effect");
-
-type ReactiveElement<T extends Element> = ElementBuilder<T> &
-  ReactiveBuilder<ElementBuilder<T>, T>;
 
 class ElementBuilder<T extends Element = Element> {
   /** The underlying DOM element */
@@ -107,3 +104,38 @@ function isObject(v: unknown): v is Record<string | symbol, unknown> {
 export function reactive<T extends Element>(el: T) {
   return ElementBuilder.create(el);
 }
+
+type ReactiveElement<T extends Element> = ElementBuilder<T> &
+  ReactiveBuilder<ElementBuilder<T>, T>;
+
+// NOTE: typescript doens't allow to extract setter argument types directly
+// check: https://github.com/microsoft/TypeScript/issues/21759
+export type ReactiveValue<T> =
+  | T
+  | ReturnType<typeof signal<T>>
+  | ReturnType<typeof computed<T>>;
+
+type ReactiveArray<T extends any[]> = {
+  [K in keyof T]: ReactiveValue<T[K]> | T[K];
+};
+
+/**
+ * Filter keys that are writable (exclude readonly and getter-only).
+ */
+type WritableKeys<T> = {
+  [K in keyof T]: (<U>() => U extends { [Q in K]: T[K] } ? 1 : 2) extends <
+    U,
+  >() => U extends { readonly [Q in K]: T[K] } ? 1 : 2
+    ? never
+    : K;
+}[keyof T];
+
+export type ReactiveBuilder<R, T = R> = T extends (...args: infer U) => unknown
+  ? (...value: ReactiveArray<U>) => ReactiveBuilder<R>
+  : {
+      (value?: ReactiveValue<T>): ReactiveBuilder<R>;
+    } & (T extends object
+      ? {
+          [K in WritableKeys<T>]: ReactiveBuilder<R, T[K]>;
+        }
+      : {});
