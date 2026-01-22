@@ -52,6 +52,36 @@ button()
   }, { once: true });
 ```
 
+## Make Existing Objects Reactive
+
+Wrap existing HTMLElements or objects to make them reactive using the `reactive()` function.
+
+```ts
+import { reactive } from "elements-kit/core";
+import { signal } from "elements-kit/signals";
+
+const name = signal("John");
+const obj = {
+  name: "John",
+  age: 30
+};
+reactive(obj).name(name);
+name("Doe"); // Updates name reactively
+```
+
+Transform any existing DOM element ref into a reactive element:
+
+```ts
+const canvasRef = document.createElement("canvas");
+// setup the canvas...
+// const ctx = canvas.getContext("2d");
+// ...
+
+const canvas = reactive(canvasRef)
+  .width("400")
+  .height("300");
+```
+
 ## Element Reference
 
 Access the underlying DOM element directly using the `[REF]` symbol when you need to use native APIs or third-party libraries.
