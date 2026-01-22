@@ -3,6 +3,8 @@ import { span, div, button } from "../../src/dom";
 import { REF, ON } from "../../src/core";
 
 const value = signal(0);
+const doubleValue = computed(() => value() * 2);
+const doubledMessage = computed(() => `The double value is: ${doubleValue()}`);
 
 const myelement = div()
   [REF]((el) => console.log("Created element:", el))
@@ -16,8 +18,9 @@ const myelement = div()
       value(value() + 1);
     }),
   span()
-    .style.marginLeft("10px")
+    .style.display("block")
     .textContent(computed(() => `Current value: ${value()}`)),
+  doubledMessage,
 );
 
 const interval = setInterval(() => {

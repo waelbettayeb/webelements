@@ -24,15 +24,6 @@ class ElementBuilder<T extends Element = Element> {
     this[VALUE] = el;
   }
 
-  [APPLY](this: ElementBuilder, ...children: (ElementBuilder | Element)[]) {
-    const el = this[VALUE];
-    if (children.length === 0) return el;
-
-    const _children = children.map((c) => c[VALUE] ?? c);
-    el.replaceChildren(..._children);
-    return el;
-  }
-
   static create<T extends Element>(el: T): ReactiveElement<T> {
     const builder = new ElementBuilder<T>(el);
     return new Proxy(builder[APPLY], {
@@ -50,6 +41,41 @@ class ElementBuilder<T extends Element = Element> {
     }) as unknown as ReactiveElement<T>;
   }
 
+  [APPLY](
+    this: ElementBuilder,
+    ...children: ReactiveValue<ElementBuilder | Element | string | number>[]
+  ) {
+    const el = this[VALUE];
+    if (children.length === 0) return el;
+
+    children.forEach((child) => {
+      if (isReactiveValue(child)) {
+        const markerStart = document.createComment("reactive-start");
+        const markerEnd = document.createComment("reactive-end");
+        const value = toNode(child());
+        console.log("ADDING REACTIVE CHILD", value);
+        el.appendChild(markerStart);
+        el.appendChild(value);
+        el.appendChild(markerEnd);
+
+        this[EFFECT](() => {
+          const value = toNode(child());
+          let node = markerStart.nextSibling;
+          while (node && node !== markerEnd) {
+            el.removeChild(node);
+            node = node.nextSibling;
+          }
+          markerStart.after(value);
+        });
+
+        return;
+      }
+      el.appendChild(toNode(child));
+    });
+
+    return el;
+  }
+
   [REF](apply: (ref: T) => void | (() => void)) {
     const result = apply(this[VALUE]);
     if (typeof result === "function") {
@@ -57,6 +83,12 @@ class ElementBuilder<T extends Element = Element> {
     }
     return this;
   }
+
+  [EFFECT](fn: () => void) {
+    this[DISPOSABLES].add(effect(fn));
+    return this;
+  }
+
   [ON](
     eventType: string,
     listener: EventListenerOrEventListenerObject,
@@ -115,6 +147,13 @@ function setterOrValue<T extends object = object>(
   });
 }
 
+function toNode(c: ElementBuilder | Element | string | number) {
+  if (typeof c === "string" || typeof c === "number") {
+    return document.createTextNode(String(c));
+  }
+  return c[VALUE] ?? c;
+}
+
 function isObject(v: unknown): v is Record<string | symbol, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
@@ -128,10 +167,7 @@ export type ReactiveElement<T extends Element> = ElementBuilder<T> &
 
 // NOTE: typescript doens't allow to extract setter argument types directly
 // check: https://github.com/microsoft/TypeScript/issues/21759
-export type ReactiveValue<T> =
-  | T
-  | ReturnType<typeof signal<T>>
-  | ReturnType<typeof computed<T>>;
+export type ReactiveValue<T> = (() => T) | T;
 
 type ReactiveArray<T extends any[]> = {
   [K in keyof T]: ReactiveValue<T[K]> | T[K];
