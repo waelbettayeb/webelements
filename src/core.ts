@@ -4,7 +4,7 @@ import type { computed, signal } from "./signals";
 export const DISPOSABLES: unique symbol = Symbol("disposables");
 export const DISPOSE: unique symbol = Symbol("dispose");
 export const ELEMENT: unique symbol = Symbol("element");
-export const BUILD_ELEMENT: unique symbol = Symbol("build_element");
+export const APPLY: unique symbol = Symbol("apply");
 export const EFFECT: unique symbol = Symbol("effect");
 
 class ElementBuilder<T extends Element = Element> {
@@ -22,10 +22,7 @@ class ElementBuilder<T extends Element = Element> {
     this[ELEMENT] = el;
   }
 
-  [BUILD_ELEMENT](
-    this: ElementBuilder,
-    ...children: (ElementBuilder | Element)[]
-  ) {
+  [APPLY](this: ElementBuilder, ...children: (ElementBuilder | Element)[]) {
     const el = this[ELEMENT];
     if (children.length === 0) return el;
 
@@ -36,9 +33,9 @@ class ElementBuilder<T extends Element = Element> {
 
   static create<T extends Element>(el: T): ReactiveElement<T> {
     const builder = new ElementBuilder<T>(el);
-    return new Proxy(builder[BUILD_ELEMENT], {
+    return new Proxy(builder[APPLY], {
       apply(_target, _thisArg, argArray) {
-        return builder[BUILD_ELEMENT](...argArray);
+        return builder[APPLY](...argArray);
       },
       get(_target, key, receiver) {
         const el = builder[ELEMENT];
@@ -105,7 +102,7 @@ export function reactive<T extends Element>(el: T) {
   return ElementBuilder.create(el);
 }
 
-type ReactiveElement<T extends Element> = ElementBuilder<T> &
+export type ReactiveElement<T extends Element> = ElementBuilder<T> &
   ReactiveBuilder<ElementBuilder<T>, T>;
 
 // NOTE: typescript doens't allow to extract setter argument types directly

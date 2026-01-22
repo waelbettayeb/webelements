@@ -40,3 +40,12 @@ document.body.appendChild(element(Elements))
 
 - [ ] Add events `.on()`, `.once()`, `.off()`
 - [ ] Complete type safety
+- [ ] Function calling (like classList reactive adder, attributes)
+- [ ] Ref access
+- [ ] Async signal
+- [ ] URLPattern signal <https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API>
+- [ ] document reactive element (set and get cookies, delegate events)
+
+- [ ] Context?
+- [ ] Conditional rendering?
+- [ ] List rendering?
