@@ -108,6 +108,7 @@ color("red");
 - [ ] URLPattern signal <https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API>
 - [ ] document reactive element (set and get cookies, delegate events)
 - [ ] Builder extensions (like style extensions)
+- [ ] signal children
 
 - [ ] Context?
 - [ ] Conditional rendering?
