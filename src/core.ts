@@ -3,13 +3,13 @@ import type { computed, signal } from "./signals";
 
 export const DISPOSABLES: unique symbol = Symbol("disposables");
 export const DISPOSE: unique symbol = Symbol("dispose");
-export const ELEMENT: unique symbol = Symbol("element");
+export const REF: unique symbol = Symbol("ref");
 export const APPLY: unique symbol = Symbol("apply");
 export const EFFECT: unique symbol = Symbol("effect");
 
 class ElementBuilder<T extends Element = Element> {
   /** The underlying DOM element */
-  [ELEMENT]: T;
+  [REF]: T;
   // TODO: should we track effects separately?
   /** A set of cleanup functions to run when disposing the element */
   private [DISPOSABLES] = new Set<() => void>();
@@ -19,14 +19,14 @@ class ElementBuilder<T extends Element = Element> {
     this[DISPOSABLES].clear();
   }
   private constructor(el: T) {
-    this[ELEMENT] = el;
+    this[REF] = el;
   }
 
   [APPLY](this: ElementBuilder, ...children: (ElementBuilder | Element)[]) {
-    const el = this[ELEMENT];
+    const el = this[REF];
     if (children.length === 0) return el;
 
-    const _children = children.map((c) => c[ELEMENT] ?? c);
+    const _children = children.map((c) => c[REF] ?? c);
     el.replaceChildren(..._children);
     return el;
   }
@@ -38,7 +38,7 @@ class ElementBuilder<T extends Element = Element> {
         return builder[APPLY](...argArray);
       },
       get(_target, key, receiver) {
-        const el = builder[ELEMENT];
+        const el = builder[REF];
         if (key in builder) {
           return Reflect.get(builder, key, receiver);
         }
@@ -52,9 +52,9 @@ class ElementBuilder<T extends Element = Element> {
     listener: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions,
   ) {
-    this[ELEMENT].addEventListener(eventType, listener, options);
+    this[REF].addEventListener(eventType, listener, options);
     this[DISPOSABLES].add(() => {
-      this[ELEMENT].removeEventListener(eventType, listener, options);
+      this[REF].removeEventListener(eventType, listener, options);
     });
     return this;
   }

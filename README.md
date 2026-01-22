@@ -2,7 +2,7 @@
 
 ElementsKit is a lightweight reactive UI library that transforms native HTMLElements into reactive elements. Perfect for framework-agnostic applications and web component development.
 
-```tsx
+```ts
 import { signal } from "elements-kit/signals"
 import { div } from "elements-kit/dom"
 import { ReactiveElement, element } from "elements-kit"
@@ -35,6 +35,21 @@ document.body.appendChild(element(Elements))
 - **Type-Safe** - Full TypeScript support with comprehensive type inference
 - **Minimal Abstraction** - Thin layer over standard DOM APIs, learn once and use anywhere
 - **Composable** - Build complex UIs from simple, reusable reactive elements
+
+## Event Listeners
+
+Attach event listeners using the `.on()` method with full TypeScript inference and standard [EventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options).
+
+```ts
+const count = signal(0);
+
+button()
+  .textContent("Click me")
+  .on("click", (e) => {
+    count(count() + 1);
+    console.log("Clicked!", e.target);
+  }, { once: true });
+```
 
 ## TO-DO
 
