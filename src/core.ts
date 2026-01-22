@@ -39,13 +39,24 @@ class ElementBuilder<T extends Element = Element> {
       },
       get(_target, key, receiver) {
         const el = builder[ELEMENT];
-        if (!(key in el)) {
+        if (key in builder) {
           return Reflect.get(builder, key, receiver);
         }
 
         return setterOrValue(receiver as ElementBuilder<T>, el, key);
       },
     }) as unknown as ReactiveElement<T>;
+  }
+  on(
+    eventType: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions,
+  ) {
+    this[ELEMENT].addEventListener(eventType, listener, options);
+    this[DISPOSABLES].add(() => {
+      this[ELEMENT].removeEventListener(eventType, listener, options);
+    });
+    return this;
   }
 }
 

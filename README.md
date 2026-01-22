@@ -38,7 +38,6 @@ document.body.appendChild(element(Elements))
 
 ## TO-DO
 
-- [ ] Add events `.on()`, `.once()`, `.off()`
 - [ ] Complete type safety
 - [ ] Function calling (like classList reactive adder, attributes)
 - [ ] Ref access

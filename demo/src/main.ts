@@ -1,15 +1,19 @@
 import { computed, signal } from "../../src/signals";
-import { span, div } from "../../src/dom";
+import { span, div, button } from "../../src/dom";
 
 const value = signal(0);
 
 const myelement = div()
-  .textContent(computed(() => `The value is: ${value()}`))
   .style.backgroundColor("lightblue")
-  .style.padding("20px");
-
-const child = span().textContent(
-  computed(() => `The span value is: ${value()}`),
+  .style.padding("20px")(
+  button()
+    .textContent("Increment")
+    .on("click", () => {
+      value(value() + 1);
+    }),
+  span()
+    .style.marginLeft("10px")
+    .textContent(computed(() => `Current value: ${value()}`)),
 );
 
 const interval = setInterval(() => {
@@ -17,4 +21,4 @@ const interval = setInterval(() => {
   value(value() + 1);
 }, 1000);
 
-document.getElementById("app")?.appendChild(myelement(child));
+document.getElementById("app")?.appendChild(myelement);
