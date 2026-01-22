@@ -1,5 +1,4 @@
 import { effect, isReactiveValue } from "./signals";
-import type { computed, signal } from "./signals";
 
 export const DISPOSABLES: unique symbol = Symbol("disposables");
 export const DISPOSE: unique symbol = Symbol("dispose");
@@ -50,8 +49,8 @@ class ElementBuilder<T extends Element = Element> {
 
     children.forEach((child) => {
       if (isReactiveValue(child)) {
-        const markerStart = document.createComment("reactive-start");
-        const markerEnd = document.createComment("reactive-end");
+        const markerStart = document.createComment("{");
+        const markerEnd = document.createComment("}");
         const value = toNode(child());
         console.log("ADDING REACTIVE CHILD", value);
         el.appendChild(markerStart);
