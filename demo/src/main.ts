@@ -8,6 +8,8 @@ const myelement = div()
   [REF]((el) => console.log("Created element:", el))
   .style.backgroundColor("lightblue")
   .style.padding("20px")(
+  "Click the button to increment the value:",
+  document.createElement("br"),
   button()
     .textContent("Increment")
     [ON]("click", () => {
