@@ -59,7 +59,10 @@ type CSSStyleSetters<R> = {
 };
 
 // Re-export conditional after types are defined
-export { when, show } from "./conditional";
+export { when, show, each } from "./conditional";
+
+// Re-export context API
+export { createContext, provide, inject, updateContext, type Context } from "./context";
 
 class ElementBuilder<T extends Element = Element> {
   /** The underlying DOM element */

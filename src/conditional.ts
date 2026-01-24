@@ -136,3 +136,122 @@ export function show<T extends Element>(
 
   return element;
 }
+
+/**
+ * Options for the each() function
+ */
+interface EachOptions<T> {
+  /** Function to extract a unique key from each item for efficient updates */
+  key?: (item: T, index: number) => string | number;
+}
+
+/**
+ * Render a list of items reactively.
+ * Re-renders efficiently when the array signal changes.
+ *
+ * @example
+ * ```ts
+ * const items = signal(["Apple", "Banana", "Cherry"]);
+ *
+ * ul()(
+ *   each(
+ *     () => items(),
+ *     (item, index) => li().textContent(`${index() + 1}. ${item}`)
+ *   )
+ * )
+ * ```
+ *
+ * @example With keyed rendering for efficient updates
+ * ```ts
+ * const todos = signal([
+ *   { id: 1, text: "Learn ElementsKit" },
+ *   { id: 2, text: "Build something" }
+ * ]);
+ *
+ * ul()(
+ *   each(
+ *     () => todos(),
+ *     (todo) => li().textContent(todo.text),
+ *     { key: (todo) => todo.id }
+ *   )
+ * )
+ * ```
+ */
+export function each<T>(
+  items: () => T[],
+  template: (item: T, index: () => number) => Child,
+  options?: EachOptions<T>
+): DocumentFragment {
+  const markerStart = document.createComment("{each");
+  const markerEnd = document.createComment("}each");
+
+  // Track rendered nodes by key or index
+  const nodeMap = new Map<string | number, { node: Node; item: T }>();
+  let currentNodes: Node[] = [];
+
+  const getKey = options?.key ?? ((_item: T, index: number) => index);
+
+  // Render initial items
+  const initialItems = items();
+  const fragment = document.createDocumentFragment();
+  fragment.appendChild(markerStart);
+
+  initialItems.forEach((item, index) => {
+    const key = getKey(item, index);
+    const node = toNode(template(item, () => index));
+    nodeMap.set(key, { node, item });
+    currentNodes.push(node);
+    fragment.appendChild(node);
+  });
+
+  fragment.appendChild(markerEnd);
+
+  // Set up reactive effect
+  effect(() => {
+    const newItems = items();
+    const newKeys = newItems.map((item, index) => getKey(item, index));
+    const newKeySet = new Set(newKeys);
+
+    // Remove nodes that are no longer in the list
+    for (const [key, { node }] of nodeMap) {
+      if (!newKeySet.has(key)) {
+        disposeIfNeeded(node);
+        node.parentNode?.removeChild(node);
+        nodeMap.delete(key);
+      }
+    }
+
+    // Build new node list
+    const newNodes: Node[] = [];
+    let insertBefore: Node = markerEnd;
+
+    // Process items in reverse order for efficient insertion
+    for (let i = newItems.length - 1; i >= 0; i--) {
+      const item = newItems[i];
+      const key = newKeys[i];
+      const existing = nodeMap.get(key);
+
+      let node: Node;
+      if (existing) {
+        node = existing.node;
+        // Move node if needed
+        if (node.nextSibling !== insertBefore) {
+          insertBefore.parentNode?.insertBefore(node, insertBefore);
+        }
+      } else {
+        // Create new node
+        const index = i;
+        node = toNode(template(item, () => index));
+        nodeMap.set(key, { node, item });
+        insertBefore.parentNode?.insertBefore(node, insertBefore);
+      }
+
+      newNodes.unshift(node);
+      insertBefore = node;
+    }
+
+    currentNodes = newNodes;
+  });
+
+  return fragment;
+}

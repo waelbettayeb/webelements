@@ -1,6 +1,6 @@
 import { computed, signal } from "../../src/signals";
-import { div, span, button, h1, h2, p, input, pre, code, header, canvas, nav, a } from "../../src/dom";
-import { REF, ON, VALUE, when, show } from "../../src/core";
+import { div, span, button, h1, h2, p, input, pre, code, header, canvas, nav, a, ul, li } from "../../src/dom";
+import { REF, ON, VALUE, when, show, each, createContext, provide, inject, updateContext } from "../../src/core";
 
 // ============================================
 // Example Registry
@@ -555,6 +555,247 @@ div()(
 }
 
 // ============================================
+// Example 9: List Rendering
+// ============================================
+function listRenderingExample() {
+  const items = signal([
+    { id: 1, text: "Learn ElementsKit", done: false },
+    { id: 2, text: "Build something awesome", done: false },
+    { id: 3, text: "Share with others", done: true },
+  ]);
+  const newItemText = signal("");
+  let nextId = 4;
+
+  const addItem = () => {
+    const text = newItemText().trim();
+    if (text) {
+      items([...items(), { id: nextId++, text, done: false }]);
+      newItemText("");
+    }
+  };
+
+  const toggleItem = (id: number) => {
+    items(items().map(item =>
+      item.id === id ? { ...item, done: !item.done } : item
+    ));
+  };
+
+  const removeItem = (id: number) => {
+    items(items().filter(item => item.id !== id));
+  };
+
+  return div().className("example-card")(
+    h2()("List Rendering"),
+    p().className("description")("Use each() to render reactive lists with efficient keyed updates."),
+    div().className("demo-area")(
+      div()
+        .style.display("flex")
+        .style.flexDirection("column")
+        .style.gap("16px")(
+          // Add item form
+          div()
+            .style.display("flex")
+            .style.gap("8px")(
+              input()
+                .type("text")
+                .placeholder("Add a new item...")
+                .value(newItemText())
+                .style.flex("1")
+                [ON]("input", (e) => newItemText((e.target as HTMLInputElement).value))
+                [ON]("keydown", (e) => {
+                  if (e.key === "Enter") addItem();
+                }),
+              button()
+                .textContent("Add")
+                [ON]("click", addItem)
+            ),
+          // List items
+          ul()
+            .style.listStyle("none")
+            .style.padding("0")
+            .style.margin("0")(
+              each(
+                () => items(),
+                (item) => li()
+                  .style.display("flex")
+                  .style.alignItems("center")
+                  .style.justifyContent("space-between")
+                  .style.padding("12px")
+                  .style.marginBottom("8px")
+                  .style.background("rgba(59, 130, 246, 0.1)")
+                  .style.borderRadius("8px")
+                  .style.border("1px solid rgba(59, 130, 246, 0.2)")(
+                    div()
+                      .style.display("flex")
+                      .style.alignItems("center")
+                      .style.gap("12px")(
+                        input()
+                          .type("checkbox")
+                          .checked(item.done)
+                          [ON]("change", () => toggleItem(item.id)),
+                        span()
+                          .style.textDecoration(item.done ? "line-through" : "none")
+                          .style.opacity(item.done ? "0.6" : "1")
+                          .textContent(item.text)
+                      ),
+                    button()
+                      .textContent("×")
+                      .style.background("transparent")
+                      .style.color("#888")
+                      .style.fontSize("1.2rem")
+                      .style.padding("0 8px")
+                      [ON]("click", () => removeItem(item.id))
+                  ),
+                { key: (item) => item.id }
+              )
+            ),
+          // Stats
+          div()
+            .style.color("#888")
+            .style.fontSize("0.875rem")(
+              computed(() => {
+                const total = items().length;
+                const done = items().filter(i => i.done).length;
+                return `${done}/${total} completed`;
+              })
+            )
+        )
+    ),
+    pre().className("code-block")(
+      code()(`const items = signal([
+  { id: 1, text: "Learn ElementsKit", done: false },
+  { id: 2, text: "Build something", done: true },
+]);
+
+ul()(
+  each(
+    () => items(),
+    (item) => li()(
+      span().textContent(item.text),
+      button().textContent("×")
+        [ON]("click", () => removeItem(item.id))
+    ),
+    { key: (item) => item.id }
+  )
+);`)
+    )
+  );
+}
+
+// ============================================
+// Example 10: Context API
+// ============================================
+
+// Define a theme context
+const ThemeContext = createContext<"light" | "dark">("light");
+
+function contextExample() {
+  // Container where we'll provide context
+  const container = div().className("example-card");
+
+  // Provide initial theme
+  provide(ThemeContext, "dark", container);
+
+  // Child component that uses context
+  function ThemedBox() {
+    const theme = inject(ThemeContext);
+
+    return div()
+      .style.padding("20px")
+      .style.borderRadius("8px")
+      .style.transition("all 0.3s ease")
+      .style.background(computed(() =>
+        theme() === "dark" ? "rgba(30, 30, 40, 0.9)" : "rgba(240, 240, 245, 0.9)"
+      ))
+      .style.color(computed(() =>
+        theme() === "dark" ? "#e5e5e5" : "#1a1a1a"
+      ))
+      .style.border(computed(() =>
+        theme() === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)"
+      ))(
+        div()
+          .style.fontWeight("bold")
+          .style.marginBottom("8px")(
+            "Current theme: ",
+            computed(() => theme())
+          ),
+        p().style.margin("0").style.opacity("0.8")(
+          "This box reads the theme from context. No prop drilling needed!"
+        )
+      );
+  }
+
+  // Another nested child
+  function NestedComponent() {
+    const theme = inject(ThemeContext);
+
+    return div()
+      .style.marginTop("12px")
+      .style.padding("12px")
+      .style.borderRadius("6px")
+      .style.background(computed(() =>
+        theme() === "dark" ? "rgba(59, 130, 246, 0.2)" : "rgba(59, 130, 246, 0.1)"
+      ))
+      .style.border(computed(() =>
+        theme() === "dark" ? "1px solid rgba(59, 130, 246, 0.4)" : "1px solid rgba(59, 130, 246, 0.3)"
+      ))(
+        span()
+          .style.fontSize("0.875rem")(
+            "Nested component also reads theme: ",
+            span()
+              .style.fontWeight("bold")
+              .textContent(computed(() => theme()))
+          )
+      );
+  }
+
+  return container(
+    h2()("Context API"),
+    p().className("description")("Share state between components without prop drilling using provide/inject."),
+    div().className("demo-area")(
+      div()
+        .style.display("flex")
+        .style.flexDirection("column")
+        .style.gap("16px")(
+          div()
+            .style.display("flex")
+            .style.gap("8px")(
+              button()
+                .textContent("Light Theme")
+                [ON]("click", () => updateContext(ThemeContext, "light")),
+              button()
+                .textContent("Dark Theme")
+                [ON]("click", () => updateContext(ThemeContext, "dark"))
+            ),
+          ThemedBox(),
+          NestedComponent()
+        )
+    ),
+    pre().className("code-block")(
+      code()(`// Create a context with default value
+const ThemeContext = createContext<"light" | "dark">("light");
+
+// Provide context to a subtree
+const app = div();
+provide(ThemeContext, "dark", app);
+
+// Inject in any child component
+function ThemedBox() {
+  const theme = inject(ThemeContext);
+
+  return div()
+    .style.background(computed(() =>
+      theme() === "dark" ? "#1a1a1a" : "#fff"
+    ));
+}
+
+// Update context value
+button()[ON]("click", () => updateContext(ThemeContext, "light"));`)
+    )
+  );
+}
+
+// ============================================
 // Example Registry
 // ============================================
 const examples: Example[] = [
@@ -565,6 +806,8 @@ const examples: Example[] = [
   { id: "toggle", title: "Conditional Display", icon: "👁", component: conditionalExample },
   { id: "conditional", title: "Conditional Rendering", icon: "🔀", component: conditionalRenderingExample },
   { id: "reactive-children", title: "Reactive Children", icon: "🧩", component: reactiveChildrenExample },
+  { id: "list-rendering", title: "List Rendering", icon: "📋", component: listRenderingExample },
+  { id: "context", title: "Context API", icon: "🔄", component: contextExample },
   { id: "canvas", title: "Canvas Drawing", icon: "✏️", component: refExample },
 ];
 
