@@ -10,7 +10,7 @@ export const ON: unique symbol = Symbol("on");
 export const CLASSES: unique symbol = Symbol("classes");
 export const ATTR: unique symbol = Symbol("attr");
 
-// NOTE: typescript doens't allow to extract setter argument types directly
+// NOTE: typescript doesn't allow to extract setter argument types directly
 // check: https://github.com/microsoft/TypeScript/issues/21759
 export type ReactiveValue<T> = (() => T) | T;
 
