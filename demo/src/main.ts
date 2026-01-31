@@ -1,10 +1,52 @@
 import { computed, signal } from "../../src/signals";
 import { span, div, button } from "../../src/dom";
 import { REF, ON } from "../../src/core";
+import {
+  attributeChangedCallback,
+  Attributes,
+  CustomElementLifecycle,
+} from "../../src/attributes";
 
 const value = signal(0);
 const doubleValue = computed(() => value() * 2);
 const doubledMessage = computed(() => `The double value is: ${doubleValue()}`);
+
+class MyElement extends HTMLElement implements CustomElementLifecycle {
+  #connected = signal(false);
+  static attributes: Attributes<MyElement> = {
+    count(this, value) {
+      this.count = Number(value);
+    },
+  };
+  static observedAttributes: string[] = Object.keys(MyElement.attributes);
+  attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback.call(this, name, newValue, oldValue);
+  }
+
+  #count = signal(0);
+  set count(v: number) {
+    this.#count(v);
+  }
+  get count() {
+    return this.#count();
+  }
+
+  connectedCallback() {
+    const children = div()(
+      this.#count(),
+      button()[ON]("click", () => {
+        this.count = this.count + 1;
+      })("Click"),
+    );
+
+    this.append(children);
+    this.#connected(true);
+  }
+  disconnectedCallback() {
+    this.#connected(false);
+  }
+}
+customElements.define("custom-element", MyElement);
 
 const myelement = div()
   [REF]((el) => console.log("Created element:", el))
@@ -21,6 +63,8 @@ const myelement = div()
     .style.display("block")
     .textContent(computed(() => `Current value: ${value()}`)),
   doubledMessage,
+  document.createElement("br"),
+  document.createElement("custom-element"),
 );
 
 const interval = setInterval(() => {
