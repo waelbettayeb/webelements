@@ -24,10 +24,13 @@ export function attributeChangedCallback<
     };
   },
 >(this: T, name: string, oldValue: string | null, newValue: string | null) {
-  const cls = this.constructor;
-  if (name in cls.attributes) {
-    cls.attributes[name].call(this, newValue, oldValue);
-    return true;
+  let cls: any = this.constructor;
+  while (cls) {
+    if (cls.attributes && name in cls.attributes) {
+      cls.attributes[name].call(this, newValue, oldValue);
+      return true;
+    }
+    cls = Object.getPrototypeOf(cls);
   }
 }
 
