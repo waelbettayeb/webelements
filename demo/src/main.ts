@@ -15,7 +15,7 @@ const doubledMessage = computed(() => `The double value is: ${doubleValue()}`);
 class MyElement extends HTMLElement implements ElementLifecycle {
   #connected = signal(false);
 
-  // #region Attributes
+  // {{{ Attributes
   static attributes: Attributes<MyElement> = {
     count(value) {
       this.count = Number(value);
@@ -23,7 +23,7 @@ class MyElement extends HTMLElement implements ElementLifecycle {
   };
   static observedAttributes: string[] = observedAttributes(MyElement);
   attributeChangedCallback = attributeChangedCallback.bind(this);
-  // #endregion
+  // }}}
 
   #count = signal(0);
   set count(v: number) {
