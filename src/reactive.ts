@@ -31,7 +31,9 @@ import { signal, Signal } from "./signals";
  * }
  * ```
  */
-export function reactive<This extends object, Value>() {
+export function reactive<This extends object, Value>(
+  initialSignal?: Signal<Value>,
+) {
   const signalStore = new WeakMap<This, Signal<Value>>();
 
   return (
@@ -68,7 +70,7 @@ export function reactive<This extends object, Value>() {
     });
 
     return function (this: This, initialValue: Value): Value {
-      const sig = signal(initialValue);
+      const sig = initialSignal ?? signal(initialValue);
       signalStore.set(this, sig);
       return initialValue;
     };
