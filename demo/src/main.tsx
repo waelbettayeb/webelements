@@ -8,7 +8,7 @@ import {
   observedAttributes,
 } from "elements-kit/attributes";
 import { reactive } from "elements-kit/reactive";
-import { Slot } from "elements-kit/slot";
+import { createSlot } from "elements-kit/slot";
 
 const value = signal(0);
 const doubleValue = computed(() => value() * 2);
@@ -35,7 +35,7 @@ class MyElement extends HTMLElement implements ElementLifecycle {
 
   // {{{ slots
   static slots = ["children"] as const;
-  readonly slots = { children: new Slot() };
+  readonly slots = { children: createSlot() };
   // }}}
 
   @reactive()
@@ -44,7 +44,7 @@ class MyElement extends HTMLElement implements ElementLifecycle {
   connectedCallback() {
     this.append(
       <div>
-        {this.slots.children.slot(<span>Default content</span>)}
+        {this.slots.children(<span>Default content</span>)}
         <button onClick={() => this.count++}>
           {computed(() => `Increment ${this.count}`)}
         </button>
