@@ -3,7 +3,7 @@ export class Slot {
   private readonly start = document.createComment("{");
   private readonly end = document.createComment("}");
 
-  slot() {
+  slot(defaultContent?: string | Node) {
     const fragment = document.createDocumentFragment();
     if (this.isMounted()) {
       const range = document.createRange();
@@ -14,6 +14,14 @@ export class Slot {
     }
     fragment.appendChild(this.start);
     fragment.appendChild(this.end);
+    if (defaultContent) {
+      // TODO: refactor this
+      const defaultNode =
+        typeof defaultContent === "string"
+          ? document.createTextNode(defaultContent)
+          : defaultContent;
+      fragment.insertBefore(defaultNode, this.end);
+    }
     return fragment;
   }
 

@@ -17,34 +17,54 @@
   ],
   "author": "@waelbettayeb",
   "license": "MIT",
-  "main": "./dist/core.js",
+  "main": "./dist/core.mjs",
   "types": "./dist/core.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "import": "./dist/core.js",
+      "import": "./dist/core.mjs",
       "types": "./dist/core.d.ts"
     },
     "./signals": {
-      "import": "./dist/signals.js",
+      "import": "./dist/signals.mjs",
       "types": "./dist/signals.d.ts"
     },
     "./dom": {
-      "import": "./dist/dom.js",
+      "import": "./dist/dom.mjs",
       "types": "./dist/dom.d.ts"
+    },
+    "./reactive": {
+      "import": "./dist/reactive.mjs",
+      "types": "./dist/reactive.d.ts"
+    },
+    "./slot": {
+      "import": "./dist/slot.mjs",
+      "types": "./dist/slot.d.ts"
+    },
+    "./attributes": {
+      "import": "./dist/attributes.mjs",
+      "types": "./dist/attributes.d.ts"
+    },
+    "./jsx-runtime": {
+      "import": "./dist/jsx-runtime.mjs",
+      "types": "./dist/jsx-runtime.d.ts"
+    },
+    "./jsx-dev-runtime": {
+      "import": "./dist/jsx-runtime.mjs",
+      "types": "./dist/jsx-runtime.d.ts"
     }
   },
   "scripts": {
     "demo": "pnpx vite ./demo -c demo/vite.config.ts",
-    "build": "tsdown"
+    "build": "tsdown",
+    "watch": "tsdown -w"
   },
   "packageManager": "pnpm@10.26.2",
   "devDependencies": {
-    "tsdown": "0.19.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "tsdown": "0.20.3",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "alien-signals": "^3.1.2"

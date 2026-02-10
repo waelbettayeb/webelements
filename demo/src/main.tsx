@@ -1,14 +1,14 @@
-import { computed, signal } from "../../src/signals";
-import { span, div, button } from "../../src/dom";
-import { REF, ON } from "../../src/core";
+import { REF, ON } from "elements-kit";
+import { computed, signal } from "elements-kit/signals";
+import { span, div, button } from "elements-kit/dom";
 import {
   attrChange,
   Attributes,
   ElementLifecycle,
   observedAttributes,
-} from "../../src/attributes";
-import { Slot } from "../../src/slot";
-import { reactive } from "../../src/reactive";
+} from "elements-kit/attributes";
+import { reactive } from "elements-kit/reactive";
+import { Slot } from "elements-kit/slot";
 
 const value = signal(0);
 const doubleValue = computed(() => value() * 2);
@@ -16,8 +16,6 @@ const doubledMessage = computed(() => `The double value is: ${doubleValue()}`);
 
 class MyElement extends HTMLElement implements ElementLifecycle {
   #connected = signal(false);
-
-  readonly child = new Slot();
 
   // {{{ Attributes
   static attributes: Attributes<MyElement> = {
@@ -35,21 +33,23 @@ class MyElement extends HTMLElement implements ElementLifecycle {
   }
   // }}}
 
-  /// {{{ Count
-  @reactive()
-  count: number = 0;
+  // {{{ slots
+  static slots = ["children"] as const;
+  readonly slots = { children: new Slot() };
   // }}}
 
-  connectedCallback() {
-    const children = div()(
-      computed(() => this.count),
-      this.child.slot(),
-      button()[ON]("click", () => {
-        this.count = this.count + 1;
-      })("Click"),
-    );
+  @reactive()
+  count: number = 0;
 
-    this.append(children);
+  connectedCallback() {
+    this.append(
+      <div>
+        {this.slots.children.slot(<span>Default content</span>)}
+        <button onClick={() => this.count++}>
+          {computed(() => `Increment ${this.count}`)}
+        </button>
+      </div>,
+    );
     this.#connected(true);
   }
   disconnectedCallback() {

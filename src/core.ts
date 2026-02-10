@@ -135,7 +135,7 @@ function setterOrValue<T extends object = object>(
   });
 }
 
-function toNode(c: ElementBuilder | Element | string | number) {
+export function toNode(c: ElementBuilder | Node | Element | string | number) {
   if (typeof c === "string" || typeof c === "number") {
     return document.createTextNode(String(c));
   }

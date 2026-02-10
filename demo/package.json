@@ -1,0 +1,18 @@
+{
+  "name": "elements-kit-demo",
+  "type": "module",
+  "version": "0.0.1",
+  "author": "@waelbettayeb",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite"
+  },
+  "packageManager": "pnpm@10.26.2",
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "elements-kit": "link:.."
+  }
+}
