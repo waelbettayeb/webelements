@@ -91,37 +91,3 @@ export function observedAttributes(cls) {
   }
   return Array.from(s);
 }
-
-/**
- * Base class for custom elements with reactive attributes.
- * Automatically handles attribute changes using the static `attributes` map.
- *
- * @example
- * ```ts
- * class MyElement extends ReactiveElement<MyElement> {
- *   static attributes = {
- *     count(value) {
- *       this.count = Number(value);
- *     }
- *   };
- *
- *   count = 0;
- * }
- * customElements.define('my-element', MyElement);
- * ```
- */
-export class ReactiveElement<T> extends HTMLElement {
-  static attributes: Attributes<any> = {};
-
-  static get observedAttributes() {
-    return observedAttributes(this);
-  }
-
-  attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null,
-  ) {
-    attrChange.call(this as any, name, oldValue, newValue);
-  }
-}
