@@ -6,7 +6,7 @@ export const DISPOSE: unique symbol = Symbol("dispose");
 export const VALUE: unique symbol = Symbol("value");
 export const EFFECT: unique symbol = Symbol("effect");
 
-class ElementBuilder<T extends Element = Element> {
+export class ElementBuilder<T extends Element = Element> {
   /** The underlying DOM element */
   private [VALUE]: T;
   // TODO: should we track effects separately?
@@ -43,7 +43,7 @@ class ElementBuilder<T extends Element = Element> {
   }
 
   children(
-    ...children: ReactiveValue<ElementBuilder | Element | string | number>[]
+    ...children: ReactiveValue<ElementBuilder | Node | string | number>[]
   ) {
     const el = this[VALUE];
     if (children.length === 0) return el;

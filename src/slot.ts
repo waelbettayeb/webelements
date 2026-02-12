@@ -1,9 +1,11 @@
+import { ElementBuilder } from "./core";
+
 class Slot {
   // Using comments as markers to avoid extra elements in the DOM
   private readonly start = document.createComment("{");
   private readonly end = document.createComment("}");
 
-  slot(defaultContent?: string | Node) {
+  slot(defaultContent?: string | Node | ElementBuilder) {
     const fragment = document.createDocumentFragment();
     if (this.isMounted()) {
       const range = document.createRange();
@@ -19,7 +21,9 @@ class Slot {
       const defaultNode =
         typeof defaultContent === "string"
           ? document.createTextNode(defaultContent)
-          : defaultContent;
+          : defaultContent instanceof Node
+            ? defaultContent
+            : defaultContent.ref();
       fragment.insertBefore(defaultNode, this.end);
     }
     return fragment;

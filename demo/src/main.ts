@@ -42,12 +42,13 @@ class MyElement extends HTMLElement implements ElementLifecycle {
 
   connectedCallback() {
     this.append(
-      <div>
-        {this.slots.children(<span>Default content</span>)}
-        <button onClick={() => this.count++}>
-          {computed(() => `Increment ${this.count}`)}
-        </button>
-      </div>,
+      div().children(
+        this.slots.children(span().textContent("This is a slot content")),
+        button()
+          .textContent("Increment")
+          .on("click", () => this.count++),
+        span().textContent(computed(() => `Current count: ${this.count}`)),
+      ),
     );
     this.#connected(true);
   }
@@ -57,29 +58,30 @@ class MyElement extends HTMLElement implements ElementLifecycle {
 }
 customElements.define("custom-element", MyElement);
 
-const myelement = div()
-  .style.backgroundColor("lightblue")
-  .style.padding("20px")
-  .classList.add("my-element")
-  .children(
-    "Click the button to increment the value:",
-    document.createElement("br"),
-    button()
-      .textContent("Increment")
-      .on("click", () => {
-        value(value() + 1);
-      }),
-    span()
-      .style.display("block")
-      .textContent(computed(() => `Current value: ${value()}`)),
-    doubledMessage,
-    document.createElement("br"),
-    document.createElement("custom-element"),
-  );
+const myelement = () =>
+  div()
+    .style.backgroundColor("lightblue")
+    .style.padding("20px")
+    .classList.add("my-element")
+    .children(
+      "Click the button to increment the value:",
+      document.createElement("br"),
+      button()
+        .textContent("Increment")
+        .on("click", () => {
+          value(value() + 1);
+        }),
+      span()
+        .style.display("block")
+        .textContent(computed(() => `Current value: ${value()}`)),
+      doubledMessage,
+      document.createElement("br"),
+      document.createElement("custom-element"),
+    );
 
 const interval = setInterval(() => {
   console.log("incrementing", value());
   value(value() + 1);
 }, 1000);
 
-document.getElementById("app")?.appendChild(myelement);
+document.getElementById("app")?.appendChild(myelement());
