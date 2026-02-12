@@ -1,9 +1,8 @@
 import { computed, signal } from "elements-kit/signals";
-import { span, div, button } from "elements-kit/dom";
+import { span, div, button, Lifecycle } from "elements-kit/dom";
 import {
   attrChange,
   Attributes,
-  ElementLifecycle,
   observedAttributes,
 } from "elements-kit/attributes";
 import { reactive } from "elements-kit/reactive";
@@ -13,7 +12,7 @@ const value = signal(0);
 const doubleValue = computed(() => value() * 2);
 const doubledMessage = computed(() => `The double value is: ${doubleValue()}`);
 
-class MyElement extends HTMLElement implements ElementLifecycle {
+class MyElement extends HTMLElement implements Lifecycle {
   #connected = signal(false);
 
   // {{{ Attributes

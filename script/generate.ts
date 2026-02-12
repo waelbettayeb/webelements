@@ -37,7 +37,23 @@ function generateHTMLElementBuilders() {
 
   fs.appendFileSync(
     filename,
-    'import { reactive, ReactiveElement, type ReactiveValue, type ReactiveChain } from "./core";\n',
+    'import { build, ReactiveElement, type ValueOrReactive, type Chain } from "./core";\n',
+  );
+
+  fs.appendFileSync(
+    filename,
+    `
+export interface Lifecycle {
+  connectedCallback?(): void;
+  disconnectedCallback?(): void;
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void;
+  adoptedCallback?(): void; // This one is rarely used, so optional
+}
+`,
   );
 
   TAG_MAPS.forEach((mapName) => {
@@ -60,7 +76,7 @@ function generateHTMLElementBuilders() {
       fs.appendFileSync(
         filename,
         `
-export const ${finalName} = () => reactive(document.createElement("${name}") as unknown as ${elementCls}) as ReactiveElement<${elementCls}> & ${elementCls}Builder;
+export const ${finalName} = () => build(document.createElement("${name}") as unknown as ${elementCls}) as ReactiveElement<${elementCls}> & ${elementCls}Builder;
             `,
       );
     }
@@ -91,7 +107,7 @@ function appendGetters(property: ts.Symbol) {
     const typeString = checker.typeToString(paramType);
     fs.appendFileSync(
       filename,
-      `  ${name}: ${getterTypeString} & ((value: ReactiveValue<${typeString}>)=>this);\n`,
+      `  ${name}: ${getterTypeString} & ((value: ValueOrReactive<${typeString}>)=>this);\n`,
     );
     return true;
   }
@@ -111,14 +127,14 @@ function appendSetters(property: ts.Symbol) {
     let typeString = checker.typeToString(paramType);
     fs.appendFileSync(
       filename,
-      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`,
+      `  ${name}(value: ValueOrReactive<${typeString}>): this;\n`,
     );
   } else if (getter && !isReadonly(property)) {
     const propType = checker.getTypeOfSymbolAtLocation(property, getter);
     let typeString = checker.typeToString(propType);
     fs.appendFileSync(
       filename,
-      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`,
+      `  ${name}(value: ValueOrReactive<${typeString}>): this;\n`,
     );
   }
 }
@@ -212,19 +228,19 @@ function writeProperties(type: ts.Type) {
           const typeString = checker.typeToString(paramType);
           fs.appendFileSync(
             filename,
-            `  ${name}: ReactiveChain<this, ${objectTypeStr}> & ((value: ReactiveValue<${typeString}>) => this);\n`,
+            `  ${name}: Chain<this, ${objectTypeStr}> & ((value: ValueOrReactive<${typeString}>) => this);\n`,
           );
         } else if (propertySignature && !isReadonly(prop)) {
           const typeString = checker.typeToString(propType);
           fs.appendFileSync(
             filename,
-            `  ${name}: ReactiveChain<this, ${objectTypeStr}> & ((value: ReactiveValue<${typeString}>) => this);\n`,
+            `  ${name}: Chain<this, ${objectTypeStr}> & ((value: ValueOrReactive<${typeString}>) => this);\n`,
           );
         } else {
           // Read-only chainable object - sub-properties only
           fs.appendFileSync(
             filename,
-            `  ${name}: ReactiveChain<this, ${objectTypeStr}>;\n`,
+            `  ${name}: Chain<this, ${objectTypeStr}>;\n`,
           );
         }
         return;

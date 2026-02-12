@@ -39,17 +39,6 @@ export function attrChange<
 
 export type Attributes<T> = Record<string, AttrChangeHandler<T>>;
 
-export interface ElementLifecycle {
-  connectedCallback?(): void;
-  disconnectedCallback?(): void;
-  attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null,
-  ): void;
-  adoptedCallback?(): void; // This one is rarely used, so optional
-}
-
 /**
  * Returns a deduplicated array of all observed attribute names for a custom element class and its ancestors.
  *
