@@ -145,7 +145,7 @@ function isObject(v: unknown): v is Record<string | symbol, unknown> {
 }
 
 export function build<T extends Element>(el: T) {
-  return ElementBuilder.create(el);
+  return ElementBuilder.create(el) as unknown as ReactiveElementOf<T>;
 }
 
 /**
@@ -243,7 +243,7 @@ type ReactiveSetter<R, T> = T extends ChainableType
  * customElements.define("my-element", MyElement);
  *
  * const myEl = () =>
- *   reactive(document.createElement("my-element") as MyElement) as unknown as ReactiveElementOf<MyElement>;
+ *   reactive(document.createElement("my-element") as MyElement);
  *
  * // Full type support for both own and inherited properties:
  * myEl().greeting("world").style.padding("20px").id("main");
