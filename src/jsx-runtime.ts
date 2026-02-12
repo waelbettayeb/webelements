@@ -59,3 +59,23 @@ function h(
 }
 
 export { h as jsx, h as jsxs, h as jsxDEV };
+
+type Map<T> = {
+  [tag in keyof T]: Partial<Omit<T[tag], "children">> & {
+    children?: Children[] | Children;
+    [event: `on${string}`]: (event: Event) => void;
+  };
+};
+
+export namespace JSX {
+  // The return type of JSX expressions
+  export type Element = HTMLElement;
+
+  // Map of HTML tag names to their props
+  export type IntrinsicElements = Map<HTMLElementTagNameMap>;
+
+  // Tell TypeScript that the 'children' prop is special
+  export interface ElementChildrenAttribute {
+    children: {};
+  }
+}
