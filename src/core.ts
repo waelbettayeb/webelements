@@ -43,7 +43,7 @@ export class ElementBuilder<T extends Element = Element> {
   }
 
   children(
-    ...children: ReactiveValue<ElementBuilder | Node | string | number>[]
+    ...children: ValueOrReactive<ElementBuilder | Node | string | number>[]
   ) {
     const el = this[VALUE];
     if (children.length === 0) return el;
@@ -144,19 +144,30 @@ function isObject(v: unknown): v is Record<string | symbol, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
 
-export function reactive<T extends Element>(el: T) {
+export function build<T extends Element>(el: T) {
   return ElementBuilder.create(el);
 }
 
+/**
+ * Callable overloads matching the Proxy apply trap → ref() behavior.
+ * Calling a reactive element as a function delegates to ref():
+ *   el()            → returns the raw DOM element
+ *   el((ref) => {}) → applies a side-effect, returns the builder for chaining
+ */
+interface RefCallable<T extends Element> {
+  (): T;
+  (apply: (ref: T) => void | (() => void)): this;
+}
+
 export type ReactiveElement<T extends Element> = ElementBuilder<T> &
-  ReactiveBuilder<ElementBuilder<T>, T>;
+  RefCallable<T>;
 
 // NOTE: typescript doens't allow to extract setter argument types directly
 // check: https://github.com/microsoft/TypeScript/issues/21759
-export type ReactiveValue<T> = (() => T) | T;
+export type ValueOrReactive<T> = (() => T) | T;
 
-type ReactiveArray<T extends any[]> = {
-  [K in keyof T]: ReactiveValue<T[K]> | T[K];
+type ValueOrReactiveArray<T extends any[]> = {
+  [K in keyof T]: ValueOrReactive<T[K]> | T[K];
 };
 
 /**
@@ -176,12 +187,71 @@ type WritableKeys<T> = {
  *   .style("padding: 20px;")     // setter
  *   .style.padding("20px")       // sub-property chaining
  */
-export type ReactiveChain<R, T> = T extends object
+export type Chain<R, T> = T extends object
   ? {
-      [K in WritableKeys<T>]: ReactiveBuilder<R, T[K]>;
+      [K in WritableKeys<T>]: Builder<R, T[K]>;
     }
   : {};
 
-export type ReactiveBuilder<R, T = R> = T extends (...args: infer U) => unknown
-  ? (...value: ReactiveArray<U>) => R
-  : (value?: ReactiveValue<T>) => R;
+export type Builder<R, T = R> = T extends (...args: infer U) => unknown
+  ? (...value: ValueOrReactiveArray<U>) => R
+  : (value?: ValueOrReactive<T>) => R;
+
+/**
+ * Types eligible for sub-property chaining (e.g., `.style.padding("20px")`).
+ */
+type ChainableType =
+  | CSSStyleDeclaration
+  | DOMTokenList
+  | DOMStringMap
+  | StylePropertyMap;
+
+/**
+ * Filters keys to only writable data properties.
+ * Excludes methods (function-valued properties) and event handlers (`on*`).
+ */
+type DataPropertyKeys<T> = {
+  [K in keyof T]: K extends `on${string}`
+    ? never
+    : T[K] extends (...args: any[]) => any
+      ? never
+      : K;
+}[keyof T];
+
+/**
+ * Reactive setter for a single property.
+ * Chainable types (CSSStyleDeclaration, DOMTokenList, etc.) get both
+ * sub-property chaining and direct setter support.
+ */
+type ReactiveSetter<R, T> = T extends ChainableType
+  ? Chain<R, T> & ((value: ValueOrReactive<T>) => R)
+  : (value: ValueOrReactive<T>) => R;
+
+/**
+ * A fully-typed reactive element builder for any Element type.
+ * Automatically maps all writable data properties into reactive setters.
+ *
+ * Use this for custom elements instead of needing generated builder interfaces.
+ *
+ * @example
+ * ```ts
+ * import { reactive, type ReactiveElementOf } from "elements-kit";
+ *
+ * class MyElement extends HTMLElement {
+ *   greeting = "hello";
+ * }
+ * customElements.define("my-element", MyElement);
+ *
+ * const myEl = () =>
+ *   reactive(document.createElement("my-element") as MyElement) as unknown as ReactiveElementOf<MyElement>;
+ *
+ * // Full type support for both own and inherited properties:
+ * myEl().greeting("world").style.padding("20px").id("main");
+ * ```
+ */
+export type ReactiveElementOf<T extends Element> = ElementBuilder<T> & {
+  [K in WritableKeys<T> & DataPropertyKeys<T> & keyof T]: ReactiveSetter<
+    ReactiveElementOf<T>,
+    T[K]
+  >;
+};
