@@ -35,9 +35,9 @@
       "import": "./dist/dom.mjs",
       "types": "./dist/dom.d.ts"
     },
-    "./reactive": {
-      "import": "./dist/reactive.mjs",
-      "types": "./dist/reactive.d.ts"
+    "./decorators": {
+      "import": "./dist/decorators.mjs",
+      "types": "./dist/decorators.d.ts"
     },
     "./slot": {
       "import": "./dist/slot.mjs",

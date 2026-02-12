@@ -7,7 +7,7 @@ export default defineConfig({
     "src/signals.ts",
     "src/dom.ts",
     "src/attributes.ts",
-    "src/reactive.ts",
+    "src/decorators.ts",
     "src/slot.ts",
     "src/jsx-runtime.ts",
   ],
