@@ -38,8 +38,8 @@ function generateHTMLElementBuilders() {
     filename,
     `
 import type { ReactiveValue } from "./types";
-import { isReactiveValue, effect } from "./signals";
-`
+import { isReactive, effect } from "./signals";
+`,
   );
 
   const tags = new Set();
@@ -52,7 +52,7 @@ import { isReactiveValue, effect } from "./signals";
     for (const [name, tag] of tagNameMap.members) {
       const elementType = checker.getTypeOfSymbolAtLocation(
         tag,
-        tag.valueDeclaration!
+        tag.valueDeclaration!,
       );
       processTypeHierarchy(elementType);
       const elementCls = checker.typeToString(elementType);
@@ -66,7 +66,7 @@ import { isReactiveValue, effect } from "./signals";
 export const ${finalName} = () => new ${elementCls}Builder(document.createElement("${name}")${
           elementCls !== "HTMLElement" ? ` as unknown as ${elementCls}` : ""
         });
-      `
+      `,
       );
     }
   });
@@ -113,7 +113,7 @@ function writeProperties(type: ts.Type) {
         console.log(
           "Object chaining not supported yet for",
           name,
-          checker.typeToString(propType)
+          checker.typeToString(propType),
         );
       }
     } else if (property) {
@@ -123,7 +123,7 @@ function writeProperties(type: ts.Type) {
         console.log(
           "Object chaining not supported yet for",
           name,
-          checker.typeToString(propType)
+          checker.typeToString(propType),
         );
       }
     }
@@ -136,7 +136,7 @@ function writeProperties(type: ts.Type) {
         filename,
         `
   ${name}(value: ReactiveValue<${typeString}>): this {
-    if (isReactiveValue(value)) {
+    if (isReactive(value)) {
       effect(() => {
         this.el.${name} = value();
       });
@@ -145,7 +145,7 @@ function writeProperties(type: ts.Type) {
     this.el.${name} = value;
     return this;
   }
-`
+`,
       );
     } else if (property && !isReadonly(prop)) {
       const propType = checker.getTypeOfSymbolAtLocation(prop, property);
@@ -154,7 +154,7 @@ function writeProperties(type: ts.Type) {
         filename,
         `
   ${name}(value: ReactiveValue<${typeString}>): this {
-    if (isReactiveValue(value)) {
+    if (isReactive(value)) {
       effect(() => {
         this.el.${name} = value();
       });
@@ -163,7 +163,7 @@ function writeProperties(type: ts.Type) {
     this.el.${name} = value;
     return this;
   }
-`
+`,
       );
       // fs.appendFileSync(
       //   filename,
@@ -228,7 +228,7 @@ class ${typeName}Builder${extendsClause} {
   constructor(el: ${typeName}) {
     ${uniqueBaseNames.length > 0 ? "super(el);" : "this.el = el;"}
   }
-`
+`,
   );
 
   // Get only own properties (not inherited)

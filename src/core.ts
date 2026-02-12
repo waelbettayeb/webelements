@@ -1,4 +1,4 @@
-import { effect, isReactiveValue } from "./signals";
+import { effect, isReactive } from "./signals";
 import { createSlot } from "./slot";
 
 export const DISPOSABLES: unique symbol = Symbol("disposables");
@@ -49,7 +49,7 @@ export class ElementBuilder<T extends Element = Element> {
     if (children.length === 0) return el;
 
     children.forEach((child) => {
-      if (isReactiveValue(child)) {
+      if (isReactive(child)) {
         const slot = createSlot();
         el.appendChild(slot());
 
@@ -99,7 +99,7 @@ class ChainContext<T> {
   }
 
   setter(value) {
-    if (isReactiveValue(value)) {
+    if (isReactive(value)) {
       this.builder[DISPOSABLES].add(
         effect(() => {
           this.chain[this.key] = value();
