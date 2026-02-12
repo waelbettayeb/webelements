@@ -13,7 +13,7 @@ function Elements(property1, property2, children): ReactiveElement{
     const value = signal(0)
     return div()
         .style.color("green")
-        .title("tooltip")(
+        .title("tooltip").children(
             header("This is my header"),
             main("Second children"),
             b(value),
@@ -38,15 +38,15 @@ document.body.appendChild(element(Elements))
 
 ## Event Listeners
 
-Attach event listeners using the `.[ON]()` method with full TypeScript inference and standard [EventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options).
+Attach event listeners using the `.on()` method with full TypeScript inference and standard [EventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options).
 
 ```ts
-import { ON } from "elements-kit/core"
+
 const count = signal(0);
 
 button()
   .textContent("Click me")
-  [ON]("click", (e) => {
+  .on("click", (e) => {
     count(count() + 1);
     console.log("Clicked!", e.target);
   }, { once: true });
@@ -69,9 +69,9 @@ const canvas = reactive(canvasRef)
 
 ## Element Reference
 
-Access the underlying DOM element directly using the `[REF]` symbol when you need to use native APIs or third-party libraries.
+Access the underlying DOM element directly using the `ref` method when you need to use native APIs or third-party libraries.
 
-> **Note:** Direct DOM manipulation via `[REF]` bypasses reactivity. Wrap changes in `effect()` for reactive updates.
+> **Note:** Direct DOM manipulation via `ref` bypasses reactivity. Wrap changes in `effect()` for reactive updates.
 
 ```ts
 import { REF } from "elements-kit/core";
@@ -81,7 +81,7 @@ const canvasRef = signal<HTMLCanvasElement | null>(null);
 const color = signal("blue");
 
 const chart = canvas()
-  [REF]((canvas) => {
+  .ref((canvas) => {
     canvasRef(canvas); // Store reference for later use
     
     const ctx = canvas.getContext("2d");
@@ -98,6 +98,8 @@ const chart = canvas()
 
 // Later: change color triggers redraw
 color("red");
+
+const chartEl = chart.ref()
 ```
 
 ## TO-DO

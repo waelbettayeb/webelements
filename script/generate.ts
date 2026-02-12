@@ -34,13 +34,10 @@ const TAG_MAPS = [
 const tags = new Set();
 function generateHTMLElementBuilders() {
   fs.writeFileSync(filename, "// Auto-generated file\n\n");
+
   fs.appendFileSync(
     filename,
-    'import type { ReactiveValue } from "./types";\n'
-  );
-  fs.appendFileSync(
-    filename,
-    'import { reactive, ReactiveElement } from "./core";\n'
+    'import { reactive, ReactiveElement, type ReactiveValue, type ReactiveChain } from "./core";\n',
   );
 
   TAG_MAPS.forEach((mapName) => {
@@ -51,7 +48,7 @@ function generateHTMLElementBuilders() {
     for (const [name, tag] of tagNameMap.members) {
       const elementType = checker.getTypeOfSymbolAtLocation(
         tag,
-        tag.valueDeclaration!
+        tag.valueDeclaration!,
       );
       processTypeHierarchy(elementType);
       const elementCls = checker.typeToString(elementType);
@@ -64,7 +61,7 @@ function generateHTMLElementBuilders() {
         filename,
         `
 export const ${finalName} = () => reactive(document.createElement("${name}") as unknown as ${elementCls}) as ReactiveElement<${elementCls}> & ${elementCls}Builder;
-            `
+            `,
       );
     }
   });
@@ -94,7 +91,7 @@ function appendGetters(property: ts.Symbol) {
     const typeString = checker.typeToString(paramType);
     fs.appendFileSync(
       filename,
-      `  ${name}: ${getterTypeString} & ((value: ReactiveValue<${typeString}>)=>this);\n`
+      `  ${name}: ${getterTypeString} & ((value: ReactiveValue<${typeString}>)=>this);\n`,
     );
     return true;
   }
@@ -114,16 +111,59 @@ function appendSetters(property: ts.Symbol) {
     let typeString = checker.typeToString(paramType);
     fs.appendFileSync(
       filename,
-      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`,
     );
   } else if (getter && !isReadonly(property)) {
     const propType = checker.getTypeOfSymbolAtLocation(property, getter);
     let typeString = checker.typeToString(propType);
     fs.appendFileSync(
       filename,
-      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`
+      `  ${name}(value: ReactiveValue<${typeString}>): this;\n`,
     );
   }
+}
+
+// Types that should NOT have object chaining (Element/Node-like types)
+const NON_CHAINABLE_TYPES = new Set([
+  "Element",
+  "Node",
+  "EventTarget",
+  "HTMLElement",
+  "SVGElement",
+  "SVGGraphicsElement",
+  "MathMLElement",
+  "Document",
+  "ShadowRoot",
+  "Window",
+  "ParentNode",
+  "ChildNode",
+  "DocumentFragment",
+]);
+
+// Only these types get object sub-property chaining
+const CHAINABLE_TYPES = new Set([
+  "CSSStyleDeclaration",
+  "DOMTokenList",
+  "DOMStringMap",
+  "StylePropertyMap",
+]);
+
+// SVGAnimated* types are also chainable
+function isChainableTypeName(name: string): boolean {
+  return CHAINABLE_TYPES.has(name) || name.startsWith("SVGAnimated");
+}
+
+/**
+ * Check if a type is a simple object suitable for chaining
+ * (only allowlisted types like CSSStyleDeclaration, DOMTokenList, etc.)
+ */
+function isChainableObjectType(type: ts.Type): boolean {
+  if (!(type.flags & ts.TypeFlags.Object)) return false;
+
+  const symbol = type.getSymbol();
+  if (!symbol) return false;
+
+  return isChainableTypeName(symbol.getName());
 }
 
 // Helper function to get unique own properties (not inherited from base types)
@@ -156,6 +196,40 @@ function writeProperties(type: ts.Type) {
     // TODO: support setter methods
     // TODO: on events
     if (method) return; // Skip methods
+
+    // Check if property has a chainable object type (e.g., style, classList)
+    const propertySignature = declarations.find(ts.isPropertySignature);
+    const getAccessor = declarations.find(ts.isGetAccessor);
+    const setAccessor = declarations.find(ts.isSetAccessor);
+    const getter = getAccessor ?? propertySignature;
+
+    if (getter) {
+      const propType = checker.getTypeOfSymbolAtLocation(prop, getter);
+      if (isChainableObjectType(propType)) {
+        const objectTypeStr = checker.typeToString(propType);
+        if (setAccessor) {
+          const paramType = setterParam(setAccessor);
+          const typeString = checker.typeToString(paramType);
+          fs.appendFileSync(
+            filename,
+            `  ${name}: ReactiveChain<this, ${objectTypeStr}> & ((value: ReactiveValue<${typeString}>) => this);\n`,
+          );
+        } else if (propertySignature && !isReadonly(prop)) {
+          const typeString = checker.typeToString(propType);
+          fs.appendFileSync(
+            filename,
+            `  ${name}: ReactiveChain<this, ${objectTypeStr}> & ((value: ReactiveValue<${typeString}>) => this);\n`,
+          );
+        } else {
+          // Read-only chainable object - sub-properties only
+          fs.appendFileSync(
+            filename,
+            `  ${name}: ReactiveChain<this, ${objectTypeStr}>;\n`,
+          );
+        }
+        return;
+      }
+    }
 
     appendSetters(prop);
   });
@@ -211,7 +285,7 @@ function processTypeHierarchy(type: ts.Type): string[] {
   fs.appendFileSync(
     filename,
     `
-interface ${typeName}Builder${extendsClause} {\n`
+interface ${typeName}Builder${extendsClause} {\n`,
   );
 
   // Get only own properties (not inherited)

@@ -1,4 +1,3 @@
-import { REF, ON } from "elements-kit";
 import { computed, signal } from "elements-kit/signals";
 import { span, div, button } from "elements-kit/dom";
 import {
@@ -59,23 +58,24 @@ class MyElement extends HTMLElement implements ElementLifecycle {
 customElements.define("custom-element", MyElement);
 
 const myelement = div()
-  [REF]((el) => console.log("Created element:", el))
   .style.backgroundColor("lightblue")
-  .style.padding("20px")(
-  "Click the button to increment the value:",
-  document.createElement("br"),
-  button()
-    .textContent("Increment")
-    [ON]("click", () => {
-      value(value() + 1);
-    }),
-  span()
-    .style.display("block")
-    .textContent(computed(() => `Current value: ${value()}`)),
-  doubledMessage,
-  document.createElement("br"),
-  document.createElement("custom-element"),
-);
+  .style.padding("20px")
+  .classList.add("my-element")
+  .children(
+    "Click the button to increment the value:",
+    document.createElement("br"),
+    button()
+      .textContent("Increment")
+      .on("click", () => {
+        value(value() + 1);
+      }),
+    span()
+      .style.display("block")
+      .textContent(computed(() => `Current value: ${value()}`)),
+    doubledMessage,
+    document.createElement("br"),
+    document.createElement("custom-element"),
+  );
 
 const interval = setInterval(() => {
   console.log("incrementing", value());

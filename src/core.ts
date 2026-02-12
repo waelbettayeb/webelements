@@ -4,14 +4,11 @@ import { createSlot } from "./slot";
 export const DISPOSABLES: unique symbol = Symbol("disposables");
 export const DISPOSE: unique symbol = Symbol("dispose");
 export const VALUE: unique symbol = Symbol("value");
-export const REF: unique symbol = Symbol("ref");
-export const APPLY: unique symbol = Symbol("apply");
 export const EFFECT: unique symbol = Symbol("effect");
-export const ON: unique symbol = Symbol("on");
 
 class ElementBuilder<T extends Element = Element> {
   /** The underlying DOM element */
-  [VALUE]: T;
+  private [VALUE]: T;
   // TODO: should we track effects separately?
   /** A set of cleanup functions to run when disposing the element */
   private [DISPOSABLES] = new Set<() => void>();
@@ -20,15 +17,19 @@ class ElementBuilder<T extends Element = Element> {
     this[DISPOSABLES].forEach((dispose) => dispose());
     this[DISPOSABLES].clear();
   }
+  [EFFECT](fn: () => void) {
+    this[DISPOSABLES].add(effect(fn));
+    return this;
+  }
   private constructor(el: T) {
     this[VALUE] = el;
   }
 
   static create<T extends Element>(el: T): ReactiveElement<T> {
     const builder = new ElementBuilder<T>(el);
-    return new Proxy(builder[APPLY], {
+    return new Proxy(builder.ref, {
       apply(_target, _thisArg, argArray) {
-        return Reflect.apply(builder[APPLY], builder, argArray);
+        return Reflect.apply(builder.ref, builder, argArray);
       },
       get(_target, key, receiver) {
         const el = builder[VALUE];
@@ -41,8 +42,7 @@ class ElementBuilder<T extends Element = Element> {
     }) as unknown as ReactiveElement<T>;
   }
 
-  [APPLY](
-    this: ElementBuilder,
+  children(
     ...children: ReactiveValue<ElementBuilder | Element | string | number>[]
   ) {
     const el = this[VALUE];
@@ -64,7 +64,10 @@ class ElementBuilder<T extends Element = Element> {
     return el;
   }
 
-  [REF](apply: (ref: T) => void | (() => void)) {
+  ref(): T;
+  ref(apply: (ref: T) => void | (() => void)): this;
+  ref(apply?: (ref: T) => void | (() => void)) {
+    if (!apply) return this[VALUE];
     const result = apply(this[VALUE]);
     if (typeof result === "function") {
       this[DISPOSABLES].add(result);
@@ -72,12 +75,7 @@ class ElementBuilder<T extends Element = Element> {
     return this;
   }
 
-  [EFFECT](fn: () => void) {
-    this[DISPOSABLES].add(effect(fn));
-    return this;
-  }
-
-  [ON](
+  on(
     eventType: string,
     listener: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions,
@@ -172,12 +170,18 @@ type WritableKeys<T> = {
     : K;
 }[keyof T];
 
+/**
+ * Extracts the object chaining part of ReactiveBuilder.
+ * Used for properties like `style` where you can do both:
+ *   .style("padding: 20px;")     // setter
+ *   .style.padding("20px")       // sub-property chaining
+ */
+export type ReactiveChain<R, T> = T extends object
+  ? {
+      [K in WritableKeys<T>]: ReactiveBuilder<R, T[K]>;
+    }
+  : {};
+
 export type ReactiveBuilder<R, T = R> = T extends (...args: infer U) => unknown
-  ? (...value: ReactiveArray<U>) => ReactiveBuilder<R>
-  : {
-      (value?: ReactiveValue<T>): ReactiveBuilder<R>;
-    } & (T extends object
-      ? {
-          [K in WritableKeys<T>]: ReactiveBuilder<R, T[K]>;
-        }
-      : {});
+  ? (...value: ReactiveArray<U>) => R
+  : (value?: ReactiveValue<T>) => R;
