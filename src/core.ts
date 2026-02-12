@@ -75,9 +75,9 @@ export class ElementBuilder<T extends Element = Element> {
     return this;
   }
 
-  on(
-    eventType: string,
-    listener: EventListenerOrEventListenerObject,
+  on<K extends keyof HTMLElementEventMap>(
+    eventType: K,
+    listener: (ev: HTMLElementEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions,
   ) {
     this[VALUE].addEventListener(eventType, listener, options);
