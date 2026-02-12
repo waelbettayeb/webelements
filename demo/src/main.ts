@@ -5,7 +5,7 @@ import {
   Attributes,
   observedAttributes,
 } from "elements-kit/attributes";
-import { reactive } from "elements-kit/reactive";
+import { reactive } from "elements-kit/decorators";
 import { createSlot } from "elements-kit/slot";
 
 const value = signal(0);
