@@ -144,7 +144,7 @@ function isObject(v: unknown): v is Record<string | symbol, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
 }
 
-export function build<T extends Element>(el: T) {
+export function builder<T extends Element>(el: T) {
   return ElementBuilder.create(el) as unknown as ReactiveElementOf<T>;
 }
 

@@ -5,6 +5,7 @@ import {
   Attributes,
   observedAttributes,
 } from "elements-kit/attributes";
+import { builder } from "elements-kit";
 import { reactive } from "elements-kit/decorators";
 import { createSlot } from "elements-kit/slot";
 
@@ -55,9 +56,11 @@ class MyElement extends HTMLElement implements Lifecycle {
     this.#connected(false);
   }
 }
-customElements.define("custom-element", MyElement);
-
+customElements.define("my-element", MyElement);
 const myelement = () =>
+  builder(document.createElement("my-element") as MyElement);
+
+const element = () =>
   div()
     .style.backgroundColor("lightblue")
     .style.padding("20px")
@@ -75,7 +78,7 @@ const myelement = () =>
         .textContent(computed(() => `Current value: ${value()}`)),
       doubledMessage,
       document.createElement("br"),
-      document.createElement("custom-element"),
+      myelement(),
     );
 
 const interval = setInterval(() => {
@@ -83,4 +86,4 @@ const interval = setInterval(() => {
   value(value() + 1);
 }, 1000);
 
-document.getElementById("app")?.appendChild(myelement());
+document.getElementById("app")?.appendChild(element());

@@ -70,7 +70,7 @@ export interface Lifecycle {
 
       fs.appendFileSync(
         filename,
-        `export const ${finalName} = () => build(document.createElement("${name as string}") as unknown as ${elementCls});\n`,
+        `export const ${finalName} = () => builder(document.createElement("${name as string}") as unknown as ${elementCls});\n`,
       );
     }
   });

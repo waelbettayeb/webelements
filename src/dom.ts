@@ -1,6 +1,6 @@
 // Auto-generated file
 
-import { build } from "./core";
+import { builder } from "./core";
 
 export interface Lifecycle {
   connectedCallback?(): void;
@@ -13,204 +13,479 @@ export interface Lifecycle {
   adoptedCallback?(): void; // This one is rarely used, so optional
 }
 
-export const a = () => build(document.createElement("a") as unknown as HTMLAnchorElement);
-export const abbr = () => build(document.createElement("abbr") as unknown as HTMLElement);
-export const address = () => build(document.createElement("address") as unknown as HTMLElement);
-export const area = () => build(document.createElement("area") as unknown as HTMLAreaElement);
-export const article = () => build(document.createElement("article") as unknown as HTMLElement);
-export const aside = () => build(document.createElement("aside") as unknown as HTMLElement);
-export const audio = () => build(document.createElement("audio") as unknown as HTMLAudioElement);
-export const b = () => build(document.createElement("b") as unknown as HTMLElement);
-export const base = () => build(document.createElement("base") as unknown as HTMLBaseElement);
-export const bdi = () => build(document.createElement("bdi") as unknown as HTMLElement);
-export const bdo = () => build(document.createElement("bdo") as unknown as HTMLElement);
-export const blockquote = () => build(document.createElement("blockquote") as unknown as HTMLQuoteElement);
-export const body = () => build(document.createElement("body") as unknown as HTMLBodyElement);
-export const br = () => build(document.createElement("br") as unknown as HTMLBRElement);
-export const button = () => build(document.createElement("button") as unknown as HTMLButtonElement);
-export const canvas = () => build(document.createElement("canvas") as unknown as HTMLCanvasElement);
-export const caption = () => build(document.createElement("caption") as unknown as HTMLTableCaptionElement);
-export const cite = () => build(document.createElement("cite") as unknown as HTMLElement);
-export const code = () => build(document.createElement("code") as unknown as HTMLElement);
-export const col = () => build(document.createElement("col") as unknown as HTMLTableColElement);
-export const colgroup = () => build(document.createElement("colgroup") as unknown as HTMLTableColElement);
-export const data = () => build(document.createElement("data") as unknown as HTMLDataElement);
-export const datalist = () => build(document.createElement("datalist") as unknown as HTMLDataListElement);
-export const dd = () => build(document.createElement("dd") as unknown as HTMLElement);
-export const del = () => build(document.createElement("del") as unknown as HTMLModElement);
-export const details = () => build(document.createElement("details") as unknown as HTMLDetailsElement);
-export const dfn = () => build(document.createElement("dfn") as unknown as HTMLElement);
-export const dialog = () => build(document.createElement("dialog") as unknown as HTMLDialogElement);
-export const div = () => build(document.createElement("div") as unknown as HTMLDivElement);
-export const dl = () => build(document.createElement("dl") as unknown as HTMLDListElement);
-export const dt = () => build(document.createElement("dt") as unknown as HTMLElement);
-export const em = () => build(document.createElement("em") as unknown as HTMLElement);
-export const embed = () => build(document.createElement("embed") as unknown as HTMLEmbedElement);
-export const fieldset = () => build(document.createElement("fieldset") as unknown as HTMLFieldSetElement);
-export const figcaption = () => build(document.createElement("figcaption") as unknown as HTMLElement);
-export const figure = () => build(document.createElement("figure") as unknown as HTMLElement);
-export const footer = () => build(document.createElement("footer") as unknown as HTMLElement);
-export const form = () => build(document.createElement("form") as unknown as HTMLFormElement);
-export const h1 = () => build(document.createElement("h1") as unknown as HTMLHeadingElement);
-export const h2 = () => build(document.createElement("h2") as unknown as HTMLHeadingElement);
-export const h3 = () => build(document.createElement("h3") as unknown as HTMLHeadingElement);
-export const h4 = () => build(document.createElement("h4") as unknown as HTMLHeadingElement);
-export const h5 = () => build(document.createElement("h5") as unknown as HTMLHeadingElement);
-export const h6 = () => build(document.createElement("h6") as unknown as HTMLHeadingElement);
-export const head = () => build(document.createElement("head") as unknown as HTMLHeadElement);
-export const header = () => build(document.createElement("header") as unknown as HTMLElement);
-export const hgroup = () => build(document.createElement("hgroup") as unknown as HTMLElement);
-export const hr = () => build(document.createElement("hr") as unknown as HTMLHRElement);
-export const html = () => build(document.createElement("html") as unknown as HTMLHtmlElement);
-export const i = () => build(document.createElement("i") as unknown as HTMLElement);
-export const iframe = () => build(document.createElement("iframe") as unknown as HTMLIFrameElement);
-export const img = () => build(document.createElement("img") as unknown as HTMLImageElement);
-export const input = () => build(document.createElement("input") as unknown as HTMLInputElement);
-export const ins = () => build(document.createElement("ins") as unknown as HTMLModElement);
-export const kbd = () => build(document.createElement("kbd") as unknown as HTMLElement);
-export const label = () => build(document.createElement("label") as unknown as HTMLLabelElement);
-export const legend = () => build(document.createElement("legend") as unknown as HTMLLegendElement);
-export const li = () => build(document.createElement("li") as unknown as HTMLLIElement);
-export const link = () => build(document.createElement("link") as unknown as HTMLLinkElement);
-export const main = () => build(document.createElement("main") as unknown as HTMLElement);
-export const map = () => build(document.createElement("map") as unknown as HTMLMapElement);
-export const mark = () => build(document.createElement("mark") as unknown as HTMLElement);
-export const menu = () => build(document.createElement("menu") as unknown as HTMLMenuElement);
-export const meta = () => build(document.createElement("meta") as unknown as HTMLMetaElement);
-export const meter = () => build(document.createElement("meter") as unknown as HTMLMeterElement);
-export const nav = () => build(document.createElement("nav") as unknown as HTMLElement);
-export const noscript = () => build(document.createElement("noscript") as unknown as HTMLElement);
-export const object = () => build(document.createElement("object") as unknown as HTMLObjectElement);
-export const ol = () => build(document.createElement("ol") as unknown as HTMLOListElement);
-export const optgroup = () => build(document.createElement("optgroup") as unknown as HTMLOptGroupElement);
-export const option = () => build(document.createElement("option") as unknown as HTMLOptionElement);
-export const output = () => build(document.createElement("output") as unknown as HTMLOutputElement);
-export const p = () => build(document.createElement("p") as unknown as HTMLParagraphElement);
-export const picture = () => build(document.createElement("picture") as unknown as HTMLPictureElement);
-export const pre = () => build(document.createElement("pre") as unknown as HTMLPreElement);
-export const progress = () => build(document.createElement("progress") as unknown as HTMLProgressElement);
-export const q = () => build(document.createElement("q") as unknown as HTMLQuoteElement);
-export const rp = () => build(document.createElement("rp") as unknown as HTMLElement);
-export const rt = () => build(document.createElement("rt") as unknown as HTMLElement);
-export const ruby = () => build(document.createElement("ruby") as unknown as HTMLElement);
-export const s = () => build(document.createElement("s") as unknown as HTMLElement);
-export const samp = () => build(document.createElement("samp") as unknown as HTMLElement);
-export const script = () => build(document.createElement("script") as unknown as HTMLScriptElement);
-export const search = () => build(document.createElement("search") as unknown as HTMLElement);
-export const section = () => build(document.createElement("section") as unknown as HTMLElement);
-export const select = () => build(document.createElement("select") as unknown as HTMLSelectElement);
-export const slot = () => build(document.createElement("slot") as unknown as HTMLSlotElement);
-export const small = () => build(document.createElement("small") as unknown as HTMLElement);
-export const source = () => build(document.createElement("source") as unknown as HTMLSourceElement);
-export const span = () => build(document.createElement("span") as unknown as HTMLSpanElement);
-export const strong = () => build(document.createElement("strong") as unknown as HTMLElement);
-export const style = () => build(document.createElement("style") as unknown as HTMLStyleElement);
-export const sub = () => build(document.createElement("sub") as unknown as HTMLElement);
-export const summary = () => build(document.createElement("summary") as unknown as HTMLElement);
-export const sup = () => build(document.createElement("sup") as unknown as HTMLElement);
-export const table = () => build(document.createElement("table") as unknown as HTMLTableElement);
-export const tbody = () => build(document.createElement("tbody") as unknown as HTMLTableSectionElement);
-export const td = () => build(document.createElement("td") as unknown as HTMLTableCellElement);
-export const template = () => build(document.createElement("template") as unknown as HTMLTemplateElement);
-export const textarea = () => build(document.createElement("textarea") as unknown as HTMLTextAreaElement);
-export const tfoot = () => build(document.createElement("tfoot") as unknown as HTMLTableSectionElement);
-export const th = () => build(document.createElement("th") as unknown as HTMLTableCellElement);
-export const thead = () => build(document.createElement("thead") as unknown as HTMLTableSectionElement);
-export const time = () => build(document.createElement("time") as unknown as HTMLTimeElement);
-export const title = () => build(document.createElement("title") as unknown as HTMLTitleElement);
-export const tr = () => build(document.createElement("tr") as unknown as HTMLTableRowElement);
-export const track = () => build(document.createElement("track") as unknown as HTMLTrackElement);
-export const u = () => build(document.createElement("u") as unknown as HTMLElement);
-export const ul = () => build(document.createElement("ul") as unknown as HTMLUListElement);
-export const mathVar = () => build(document.createElement("var") as unknown as HTMLElement);
-export const video = () => build(document.createElement("video") as unknown as HTMLVideoElement);
-export const wbr = () => build(document.createElement("wbr") as unknown as HTMLElement);
-export const animate = () => build(document.createElement("animate") as unknown as SVGAnimateElement);
-export const animateMotion = () => build(document.createElement("animateMotion") as unknown as SVGAnimateMotionElement);
-export const animateTransform = () => build(document.createElement("animateTransform") as unknown as SVGAnimateTransformElement);
-export const circle = () => build(document.createElement("circle") as unknown as SVGCircleElement);
-export const clipPath = () => build(document.createElement("clipPath") as unknown as SVGClipPathElement);
-export const defs = () => build(document.createElement("defs") as unknown as SVGDefsElement);
-export const desc = () => build(document.createElement("desc") as unknown as SVGDescElement);
-export const ellipse = () => build(document.createElement("ellipse") as unknown as SVGEllipseElement);
-export const feBlend = () => build(document.createElement("feBlend") as unknown as SVGFEBlendElement);
-export const feColorMatrix = () => build(document.createElement("feColorMatrix") as unknown as SVGFEColorMatrixElement);
-export const feComponentTransfer = () => build(document.createElement("feComponentTransfer") as unknown as SVGFEComponentTransferElement);
-export const feComposite = () => build(document.createElement("feComposite") as unknown as SVGFECompositeElement);
-export const feConvolveMatrix = () => build(document.createElement("feConvolveMatrix") as unknown as SVGFEConvolveMatrixElement);
-export const feDiffuseLighting = () => build(document.createElement("feDiffuseLighting") as unknown as SVGFEDiffuseLightingElement);
-export const feDisplacementMap = () => build(document.createElement("feDisplacementMap") as unknown as SVGFEDisplacementMapElement);
-export const feDistantLight = () => build(document.createElement("feDistantLight") as unknown as SVGFEDistantLightElement);
-export const feDropShadow = () => build(document.createElement("feDropShadow") as unknown as SVGFEDropShadowElement);
-export const feFlood = () => build(document.createElement("feFlood") as unknown as SVGFEFloodElement);
-export const feFuncA = () => build(document.createElement("feFuncA") as unknown as SVGFEFuncAElement);
-export const feFuncB = () => build(document.createElement("feFuncB") as unknown as SVGFEFuncBElement);
-export const feFuncG = () => build(document.createElement("feFuncG") as unknown as SVGFEFuncGElement);
-export const feFuncR = () => build(document.createElement("feFuncR") as unknown as SVGFEFuncRElement);
-export const feGaussianBlur = () => build(document.createElement("feGaussianBlur") as unknown as SVGFEGaussianBlurElement);
-export const feImage = () => build(document.createElement("feImage") as unknown as SVGFEImageElement);
-export const feMerge = () => build(document.createElement("feMerge") as unknown as SVGFEMergeElement);
-export const feMergeNode = () => build(document.createElement("feMergeNode") as unknown as SVGFEMergeNodeElement);
-export const feMorphology = () => build(document.createElement("feMorphology") as unknown as SVGFEMorphologyElement);
-export const feOffset = () => build(document.createElement("feOffset") as unknown as SVGFEOffsetElement);
-export const fePointLight = () => build(document.createElement("fePointLight") as unknown as SVGFEPointLightElement);
-export const feSpecularLighting = () => build(document.createElement("feSpecularLighting") as unknown as SVGFESpecularLightingElement);
-export const feSpotLight = () => build(document.createElement("feSpotLight") as unknown as SVGFESpotLightElement);
-export const feTile = () => build(document.createElement("feTile") as unknown as SVGFETileElement);
-export const feTurbulence = () => build(document.createElement("feTurbulence") as unknown as SVGFETurbulenceElement);
-export const filter = () => build(document.createElement("filter") as unknown as SVGFilterElement);
-export const foreignObject = () => build(document.createElement("foreignObject") as unknown as SVGForeignObjectElement);
-export const g = () => build(document.createElement("g") as unknown as SVGGElement);
-export const image = () => build(document.createElement("image") as unknown as SVGImageElement);
-export const line = () => build(document.createElement("line") as unknown as SVGLineElement);
-export const linearGradient = () => build(document.createElement("linearGradient") as unknown as SVGLinearGradientElement);
-export const marker = () => build(document.createElement("marker") as unknown as SVGMarkerElement);
-export const mask = () => build(document.createElement("mask") as unknown as SVGMaskElement);
-export const metadata = () => build(document.createElement("metadata") as unknown as SVGMetadataElement);
-export const mpath = () => build(document.createElement("mpath") as unknown as SVGMPathElement);
-export const path = () => build(document.createElement("path") as unknown as SVGPathElement);
-export const pattern = () => build(document.createElement("pattern") as unknown as SVGPatternElement);
-export const polygon = () => build(document.createElement("polygon") as unknown as SVGPolygonElement);
-export const polyline = () => build(document.createElement("polyline") as unknown as SVGPolylineElement);
-export const radialGradient = () => build(document.createElement("radialGradient") as unknown as SVGRadialGradientElement);
-export const rect = () => build(document.createElement("rect") as unknown as SVGRectElement);
-export const set = () => build(document.createElement("set") as unknown as SVGSetElement);
-export const stop = () => build(document.createElement("stop") as unknown as SVGStopElement);
-export const svg = () => build(document.createElement("svg") as unknown as SVGSVGElement);
-export const svgSwitch = () => build(document.createElement("switch") as unknown as SVGSwitchElement);
-export const symbol = () => build(document.createElement("symbol") as unknown as SVGSymbolElement);
-export const text = () => build(document.createElement("text") as unknown as SVGTextElement);
-export const textPath = () => build(document.createElement("textPath") as unknown as SVGTextPathElement);
-export const tspan = () => build(document.createElement("tspan") as unknown as SVGTSpanElement);
-export const use = () => build(document.createElement("use") as unknown as SVGUseElement);
-export const view = () => build(document.createElement("view") as unknown as SVGViewElement);
-export const annotation = () => build(document.createElement("annotation") as unknown as MathMLElement);
-export const annotationXml = () => build(document.createElement("annotation-xml") as unknown as MathMLElement);
-export const maction = () => build(document.createElement("maction") as unknown as MathMLElement);
-export const math = () => build(document.createElement("math") as unknown as MathMLElement);
-export const merror = () => build(document.createElement("merror") as unknown as MathMLElement);
-export const mfrac = () => build(document.createElement("mfrac") as unknown as MathMLElement);
-export const mi = () => build(document.createElement("mi") as unknown as MathMLElement);
-export const mmultiscripts = () => build(document.createElement("mmultiscripts") as unknown as MathMLElement);
-export const mn = () => build(document.createElement("mn") as unknown as MathMLElement);
-export const mo = () => build(document.createElement("mo") as unknown as MathMLElement);
-export const mover = () => build(document.createElement("mover") as unknown as MathMLElement);
-export const mpadded = () => build(document.createElement("mpadded") as unknown as MathMLElement);
-export const mphantom = () => build(document.createElement("mphantom") as unknown as MathMLElement);
-export const mprescripts = () => build(document.createElement("mprescripts") as unknown as MathMLElement);
-export const mroot = () => build(document.createElement("mroot") as unknown as MathMLElement);
-export const mrow = () => build(document.createElement("mrow") as unknown as MathMLElement);
-export const ms = () => build(document.createElement("ms") as unknown as MathMLElement);
-export const mspace = () => build(document.createElement("mspace") as unknown as MathMLElement);
-export const msqrt = () => build(document.createElement("msqrt") as unknown as MathMLElement);
-export const mstyle = () => build(document.createElement("mstyle") as unknown as MathMLElement);
-export const msub = () => build(document.createElement("msub") as unknown as MathMLElement);
-export const msubsup = () => build(document.createElement("msubsup") as unknown as MathMLElement);
-export const msup = () => build(document.createElement("msup") as unknown as MathMLElement);
-export const mtable = () => build(document.createElement("mtable") as unknown as MathMLElement);
-export const mtd = () => build(document.createElement("mtd") as unknown as MathMLElement);
-export const mtext = () => build(document.createElement("mtext") as unknown as MathMLElement);
-export const mtr = () => build(document.createElement("mtr") as unknown as MathMLElement);
-export const munder = () => build(document.createElement("munder") as unknown as MathMLElement);
-export const munderover = () => build(document.createElement("munderover") as unknown as MathMLElement);
-export const semantics = () => build(document.createElement("semantics") as unknown as MathMLElement);
+export const a = () =>
+  builder(document.createElement("a") as unknown as HTMLAnchorElement);
+export const abbr = () =>
+  builder(document.createElement("abbr") as unknown as HTMLElement);
+export const address = () =>
+  builder(document.createElement("address") as unknown as HTMLElement);
+export const area = () =>
+  builder(document.createElement("area") as unknown as HTMLAreaElement);
+export const article = () =>
+  builder(document.createElement("article") as unknown as HTMLElement);
+export const aside = () =>
+  builder(document.createElement("aside") as unknown as HTMLElement);
+export const audio = () =>
+  builder(document.createElement("audio") as unknown as HTMLAudioElement);
+export const b = () =>
+  builder(document.createElement("b") as unknown as HTMLElement);
+export const base = () =>
+  builder(document.createElement("base") as unknown as HTMLBaseElement);
+export const bdi = () =>
+  builder(document.createElement("bdi") as unknown as HTMLElement);
+export const bdo = () =>
+  builder(document.createElement("bdo") as unknown as HTMLElement);
+export const blockquote = () =>
+  builder(document.createElement("blockquote") as unknown as HTMLQuoteElement);
+export const body = () =>
+  builder(document.createElement("body") as unknown as HTMLBodyElement);
+export const br = () =>
+  builder(document.createElement("br") as unknown as HTMLBRElement);
+export const button = () =>
+  builder(document.createElement("button") as unknown as HTMLButtonElement);
+export const canvas = () =>
+  builder(document.createElement("canvas") as unknown as HTMLCanvasElement);
+export const caption = () =>
+  builder(
+    document.createElement("caption") as unknown as HTMLTableCaptionElement,
+  );
+export const cite = () =>
+  builder(document.createElement("cite") as unknown as HTMLElement);
+export const code = () =>
+  builder(document.createElement("code") as unknown as HTMLElement);
+export const col = () =>
+  builder(document.createElement("col") as unknown as HTMLTableColElement);
+export const colgroup = () =>
+  builder(document.createElement("colgroup") as unknown as HTMLTableColElement);
+export const data = () =>
+  builder(document.createElement("data") as unknown as HTMLDataElement);
+export const datalist = () =>
+  builder(document.createElement("datalist") as unknown as HTMLDataListElement);
+export const dd = () =>
+  builder(document.createElement("dd") as unknown as HTMLElement);
+export const del = () =>
+  builder(document.createElement("del") as unknown as HTMLModElement);
+export const details = () =>
+  builder(document.createElement("details") as unknown as HTMLDetailsElement);
+export const dfn = () =>
+  builder(document.createElement("dfn") as unknown as HTMLElement);
+export const dialog = () =>
+  builder(document.createElement("dialog") as unknown as HTMLDialogElement);
+export const div = () =>
+  builder(document.createElement("div") as unknown as HTMLDivElement);
+export const dl = () =>
+  builder(document.createElement("dl") as unknown as HTMLDListElement);
+export const dt = () =>
+  builder(document.createElement("dt") as unknown as HTMLElement);
+export const em = () =>
+  builder(document.createElement("em") as unknown as HTMLElement);
+export const embed = () =>
+  builder(document.createElement("embed") as unknown as HTMLEmbedElement);
+export const fieldset = () =>
+  builder(document.createElement("fieldset") as unknown as HTMLFieldSetElement);
+export const figcaption = () =>
+  builder(document.createElement("figcaption") as unknown as HTMLElement);
+export const figure = () =>
+  builder(document.createElement("figure") as unknown as HTMLElement);
+export const footer = () =>
+  builder(document.createElement("footer") as unknown as HTMLElement);
+export const form = () =>
+  builder(document.createElement("form") as unknown as HTMLFormElement);
+export const h1 = () =>
+  builder(document.createElement("h1") as unknown as HTMLHeadingElement);
+export const h2 = () =>
+  builder(document.createElement("h2") as unknown as HTMLHeadingElement);
+export const h3 = () =>
+  builder(document.createElement("h3") as unknown as HTMLHeadingElement);
+export const h4 = () =>
+  builder(document.createElement("h4") as unknown as HTMLHeadingElement);
+export const h5 = () =>
+  builder(document.createElement("h5") as unknown as HTMLHeadingElement);
+export const h6 = () =>
+  builder(document.createElement("h6") as unknown as HTMLHeadingElement);
+export const head = () =>
+  builder(document.createElement("head") as unknown as HTMLHeadElement);
+export const header = () =>
+  builder(document.createElement("header") as unknown as HTMLElement);
+export const hgroup = () =>
+  builder(document.createElement("hgroup") as unknown as HTMLElement);
+export const hr = () =>
+  builder(document.createElement("hr") as unknown as HTMLHRElement);
+export const html = () =>
+  builder(document.createElement("html") as unknown as HTMLHtmlElement);
+export const i = () =>
+  builder(document.createElement("i") as unknown as HTMLElement);
+export const iframe = () =>
+  builder(document.createElement("iframe") as unknown as HTMLIFrameElement);
+export const img = () =>
+  builder(document.createElement("img") as unknown as HTMLImageElement);
+export const input = () =>
+  builder(document.createElement("input") as unknown as HTMLInputElement);
+export const ins = () =>
+  builder(document.createElement("ins") as unknown as HTMLModElement);
+export const kbd = () =>
+  builder(document.createElement("kbd") as unknown as HTMLElement);
+export const label = () =>
+  builder(document.createElement("label") as unknown as HTMLLabelElement);
+export const legend = () =>
+  builder(document.createElement("legend") as unknown as HTMLLegendElement);
+export const li = () =>
+  builder(document.createElement("li") as unknown as HTMLLIElement);
+export const link = () =>
+  builder(document.createElement("link") as unknown as HTMLLinkElement);
+export const main = () =>
+  builder(document.createElement("main") as unknown as HTMLElement);
+export const map = () =>
+  builder(document.createElement("map") as unknown as HTMLMapElement);
+export const mark = () =>
+  builder(document.createElement("mark") as unknown as HTMLElement);
+export const menu = () =>
+  builder(document.createElement("menu") as unknown as HTMLMenuElement);
+export const meta = () =>
+  builder(document.createElement("meta") as unknown as HTMLMetaElement);
+export const meter = () =>
+  builder(document.createElement("meter") as unknown as HTMLMeterElement);
+export const nav = () =>
+  builder(document.createElement("nav") as unknown as HTMLElement);
+export const noscript = () =>
+  builder(document.createElement("noscript") as unknown as HTMLElement);
+export const object = () =>
+  builder(document.createElement("object") as unknown as HTMLObjectElement);
+export const ol = () =>
+  builder(document.createElement("ol") as unknown as HTMLOListElement);
+export const optgroup = () =>
+  builder(document.createElement("optgroup") as unknown as HTMLOptGroupElement);
+export const option = () =>
+  builder(document.createElement("option") as unknown as HTMLOptionElement);
+export const output = () =>
+  builder(document.createElement("output") as unknown as HTMLOutputElement);
+export const p = () =>
+  builder(document.createElement("p") as unknown as HTMLParagraphElement);
+export const picture = () =>
+  builder(document.createElement("picture") as unknown as HTMLPictureElement);
+export const pre = () =>
+  builder(document.createElement("pre") as unknown as HTMLPreElement);
+export const progress = () =>
+  builder(document.createElement("progress") as unknown as HTMLProgressElement);
+export const q = () =>
+  builder(document.createElement("q") as unknown as HTMLQuoteElement);
+export const rp = () =>
+  builder(document.createElement("rp") as unknown as HTMLElement);
+export const rt = () =>
+  builder(document.createElement("rt") as unknown as HTMLElement);
+export const ruby = () =>
+  builder(document.createElement("ruby") as unknown as HTMLElement);
+export const s = () =>
+  builder(document.createElement("s") as unknown as HTMLElement);
+export const samp = () =>
+  builder(document.createElement("samp") as unknown as HTMLElement);
+export const script = () =>
+  builder(document.createElement("script") as unknown as HTMLScriptElement);
+export const search = () =>
+  builder(document.createElement("search") as unknown as HTMLElement);
+export const section = () =>
+  builder(document.createElement("section") as unknown as HTMLElement);
+export const select = () =>
+  builder(document.createElement("select") as unknown as HTMLSelectElement);
+export const slot = () =>
+  builder(document.createElement("slot") as unknown as HTMLSlotElement);
+export const small = () =>
+  builder(document.createElement("small") as unknown as HTMLElement);
+export const source = () =>
+  builder(document.createElement("source") as unknown as HTMLSourceElement);
+export const span = () =>
+  builder(document.createElement("span") as unknown as HTMLSpanElement);
+export const strong = () =>
+  builder(document.createElement("strong") as unknown as HTMLElement);
+export const style = () =>
+  builder(document.createElement("style") as unknown as HTMLStyleElement);
+export const sub = () =>
+  builder(document.createElement("sub") as unknown as HTMLElement);
+export const summary = () =>
+  builder(document.createElement("summary") as unknown as HTMLElement);
+export const sup = () =>
+  builder(document.createElement("sup") as unknown as HTMLElement);
+export const table = () =>
+  builder(document.createElement("table") as unknown as HTMLTableElement);
+export const tbody = () =>
+  builder(
+    document.createElement("tbody") as unknown as HTMLTableSectionElement,
+  );
+export const td = () =>
+  builder(document.createElement("td") as unknown as HTMLTableCellElement);
+export const template = () =>
+  builder(document.createElement("template") as unknown as HTMLTemplateElement);
+export const textarea = () =>
+  builder(document.createElement("textarea") as unknown as HTMLTextAreaElement);
+export const tfoot = () =>
+  builder(
+    document.createElement("tfoot") as unknown as HTMLTableSectionElement,
+  );
+export const th = () =>
+  builder(document.createElement("th") as unknown as HTMLTableCellElement);
+export const thead = () =>
+  builder(
+    document.createElement("thead") as unknown as HTMLTableSectionElement,
+  );
+export const time = () =>
+  builder(document.createElement("time") as unknown as HTMLTimeElement);
+export const title = () =>
+  builder(document.createElement("title") as unknown as HTMLTitleElement);
+export const tr = () =>
+  builder(document.createElement("tr") as unknown as HTMLTableRowElement);
+export const track = () =>
+  builder(document.createElement("track") as unknown as HTMLTrackElement);
+export const u = () =>
+  builder(document.createElement("u") as unknown as HTMLElement);
+export const ul = () =>
+  builder(document.createElement("ul") as unknown as HTMLUListElement);
+export const mathVar = () =>
+  builder(document.createElement("var") as unknown as HTMLElement);
+export const video = () =>
+  builder(document.createElement("video") as unknown as HTMLVideoElement);
+export const wbr = () =>
+  builder(document.createElement("wbr") as unknown as HTMLElement);
+export const animate = () =>
+  builder(document.createElement("animate") as unknown as SVGAnimateElement);
+export const animateMotion = () =>
+  builder(
+    document.createElement(
+      "animateMotion",
+    ) as unknown as SVGAnimateMotionElement,
+  );
+export const animateTransform = () =>
+  builder(
+    document.createElement(
+      "animateTransform",
+    ) as unknown as SVGAnimateTransformElement,
+  );
+export const circle = () =>
+  builder(document.createElement("circle") as unknown as SVGCircleElement);
+export const clipPath = () =>
+  builder(document.createElement("clipPath") as unknown as SVGClipPathElement);
+export const defs = () =>
+  builder(document.createElement("defs") as unknown as SVGDefsElement);
+export const desc = () =>
+  builder(document.createElement("desc") as unknown as SVGDescElement);
+export const ellipse = () =>
+  builder(document.createElement("ellipse") as unknown as SVGEllipseElement);
+export const feBlend = () =>
+  builder(document.createElement("feBlend") as unknown as SVGFEBlendElement);
+export const feColorMatrix = () =>
+  builder(
+    document.createElement(
+      "feColorMatrix",
+    ) as unknown as SVGFEColorMatrixElement,
+  );
+export const feComponentTransfer = () =>
+  builder(
+    document.createElement(
+      "feComponentTransfer",
+    ) as unknown as SVGFEComponentTransferElement,
+  );
+export const feComposite = () =>
+  builder(
+    document.createElement("feComposite") as unknown as SVGFECompositeElement,
+  );
+export const feConvolveMatrix = () =>
+  builder(
+    document.createElement(
+      "feConvolveMatrix",
+    ) as unknown as SVGFEConvolveMatrixElement,
+  );
+export const feDiffuseLighting = () =>
+  builder(
+    document.createElement(
+      "feDiffuseLighting",
+    ) as unknown as SVGFEDiffuseLightingElement,
+  );
+export const feDisplacementMap = () =>
+  builder(
+    document.createElement(
+      "feDisplacementMap",
+    ) as unknown as SVGFEDisplacementMapElement,
+  );
+export const feDistantLight = () =>
+  builder(
+    document.createElement(
+      "feDistantLight",
+    ) as unknown as SVGFEDistantLightElement,
+  );
+export const feDropShadow = () =>
+  builder(
+    document.createElement("feDropShadow") as unknown as SVGFEDropShadowElement,
+  );
+export const feFlood = () =>
+  builder(document.createElement("feFlood") as unknown as SVGFEFloodElement);
+export const feFuncA = () =>
+  builder(document.createElement("feFuncA") as unknown as SVGFEFuncAElement);
+export const feFuncB = () =>
+  builder(document.createElement("feFuncB") as unknown as SVGFEFuncBElement);
+export const feFuncG = () =>
+  builder(document.createElement("feFuncG") as unknown as SVGFEFuncGElement);
+export const feFuncR = () =>
+  builder(document.createElement("feFuncR") as unknown as SVGFEFuncRElement);
+export const feGaussianBlur = () =>
+  builder(
+    document.createElement(
+      "feGaussianBlur",
+    ) as unknown as SVGFEGaussianBlurElement,
+  );
+export const feImage = () =>
+  builder(document.createElement("feImage") as unknown as SVGFEImageElement);
+export const feMerge = () =>
+  builder(document.createElement("feMerge") as unknown as SVGFEMergeElement);
+export const feMergeNode = () =>
+  builder(
+    document.createElement("feMergeNode") as unknown as SVGFEMergeNodeElement,
+  );
+export const feMorphology = () =>
+  builder(
+    document.createElement("feMorphology") as unknown as SVGFEMorphologyElement,
+  );
+export const feOffset = () =>
+  builder(document.createElement("feOffset") as unknown as SVGFEOffsetElement);
+export const fePointLight = () =>
+  builder(
+    document.createElement("fePointLight") as unknown as SVGFEPointLightElement,
+  );
+export const feSpecularLighting = () =>
+  builder(
+    document.createElement(
+      "feSpecularLighting",
+    ) as unknown as SVGFESpecularLightingElement,
+  );
+export const feSpotLight = () =>
+  builder(
+    document.createElement("feSpotLight") as unknown as SVGFESpotLightElement,
+  );
+export const feTile = () =>
+  builder(document.createElement("feTile") as unknown as SVGFETileElement);
+export const feTurbulence = () =>
+  builder(
+    document.createElement("feTurbulence") as unknown as SVGFETurbulenceElement,
+  );
+export const filter = () =>
+  builder(document.createElement("filter") as unknown as SVGFilterElement);
+export const foreignObject = () =>
+  builder(
+    document.createElement(
+      "foreignObject",
+    ) as unknown as SVGForeignObjectElement,
+  );
+export const g = () =>
+  builder(document.createElement("g") as unknown as SVGGElement);
+export const image = () =>
+  builder(document.createElement("image") as unknown as SVGImageElement);
+export const line = () =>
+  builder(document.createElement("line") as unknown as SVGLineElement);
+export const linearGradient = () =>
+  builder(
+    document.createElement(
+      "linearGradient",
+    ) as unknown as SVGLinearGradientElement,
+  );
+export const marker = () =>
+  builder(document.createElement("marker") as unknown as SVGMarkerElement);
+export const mask = () =>
+  builder(document.createElement("mask") as unknown as SVGMaskElement);
+export const metadata = () =>
+  builder(document.createElement("metadata") as unknown as SVGMetadataElement);
+export const mpath = () =>
+  builder(document.createElement("mpath") as unknown as SVGMPathElement);
+export const path = () =>
+  builder(document.createElement("path") as unknown as SVGPathElement);
+export const pattern = () =>
+  builder(document.createElement("pattern") as unknown as SVGPatternElement);
+export const polygon = () =>
+  builder(document.createElement("polygon") as unknown as SVGPolygonElement);
+export const polyline = () =>
+  builder(document.createElement("polyline") as unknown as SVGPolylineElement);
+export const radialGradient = () =>
+  builder(
+    document.createElement(
+      "radialGradient",
+    ) as unknown as SVGRadialGradientElement,
+  );
+export const rect = () =>
+  builder(document.createElement("rect") as unknown as SVGRectElement);
+export const set = () =>
+  builder(document.createElement("set") as unknown as SVGSetElement);
+export const stop = () =>
+  builder(document.createElement("stop") as unknown as SVGStopElement);
+export const svg = () =>
+  builder(document.createElement("svg") as unknown as SVGSVGElement);
+export const svgSwitch = () =>
+  builder(document.createElement("switch") as unknown as SVGSwitchElement);
+export const symbol = () =>
+  builder(document.createElement("symbol") as unknown as SVGSymbolElement);
+export const text = () =>
+  builder(document.createElement("text") as unknown as SVGTextElement);
+export const textPath = () =>
+  builder(document.createElement("textPath") as unknown as SVGTextPathElement);
+export const tspan = () =>
+  builder(document.createElement("tspan") as unknown as SVGTSpanElement);
+export const use = () =>
+  builder(document.createElement("use") as unknown as SVGUseElement);
+export const view = () =>
+  builder(document.createElement("view") as unknown as SVGViewElement);
+export const annotation = () =>
+  builder(document.createElement("annotation") as unknown as MathMLElement);
+export const annotationXml = () =>
+  builder(document.createElement("annotation-xml") as unknown as MathMLElement);
+export const maction = () =>
+  builder(document.createElement("maction") as unknown as MathMLElement);
+export const math = () =>
+  builder(document.createElement("math") as unknown as MathMLElement);
+export const merror = () =>
+  builder(document.createElement("merror") as unknown as MathMLElement);
+export const mfrac = () =>
+  builder(document.createElement("mfrac") as unknown as MathMLElement);
+export const mi = () =>
+  builder(document.createElement("mi") as unknown as MathMLElement);
+export const mmultiscripts = () =>
+  builder(document.createElement("mmultiscripts") as unknown as MathMLElement);
+export const mn = () =>
+  builder(document.createElement("mn") as unknown as MathMLElement);
+export const mo = () =>
+  builder(document.createElement("mo") as unknown as MathMLElement);
+export const mover = () =>
+  builder(document.createElement("mover") as unknown as MathMLElement);
+export const mpadded = () =>
+  builder(document.createElement("mpadded") as unknown as MathMLElement);
+export const mphantom = () =>
+  builder(document.createElement("mphantom") as unknown as MathMLElement);
+export const mprescripts = () =>
+  builder(document.createElement("mprescripts") as unknown as MathMLElement);
+export const mroot = () =>
+  builder(document.createElement("mroot") as unknown as MathMLElement);
+export const mrow = () =>
+  builder(document.createElement("mrow") as unknown as MathMLElement);
+export const ms = () =>
+  builder(document.createElement("ms") as unknown as MathMLElement);
+export const mspace = () =>
+  builder(document.createElement("mspace") as unknown as MathMLElement);
+export const msqrt = () =>
+  builder(document.createElement("msqrt") as unknown as MathMLElement);
+export const mstyle = () =>
+  builder(document.createElement("mstyle") as unknown as MathMLElement);
+export const msub = () =>
+  builder(document.createElement("msub") as unknown as MathMLElement);
+export const msubsup = () =>
+  builder(document.createElement("msubsup") as unknown as MathMLElement);
+export const msup = () =>
+  builder(document.createElement("msup") as unknown as MathMLElement);
+export const mtable = () =>
+  builder(document.createElement("mtable") as unknown as MathMLElement);
+export const mtd = () =>
+  builder(document.createElement("mtd") as unknown as MathMLElement);
+export const mtext = () =>
+  builder(document.createElement("mtext") as unknown as MathMLElement);
+export const mtr = () =>
+  builder(document.createElement("mtr") as unknown as MathMLElement);
+export const munder = () =>
+  builder(document.createElement("munder") as unknown as MathMLElement);
+export const munderover = () =>
+  builder(document.createElement("munderover") as unknown as MathMLElement);
+export const semantics = () =>
+  builder(document.createElement("semantics") as unknown as MathMLElement);
